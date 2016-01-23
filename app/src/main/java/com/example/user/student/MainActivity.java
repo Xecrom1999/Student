@@ -34,8 +34,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         list_img = (ImageView) findViewById(R.id.list_img);
         list_img.setOnClickListener(this);
-
-
 }
 
     public boolean onCreateOptionsMenu(Menu menu) {
