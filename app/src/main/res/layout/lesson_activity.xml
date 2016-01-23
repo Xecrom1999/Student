@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+                android:background="#C5CAE9">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/name_input"
+        android:hint="Class Name"
+        android:textColorHint="#9E9E9E"
+        android:textSize="40dp"
+        android:textColor="#212121"
+        android:textStyle="bold"
+        android:layout_marginTop="47dp"
+        android:layout_weight="3"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/lessonsList_button"
+        android:inputType="textCapWords"
+        />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/name_input"
+            android:id="@+id/classesRecyclerView"
+            android:onClick="recyclerClicked">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <Button
+            android:background="#5C6BC0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/name_input"
+            android:layout_toRightOf="@id/classesRecyclerView"
+            android:text="+"
+            android:textSize="25dp"
+            android:textColor="@android:color/white"
+            android:id="@+id/lessonsList_button"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="starts at: "
+        android:id="@+id/textView5"
+        android:textSize="30dp"
+        android:textColor="#757575"
+
+        android:layout_marginEnd="50dp"
+        android:layout_alignTop="@+id/setTime_text"
+        android:layout_toStartOf="@+id/setTime_text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="08:30"
+        android:id="@+id/setTime_text"
+        android:textSize="30dp"
+        android:textColor="#212121"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/lessonsList_button"/>
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:id="@+id/numberPicker"
+        android:layout_below="@+id/setTime_text"
+        android:layout_alignEnd="@+id/setTime_text"
+        android:layout_marginTop="26dp"
+        android:solidColor="#C5CAE9"/>
+
+    <TextView
+        android:textColor="#757575"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="length (min): "
+        android:id="@+id/textView7"
+        android:textSize="30dp"
+        android:layout_marginTop="370dp"
+        android:layout_alignStart="@+id/textView5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:id="@+id/cancel_button"
+            android:background="#5C6BC0"
+            android:text="Cancel"
+            android:textColor="@android:color/white"
+            android:textSize="40dp"
+            android:layout_weight="1"
+            android:alpha="0.3"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:id="@+id/done_button"
+            android:background="#3F51B5"
+            android:text="Done"
+            android:textColor="@android:color/white"
+            android:textSize="40dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity"
+              android:orientation="vertical"
+                >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
+            android:id="@+id/toolBar"
+            />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context="Fragments.MainFragment"
+                    android:background="#5C6BC0">
+
+        <TextView
+            android:alpha="10"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student"
+            android:textSize="60dp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:id="@+id/title_text"
+            android:layout_above="@+id/schedule_img"
+            android:layout_alignStart="@+id/calendar_img"
+            />
+
+
+        <ImageView
+            android:id="@+id/calendar_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_calendar3"
+            android:layout_below="@+id/list_img"
+            android:layout_toStartOf="@+id/list_img"/>
+
+        <TextView
+            android:textStyle="italic"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calendar"
+            android:layout_below="@+id/calendar_img"
+            android:layout_alignStart="@+id/calendar_img"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/textView4"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/schedule_img"
+            android:src="@mipmap/ic_schedule2"
+            android:layout_above="@+id/list_img"
+            android:layout_toEndOf="@+id/textView2"
+            />
+
+        <TextView
+            android:textStyle="italic"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Schedule"
+            android:id="@+id/textView"
+            android:layout_below="@+id/schedule_img"
+            android:layout_alignStart="@+id/schedule_img"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_list3"
+            android:id="@+id/list_img"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:textStyle="italic"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Do List"
+            android:layout_below="@+id/list_img"
+            android:layout_alignStart="@+id/list_img"
+            android:id="@+id/textView2"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

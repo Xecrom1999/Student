@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.example.user.student"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_list3"
+        android:label="ForStudents"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ScheduleActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">>
+        </activity>
+
+        <activity
+            android:name=".LessonActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">>
+        </activity>
+
+    </application>
+
+</manifest>

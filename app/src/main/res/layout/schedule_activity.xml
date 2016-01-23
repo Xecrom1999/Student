@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="Fragments.ScheduleFragment"
+              android:background="#5C6BC0"
+              android:orientation="vertical"
+    android:id="@+id/theLayout">
+
+
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar_layout"
+        android:id="@+id/toolBar2"
+        />
+
+    <it.neokree.materialtabs.MaterialTabHost
+        android:id="@+id/materialTabHost"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:textColor="#FFFFFF"
+        app:primaryColor="#3F51B5"
+        app:accentColor="#303F9F"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="53dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/materialTabHost"
+        android:layout_alignParentStart="true"
+        >
+    </android.support.v4.view.ViewPager>
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@mipmap/ic_add"
+        app:backgroundTint="#009688"
+        app:borderWidth="0dp"
+        app:rippleColor="@android:color/white"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        />
+</RelativeLayout>
