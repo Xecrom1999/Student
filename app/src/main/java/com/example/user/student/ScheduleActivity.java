@@ -143,7 +143,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         else intent.putExtra("isNew", true);
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
-    }
+}
 
     public ArrayList<Lesson> getList(int p) {
         ArrayList<Lesson> list = new ArrayList<>();
@@ -166,7 +166,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.schedule_menu, menu);
+        //getMenuInflater().inflate(R.menu.schedule_menu, menu);
         return true;
     }
 
@@ -191,7 +191,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
-    }
+}
 
     public void showMenu(final int position, final Lesson lesson) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

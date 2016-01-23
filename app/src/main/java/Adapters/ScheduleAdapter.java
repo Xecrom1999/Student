@@ -67,7 +67,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         return list.get(itemPosition);
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
         TextView time_text, length_text, name_text;

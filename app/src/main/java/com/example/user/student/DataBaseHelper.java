@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 /**
  * Created by user on 17/01/16.
@@ -94,7 +93,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String tableName = SUNDAY_TABLE_NAME;
-        day = 1;
 
         switch (day) {
             case 0:
@@ -104,8 +102,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 tableName = MONDAY_TABLE_NAME;
                 break;
         }
-
-        Toast.makeText(ctx, "Day: " + day, Toast.LENGTH_SHORT).show();
 
         Cursor res = db.rawQuery("select * from " + tableName, null);
         return res;
