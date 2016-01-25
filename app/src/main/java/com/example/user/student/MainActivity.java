@@ -55,14 +55,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     break;
                 case R.id.schedule_img:
                     startActivity(new Intent(this, ScheduleActivity.class));
-                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                     break;
                 case R.id.list_img:
+                    startActivity(new Intent(this, ListActivity.class));
                     break;
                 default:
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                     break;
             }
+            overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
     }
 
     public void onBackPressed() {
