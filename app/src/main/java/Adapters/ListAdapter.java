@@ -6,11 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.user.student.R;
+import com.example.user.student.Task;
 
 import java.util.ArrayList;
+
+import Interfaces.TaskListener;
 
 /**
  * Created by user on 24/01/16.
@@ -18,15 +22,17 @@ import java.util.ArrayList;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
 
     Context ctx;
-    ArrayList<String> list;
+    ArrayList<Task> list;
+    static TaskListener listener;
 
-    public ListAdapter(Context ctx) {
+    public ListAdapter(Context ctx, TaskListener listener) {
         this.ctx = ctx;
         list = new ArrayList<>();
+        this.listener = listener;
     }
 
-    public void addTask() {
-        list.add("");
+    public void addTask(String title, String description, ArrayList<ImageView> imagesList) {
+        list.add(new Task(title, description, imagesList, ""));
         notifyItemInserted(list.size() - 1);
     }
 
@@ -41,22 +47,36 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
 
     public void onBindViewHolder(ListAdapter.ViewHolder holder, int position) {
 
+        holder.title_text.setText(list.get(position).getTitle());
+        holder.description += list.get(position).getDescription();
     }
 
     public int getItemCount() {
-        return 10;
+        return list.size();
+    }
+
+    public void moveItemToEndOfList(int position) {
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        TextView title_text;
+        String description = "Description: ";
         CheckBox checkBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            textView = (TextView) itemView.findViewById(R.id.taskText);
+            title_text = (TextView) itemView.findViewById(R.id.taskText);
             checkBox = (CheckBox) itemView.findViewById(R.id.taskCheckBox);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.changeTask(list.get(getPosition()));
+                }
+            });
         }
     }
 }
