@@ -52,7 +52,6 @@ public class HomeworkFragment extends Fragment {
             description_text.setText(task.getDescription());
         }
 
-
         return layout;
     }
 }

@@ -62,7 +62,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
 
         fm = getSupportFragmentManager();
 
-        daysNames = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        daysNames = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturdayn u"};
 
         daysFragments = new DayFragment[7];
         for (int i = 0; i < daysFragments.length; i++) daysFragments[i] = new DayFragment(i, this);
@@ -144,10 +144,10 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
 }
-
+    //TODO Change here
     public ArrayList<Lesson> getList(int p) {
         ArrayList<Lesson> list = new ArrayList<>();
-
+        //list.add(new Lesson("The lesson", "10:45", "45 minutes"));
         Cursor res = dataBase.getData(p);
 
             while (res.moveToNext()) {

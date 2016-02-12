@@ -33,6 +33,9 @@ public class DayFragment extends Fragment implements View.OnClickListener, Commu
     LessonsListener listener;
     ArrayList<Lesson> list;
 
+    public DayFragment() {
+    }
+
     public DayFragment(int position, LessonsListener listener) {
         this.position = position;
         this.listener = listener;
@@ -69,13 +72,23 @@ public class DayFragment extends Fragment implements View.OnClickListener, Commu
         return layout;
     }
 
+
     public void onClick(View v) {
         communicator.newLesson(new Lesson("","",""));
     }
 
     public void lessonDone(Lesson lesson) {
         adapter.addLesson(lesson);
+        /*RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity()).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealm((Iterable<RealmObject>) lesson);
+        realm.commitTransaction();
+        realm.close();*/
         addLesson_text.setVisibility(View.INVISIBLE);
+
+
     }
 
     public void updateLesson(int position, Lesson lesson) {

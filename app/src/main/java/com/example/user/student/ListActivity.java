@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import Adapters.ListAdapter;
 import Fragments.HomeworkFragment;
@@ -22,7 +23,7 @@ public class ListActivity extends ActionBarActivity implements TaskListener {
     FragmentTransaction ft;
     HomeworkFragment fragment;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);

@@ -21,7 +21,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         theToolBar = (Toolbar) findViewById(R.id.toolBar);
         theToolBar.setTitle("Menu");
         setSupportActionBar(theToolBar);
@@ -52,6 +51,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
             switch (v.getId()) {
                 case R.id.calendar_img:
+                    //startActivity(new Intent(this, testActivity.class));
                     break;
                 case R.id.schedule_img:
                     startActivity(new Intent(this, ScheduleActivity.class));
