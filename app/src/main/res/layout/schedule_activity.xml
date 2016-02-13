@@ -1,14 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context="Fragments.ScheduleFragment"
-              android:background="#5C6BC0"
-              android:orientation="vertical"
-    android:id="@+id/theLayout">
-
-
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="Fragments.ScheduleFragment"
+                android:background="#5C6BC0"
+                android:orientation="vertical"
+                android:id="@+id/theLayout">
 
     <include
         android:layout_width="match_parent"
@@ -17,28 +15,19 @@
         android:id="@+id/toolBar2"
         />
 
-    <it.neokree.materialtabs.MaterialTabHost
-        android:id="@+id/materialTabHost"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:textColor="#FFFFFF"
-        app:primaryColor="#3F51B5"
-        app:accentColor="#303F9F"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="53dp"/>
+   <include
+       android:layout_below="@id/toolBar2"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       layout="@layout/days_view_schedule"
+       android:id="@+id/days_view_schedule"/>
 
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+    <include
+        android:layout_below="@id/toolBar2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/materialTabHost"
-        android:layout_alignParentStart="true"
-        >
-    </android.support.v4.view.ViewPager>
-
+        layout="@layout/week_view_schedule"
+        android:id="@+id/week_view_schedule"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton3"
@@ -51,5 +40,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        />
+        ></android.support.design.widget.FloatingActionButton>
+
 </RelativeLayout>

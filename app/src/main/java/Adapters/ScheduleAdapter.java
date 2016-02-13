@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.user.student.R;
 import com.example.user.student.Lesson;
+import com.example.user.student.R;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     public void addLesson(Lesson lesson) {
         list.add(lesson);
         notifyItemInserted(list.size()-1);
+    }
+
+    public void setList(ArrayList<Lesson> list) {
+        this.list = list;
+        notifyDataSetChanged();
+        notifyItemRangeInserted(0, list.size());
     }
 
     public ScheduleAdapter(Context ctx, ArrayList<Lesson> list, LessonsListener listener) {

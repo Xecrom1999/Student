@@ -40,7 +40,8 @@
             android:text="+"
             android:textSize="25dp"
             android:textColor="@android:color/white"
-            android:id="@+id/lessonsList_button"/>
+            android:id="@+id/lessonsList_button"
+            />
 
     <TextView
         android:layout_width="wrap_content"
@@ -94,12 +95,12 @@
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:id="@+id/cancel_button"
-            android:background="#5C6BC0"
+            android:background="#9FA8DA"
             android:text="Cancel"
             android:textColor="@android:color/white"
             android:textSize="40dp"
             android:layout_weight="1"
-            android:alpha="0.3"/>
+            android:alpha="1"/>
 
         <Button
             android:layout_width="0dp"

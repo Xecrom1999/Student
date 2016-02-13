@@ -14,32 +14,44 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Schedule.db";
 
     public static final String SUNDAY_TABLE_NAME = "sunday_table";
-    public static final String SUNDAY_COL_1_ = "ID";
-    public static final String SUNDAY_COL_2 = "NAME";
-    public static final String SUNDAY_COL_3 = "TIME";
-    public static final String SUNDAY_COL_4 = "LENGTH";
-
     public static final String MONDAY_TABLE_NAME = "monday_table";
-    public static final String MONDAY_COL_1_ = "ID";
-    public static final String MONDAY_COL_2 = "NAME";
-    public static final String MONDAY_COL_3 = "TIME";
-    public static final String MONDAY_COL_4 = "LENGTH";
+    public static final String TUESDAY_TABLE_NAME = "tuesday_table";
+    public static final String WEDNESDAY_TABLE_NAME = "wednesday_table";
+    public static final String THURSDAY_TABLE_NAME = "thursday_table";
+    public static final String FRIDAY_TABLE_NAME = "friday_table";
+    public static final String SATURDAY_TABLE_NAME = "saturday_table";
+
+    public static final String COL_1_ = "ID";
+    public static final String COL_2 = "NAME";
+    public static final String COL_3 = "TIME";
+    public static final String COL_4 = "LENGTH";
 
     Context ctx;
 
     public DataBaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 11);
+        super(context, DATABASE_NAME, null, 13);
         this.ctx = context;
     }
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + SUNDAY_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,TIME TEXT,LENGTH TEXT)");
         db.execSQL("create table " + MONDAY_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,TIME TEXT,LENGTH TEXT)");
+        db.execSQL("create table " + TUESDAY_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,TIME TEXT,LENGTH TEXT)");
+        db.execSQL("create table " + WEDNESDAY_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,TIME TEXT,LENGTH TEXT)");
+        db.execSQL("create table " + THURSDAY_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,TIME TEXT,LENGTH TEXT)");
+        db.execSQL("create table " + FRIDAY_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,TIME TEXT,LENGTH TEXT)");
+        db.execSQL("create table " + SATURDAY_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,TIME TEXT,LENGTH TEXT)");
+
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + SUNDAY_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + MONDAY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TUESDAY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + WEDNESDAY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + THURSDAY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + FRIDAY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SATURDAY_TABLE_NAME);
 
         onCreate(db);
     }
@@ -50,21 +62,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        String tableName = "";
+        contentValues.put(COL_2, lesson.getName());
+        contentValues.put(COL_3, lesson.getTime());
+        contentValues.put(COL_4, lesson.getLength());
+
+        String tableName = MONDAY_TABLE_NAME;
 
         switch (day) {
             case 0:
                 tableName = SUNDAY_TABLE_NAME;
-                contentValues.put(SUNDAY_COL_2, lesson.getName());
-                contentValues.put(SUNDAY_COL_3, lesson.getTime());
-                contentValues.put(SUNDAY_COL_4, lesson.getLength());
                 break;
-
             case 1:
                 tableName = MONDAY_TABLE_NAME;
-                contentValues.put(MONDAY_COL_2, lesson.getName());
-                contentValues.put(MONDAY_COL_3, lesson.getTime());
-                contentValues.put(MONDAY_COL_4, lesson.getLength());
+                break;
+            case 2:
+                tableName = TUESDAY_TABLE_NAME;
+                break;
+            case 3:
+                tableName = WEDNESDAY_TABLE_NAME;
+                break;
+            case 4:
+                tableName = THURSDAY_TABLE_NAME;
+                break;
+            case 5:
+                tableName = FRIDAY_TABLE_NAME;
+                break;
+            case 6:
+                tableName = SATURDAY_TABLE_NAME;
                 break;
         }
 
@@ -75,7 +99,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String tableName = "";
+        String tableName = MONDAY_TABLE_NAME;
 
         switch (day) {
             case 0:
@@ -83,6 +107,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 break;
             case 1:
                 tableName = MONDAY_TABLE_NAME;
+                break;
+            case 2:
+                tableName = TUESDAY_TABLE_NAME;
+                break;
+            case 3:
+                tableName = WEDNESDAY_TABLE_NAME;
+                break;
+            case 4:
+                tableName = THURSDAY_TABLE_NAME;
+                break;
+            case 5:
+                tableName = FRIDAY_TABLE_NAME;
+                break;
+            case 6:
+                tableName = SATURDAY_TABLE_NAME;
                 break;
         }
 
@@ -92,7 +131,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getData(int day) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String tableName = SUNDAY_TABLE_NAME;
+        String tableName = MONDAY_TABLE_NAME;
 
         switch (day) {
             case 0:
@@ -101,10 +140,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             case 1:
                 tableName = MONDAY_TABLE_NAME;
                 break;
+            case 2:
+                tableName = TUESDAY_TABLE_NAME;
+                break;
+            case 3:
+                tableName = WEDNESDAY_TABLE_NAME;
+                break;
+            case 4:
+                tableName = THURSDAY_TABLE_NAME;
+                break;
+            case 5:
+                tableName = FRIDAY_TABLE_NAME;
+                break;
+            case 6:
+                tableName = SATURDAY_TABLE_NAME;
+                break;
         }
 
-        Cursor res = db.rawQuery("select * from " + tableName, null);
-        return res;
+            Cursor res = db.rawQuery("select * from " + tableName, null);
+            return res;
     }
 
     public void updateData(int day, Lesson oldLesson, Lesson lesson) {
@@ -117,11 +171,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String time = oldLesson.getTime();
         String length = oldLesson.getLength();
 
-        contentValues.put(SUNDAY_COL_2, lesson.getName());
-        contentValues.put(SUNDAY_COL_3, lesson.getTime());
-        contentValues.put(SUNDAY_COL_4, lesson.getLength());
+        contentValues.put(COL_2, lesson.getName());
+        contentValues.put(COL_3, lesson.getTime());
+        contentValues.put(COL_4, lesson.getLength());
 
-        String tableName = "";
+        String tableName = MONDAY_TABLE_NAME;
 
         switch (day) {
             case 0:
@@ -129,6 +183,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 break;
             case 1:
                 tableName = MONDAY_TABLE_NAME;
+                break;
+            case 2:
+                tableName = TUESDAY_TABLE_NAME;
+                break;
+            case 3:
+                tableName = WEDNESDAY_TABLE_NAME;
+                break;
+            case 4:
+                tableName = THURSDAY_TABLE_NAME;
+                break;
+            case 5:
+                tableName = FRIDAY_TABLE_NAME;
+                break;
+            case 6:
+                tableName = SATURDAY_TABLE_NAME;
                 break;
         }
 

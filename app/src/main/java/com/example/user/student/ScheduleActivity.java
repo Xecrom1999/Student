@@ -2,8 +2,10 @@ package com.example.user.student;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,8 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Fragments.DayFragment;
 import Interfaces.Communicator;
@@ -39,10 +44,22 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
     int position;
     int itemPosition;
     ArrayList<Integer> list;
+    SharedPreferences sharedPreferences;
+    boolean isDaysView;
+    RelativeLayout daysView;
+    LinearLayout weekView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_activity);
+
+        daysView = (RelativeLayout) findViewById(R.id.days_view_schedule);
+        weekView = (LinearLayout) findViewById(R.id.week_view_schedule);
+
+        sharedPreferences = getSharedPreferences("myData", Context.MODE_PRIVATE);
+        isDaysView = sharedPreferences.getBoolean("isDaysView", true);
+
+        changeView();
 
         list = new ArrayList<>();
 
@@ -62,7 +79,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
 
         fm = getSupportFragmentManager();
 
-        daysNames = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturdayn u"};
+        daysNames = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
         daysFragments = new DayFragment[7];
         for (int i = 0; i < daysFragments.length; i++) daysFragments[i] = new DayFragment(i, this);
@@ -71,6 +88,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         pager = (ViewPager) findViewById(R.id.viewPager);
 
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm, daysFragments);
+        pager.setOffscreenPageLimit(0);
         pager.setAdapter(pagerAdapter);
 
         pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -84,6 +102,10 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         for (int i = 0; i < daysNames.length; i++) {
             tabHost.addTab(tabHost.newTab().setText(daysNames[i]).setTabListener(this));
         }
+
+        tabHost.setSelectedNavigationItem(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1);
+        pager.setCurrentItem(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1);
+
     }
 
     public void onTabSelected(MaterialTab tab) {
@@ -144,10 +166,9 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
 }
-    //TODO Change here
     public ArrayList<Lesson> getList(int p) {
         ArrayList<Lesson> list = new ArrayList<>();
-        //list.add(new Lesson("The lesson", "10:45", "45 minutes"));
+
         Cursor res = dataBase.getData(p);
 
             while (res.moveToNext()) {
@@ -160,13 +181,9 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         return list;
     }
 
-    public int getPagerPosition() {
-        return pager.getCurrentItem();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.schedule_menu, menu);
+        getMenuInflater().inflate(R.menu.schedule_menu, menu);
         return true;
     }
 
@@ -180,8 +197,32 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
             return true;
         }
 
+        if (id == R.id.changeView) {
+            changeView();
+        }
+
         return false;
     }
+
+    private void changeView() {
+
+        if (isDaysView) isDaysView = false;
+        else isDaysView = true;
+
+        if (isDaysView) {
+            daysView.setVisibility(View.VISIBLE);
+            weekView.setVisibility(View.GONE);
+        }
+        else {
+            weekView.setVisibility(View.VISIBLE);
+            daysView.setVisibility(View.GONE);
+        }
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isDaysView", isDaysView);
+        editor.commit();
+    }
+
 
     public void setPosition(int position) {
         this.position = position;
@@ -238,7 +279,8 @@ class ViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public android.support.v4.app.Fragment getItem(int position) {
-        return fragments[position];
+
+        return this.fragments[position];
     }
 
     public int getCount() {

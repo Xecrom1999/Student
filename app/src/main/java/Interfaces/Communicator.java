@@ -16,6 +16,4 @@ public interface Communicator {
     void newLesson(Lesson lesson);
 
     ArrayList<Lesson> getList(int p);
-
-    int getPagerPosition();
 }
