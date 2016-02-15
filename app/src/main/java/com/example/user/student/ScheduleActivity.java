@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -47,14 +46,12 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
     SharedPreferences sharedPreferences;
     boolean isDaysView;
     RelativeLayout daysView;
-    LinearLayout weekView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_activity);
 
         daysView = (RelativeLayout) findViewById(R.id.days_view_schedule);
-        weekView = (LinearLayout) findViewById(R.id.week_view_schedule);
 
         sharedPreferences = getSharedPreferences("myData", Context.MODE_PRIVATE);
         isDaysView = sharedPreferences.getBoolean("isDaysView", true);
@@ -198,7 +195,12 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         }
 
         if (id == R.id.changeView) {
-            changeView();
+
+            if (isDaysView) isDaysView = false;
+            else isDaysView = true;
+
+            startActivity(new Intent(this, WeekViewActivity.class));
+            saveChoice();
         }
 
         return false;
@@ -206,23 +208,22 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
 
     private void changeView() {
 
-        if (isDaysView) isDaysView = false;
-        else isDaysView = true;
-
         if (isDaysView) {
-            daysView.setVisibility(View.VISIBLE);
-            weekView.setVisibility(View.GONE);
+            //daysView.setVisibility(View.VISIBLE);
+            //weekView.setVisibility(View.GONE);
         }
         else {
-            weekView.setVisibility(View.VISIBLE);
-            daysView.setVisibility(View.GONE);
+            //daysView.setVisibility(View.GONE);
+            //weekView.setVisibility(View.VISIBLE);
         }
+    }
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    private void saveChoice() {
+        SharedPreferences sp = getSharedPreferences("myData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean("isDaysView", isDaysView);
         editor.commit();
     }
-
 
     public void setPosition(int position) {
         this.position = position;

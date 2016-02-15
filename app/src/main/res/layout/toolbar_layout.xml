@@ -8,7 +8,7 @@
            android:background="#3F51B5"
            android:minHeight="?attr/actionBarSize"
            android:fitsSystemWindows="true"
-           app:title="Menu"
+           app:title="Title"
            app:titleTextColor="@android:color/white"
     >
 
