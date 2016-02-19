@@ -1,33 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     card_view:cardCornerRadius="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    card_view:cardBackgroundColor="#E8EAF6"
-    android:layout_marginTop="4dp"
-    card_view:cardElevation="3dp">
+    android:layout_width="250dp"
+    android:layout_height="156dp"
+    card_view:cardBackgroundColor="#FCE4EC"
+    card_view:cardElevation="7dp"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="10dp"
+    android:id="@+id/listCard"
+    >
 
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/secondary_text_light"
-            android:gravity="center"
-            android:text="Homework in math"
-            android:textSize="20sp"
-            android:id="@+id/taskText"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"/>
+            android:text="Task title"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/primary_text_light"
+            android:id="@+id/task_title"
+            android:layout_marginTop="20dp"
+           />
 
-        <CheckBox
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/taskCheckBox"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="16dp"/>
+            android:text="date"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15dp"
+            android:textStyle="italic"
+            android:textColor="@android:color/primary_text_light"
+            android:id="@+id/task_date"
+            />
+
+
+    </LinearLayout>
+
 
 </android.support.v7.widget.CardView>
+
+</RelativeLayout>

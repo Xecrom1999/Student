@@ -200,6 +200,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
             else isDaysView = true;
 
             startActivity(new Intent(this, WeekViewActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             saveChoice();
         }
 

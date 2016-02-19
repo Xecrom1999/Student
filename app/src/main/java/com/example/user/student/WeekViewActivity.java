@@ -52,8 +52,11 @@ public class WeekViewActivity extends AppCompatActivity {
     }
 
 
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.schedule_menu, menu);
@@ -72,6 +75,7 @@ public class WeekViewActivity extends AppCompatActivity {
         if (id == R.id.changeView) {
 
            finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 
         return false;

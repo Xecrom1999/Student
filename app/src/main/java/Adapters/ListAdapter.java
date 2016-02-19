@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,12 +46,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
 
     public void onBindViewHolder(ListAdapter.ViewHolder holder, int position) {
 
-        holder.title_text.setText(list.get(position).getTitle());
-        holder.description += list.get(position).getDescription();
+        //holder.title_text.setText(list.get(position).getTitle());
+        //holder.date_text.setText(list.get(position).getWhen());
     }
 
     public int getItemCount() {
-        return list.size();
+        return 10;
     }
 
     public void moveItemToEndOfList(int position) {
@@ -62,19 +61,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title_text;
-        String description = "Description: ";
-        CheckBox checkBox;
+        TextView date_text;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
 
-            title_text = (TextView) itemView.findViewById(R.id.taskText);
-            checkBox = (CheckBox) itemView.findViewById(R.id.taskCheckBox);
+            title_text = (TextView) itemView.findViewById(R.id.task_title);
+            date_text = (TextView) itemView.findViewById(R.id.task_date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.changeTask(list.get(getPosition()));
+                    listener.changeTask(itemView);
                 }
             });
         }
