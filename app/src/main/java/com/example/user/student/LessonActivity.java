@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -38,8 +39,8 @@ public class LessonActivity extends Activity implements View.OnClickListener, Co
     RecyclerView recyclerView;
     LessonsNamesAdapter adapter;
     Button addButton;
-    Button done_button;
-    Button cancel_button;
+    ImageButton done_button;
+    ImageButton cancel_button;
     boolean isNew;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +67,10 @@ public class LessonActivity extends Activity implements View.OnClickListener, Co
         addButton = (Button) findViewById(R.id.lessonsList_button);
         addButton.setOnClickListener(this);
 
-        done_button = (Button) findViewById(R.id.done_button);
+        done_button = (ImageButton) findViewById(R.id.done_button);
         done_button.setOnClickListener(this);
 
-        cancel_button = (Button) findViewById(R.id.cancel_button);
+        cancel_button = (ImageButton) findViewById(R.id.cancel_button);
         cancel_button.setOnClickListener(this);
 
         Intent intent = getIntent();

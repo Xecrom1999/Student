@@ -41,7 +41,7 @@
             android:id="@+id/calendar_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@mipmap/ic_calendar3"
+            android:src="@mipmap/ic_list3"
             android:layout_below="@+id/list_img"
             android:layout_toStartOf="@+id/list_img"/>
 

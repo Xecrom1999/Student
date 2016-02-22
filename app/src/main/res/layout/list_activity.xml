@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.student.ListActivity"
     android:orientation="vertical"
-    android:background="#E8EAF6">
+    android:background="#D1C4E9">
 
     <include
         android:layout_width="match_parent"
@@ -17,11 +17,11 @@
         />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:id="@+id/recyclerView_task"
-        android:layout_below="@id/toolBar2">
+        android:layout_below="@id/toolBar2"
+        >
     </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton

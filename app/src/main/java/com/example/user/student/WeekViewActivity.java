@@ -27,6 +27,7 @@ public class WeekViewActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolBar3);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Week View Schedule");
 
         weekGrid = (RecyclerView) findViewById(R.id.gridRecyclerView);
         weekGrid.setLayoutManager(new GridLayoutManager(this, 7));

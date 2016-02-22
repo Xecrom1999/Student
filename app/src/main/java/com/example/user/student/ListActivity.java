@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import Adapters.ListAdapter;
+import Fragments.TaskDialog;
 import Interfaces.TaskListener;
 
 public class ListActivity extends ActionBarActivity implements TaskListener {
@@ -55,9 +56,11 @@ public class ListActivity extends ActionBarActivity implements TaskListener {
         overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
 
-    public void changeTask(final View v) {
+    public void showFullTask(final View v) {
 
+        TaskDialog dialog = new TaskDialog("", "", "", null);
 
-        }
+        dialog.show(getSupportFragmentManager(), "");
+    }
     }
 

@@ -51,7 +51,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
     }
 
     public int getItemCount() {
-        return 10;
+        return 4;
     }
 
     public void moveItemToEndOfList(int position) {
@@ -72,7 +72,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>  {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.changeTask(itemView);
+                    listener.showFullTask(itemView);
                 }
             });
         }

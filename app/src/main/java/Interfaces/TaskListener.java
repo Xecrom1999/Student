@@ -7,5 +7,5 @@ import android.view.View;
  */
 public interface TaskListener {
 
-    void changeTask(View v);
+    void showFullTask(View v);
 }
