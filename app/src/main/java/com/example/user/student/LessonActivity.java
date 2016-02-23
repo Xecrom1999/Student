@@ -217,4 +217,8 @@ public class LessonActivity extends Activity implements View.OnClickListener, Co
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+    public void deleteInput(View view) {
+        name_input.setText("");
+    }
 }

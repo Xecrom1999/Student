@@ -4,37 +4,58 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#C5CAE9">
+                android:background="#E8EAF6">
 
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/name_input"
-        android:hint="Class Name"
-        android:textColorHint="#9E9E9E"
-        android:textSize="40dp"
-        android:textColor="@android:color/widget_edittext_dark"
-        android:layout_marginTop="47dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/lessonsList_button"
-        android:inputType="textCapWords"
-        />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_input"
+            android:hint="Class Name"
+            android:textColorHint="#9E9E9E"
+            android:textSize="40dp"
+            android:textColor="@android:color/widget_edittext_dark"
+            android:layout_marginTop="47dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/lessonsList_button"
+            android:inputType="textCapWords"
+            android:singleLine="true"
+            />
+
+        <ImageButton
+            android:id="@+id/clear_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/ripple_effect"
+            android:src="@drawable/ic_clear_white_48dp"
+            android:layout_marginTop="70dp"
+            android:layout_alignParentEnd="true"
+            android:onClick="deleteInput"
+           />
+    </RelativeLayout>
+
+
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="310dp"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_below="@id/name_input"
+            android:layout_marginTop="114dp"
             android:id="@+id/classesRecyclerView"
             android:onClick="recyclerClicked">
 
         </android.support.v7.widget.RecyclerView>
 
         <Button
-            android:background="@drawable/class_name_drawable"
+            android:background="@drawable/add_lesson"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_below="@id/name_input"
+            android:layout_alignTop="@id/classesRecyclerView"
             android:layout_toRightOf="@id/classesRecyclerView"
             android:text="+"
             android:textSize="25dp"
@@ -49,7 +70,6 @@
         android:id="@+id/textView5"
         android:textSize="30dp"
         android:textColor="#757575"
-
         android:layout_marginEnd="50dp"
         android:layout_alignTop="@+id/setTime_text"
         android:layout_toStartOf="@+id/setTime_text"/>
@@ -71,7 +91,7 @@
         android:layout_below="@+id/setTime_text"
         android:layout_alignEnd="@+id/setTime_text"
         android:layout_marginTop="26dp"
-        android:solidColor="#C5CAE9"/>
+        android:solidColor="@android:color/transparent"/>
 
     <TextView
         android:textColor="#757575"
@@ -89,8 +109,6 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         >
-
-
 
             <ImageButton
                 android:layout_width="0dp"

@@ -41,9 +41,11 @@
             android:id="@+id/calendar_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@mipmap/ic_list3"
+            android:src="@mipmap/ic_calendar3"
             android:layout_below="@+id/list_img"
-            android:layout_toStartOf="@+id/list_img"/>
+            android:layout_toStartOf="@+id/list_img"
+            android:background="@drawable/main_buttons"
+            />
 
         <TextView
             android:textStyle="italic"
@@ -64,6 +66,7 @@
             android:src="@mipmap/ic_schedule2"
             android:layout_above="@+id/list_img"
             android:layout_toEndOf="@+id/textView2"
+            android:background="@drawable/main_buttons"
             />
 
         <TextView
@@ -84,7 +87,9 @@
             android:src="@mipmap/ic_list3"
             android:id="@+id/list_img"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/main_buttons"
+            />
 
         <TextView
             android:textStyle="italic"
