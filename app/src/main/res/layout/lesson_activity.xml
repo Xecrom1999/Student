@@ -4,7 +4,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#E8EAF6">
+                android:background="#E8EAF6"
+    android:layoutDirection="ltr"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"

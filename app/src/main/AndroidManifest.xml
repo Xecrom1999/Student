@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.user.student"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.user.student">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_list3"
-        android:label="ForStudents"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label=""
+            android:label="ForStudent"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ScheduleActivity"
-            android:label=""
+            android:label="Schedule"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             >
@@ -33,12 +37,15 @@
             >
         </activity>
         <activity
-            android:name=".ListActivity"
-            android:label="@string/title_activity_list"
-            android:theme="@style/AppTheme">
-        </activity>
-        <activity android:name=".WeekViewActivity">
-        </activity>
+            android:name=".NotesActivity"
+            android:label="Notes"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".WeekViewActivity" />
+        <activity
+            android:name=".NewNoteActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

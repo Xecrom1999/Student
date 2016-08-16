@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by user on 17/01/16.
  */
-public class DataBaseHelper extends SQLiteOpenHelper {
+public class ScheduleDB extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Schedule.db";
 
@@ -28,7 +28,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     Context ctx;
 
-    public DataBaseHelper(Context context) {
+    public ScheduleDB(Context context) {
         super(context, DATABASE_NAME, null, 13);
         this.ctx = context;
     }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">הגדרות</string>
+    <string name="add_lesson_text">לא הוספו שיעורים.\nגע בכדי להוסיף.</string>
+
+    <string-array name="daysOfWeek">
+
+        <item>ראשון</item>
+        <item>שני</item>
+        <item>שלישי</item>
+        <item>רביעי</item>
+        <item>חמישי</item>
+        <item>שישי</item>
+        <item>שבת</item>
+
+    </string-array>
+</resources>

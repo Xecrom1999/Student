@@ -17,13 +17,13 @@ public class WeekViewActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     RecyclerView weekGrid;
-    DataBaseHelper dataBase;
+    ScheduleDB dataBase;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.week_view_schedule);
 
-        dataBase = new DataBaseHelper(this);
+        dataBase = new ScheduleDB(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolBar3);
         setSupportActionBar(toolbar);

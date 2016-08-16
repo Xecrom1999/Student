@@ -39,7 +39,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
     DayFragment[] daysFragments;
     FloatingActionButton fab;
     Toolbar toolbar;
-    DataBaseHelper dataBase;
+    ScheduleDB dataBase;
     int position;
     int itemPosition;
     ArrayList<Integer> list;
@@ -62,7 +62,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
 
         position = 0;
 
-        dataBase = new DataBaseHelper(this);
+        dataBase = new ScheduleDB(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolBar2);
         toolbar.setTitle("Schedule");
@@ -268,24 +268,25 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
     public int getPosition() {
         return this.position;
     }
+
+    class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        DayFragment[] fragments;
+
+        public ViewPagerAdapter(FragmentManager fm, DayFragment[] daysFragments) {
+            super(fm);
+
+            this.fragments = daysFragments;
+        }
+
+        public android.support.v4.app.Fragment getItem(int position) {
+
+            return this.fragments[position];
+        }
+
+        public int getCount() {
+            return fragments.length;
+        }
+    }
 }
 
-class ViewPagerAdapter extends FragmentStatePagerAdapter {
-
-    DayFragment[] fragments;
-
-    public ViewPagerAdapter(FragmentManager fm, DayFragment[] daysFragments) {
-        super(fm);
-
-        this.fragments = daysFragments;
-    }
-
-    public android.support.v4.app.Fragment getItem(int position) {
-
-        return this.fragments[position];
-    }
-
-    public int getCount() {
-        return fragments.length;
-    }
-}

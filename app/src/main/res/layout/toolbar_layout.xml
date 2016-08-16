@@ -10,6 +10,7 @@
            android:fitsSystemWindows="true"
            app:title="Title"
            app:titleTextColor="@android:color/white"
+    android:layoutDirection="ltr"
     >
 
 </android.support.v7.widget.Toolbar>

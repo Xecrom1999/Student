@@ -5,7 +5,8 @@
     android:paddingLeft="35dp"
     android:paddingRight="35dp"
     android:paddingTop="4dp"
->
+    android:layoutDirection="ltr"
+    >
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No lessons added yet.\nTouch to add a name. "
+        android:text="@string/add_lesson_text"
         android:textSize="25dp"
         android:layout_centerInParent="true"
         android:id="@+id/addLesson_text"

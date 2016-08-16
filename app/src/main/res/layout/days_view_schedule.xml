@@ -6,7 +6,9 @@
                 tools:context="Fragments.ScheduleFragment"
                 android:background="#5C6BC0"
                 android:orientation="vertical"
-                android:id="@+id/theLayout">
+                android:id="@+id/theLayout"
+    android:layoutDirection="ltr"
+    >
 
     <it.neokree.materialtabs.MaterialTabHost
         android:id="@+id/materialTabHost"
