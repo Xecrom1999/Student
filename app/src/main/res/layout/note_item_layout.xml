@@ -3,7 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="105dp"
-    android:layout_height="130dp"
+    android:layout_height="135dp"
     android:orientation="vertical"
     android:background="@drawable/note_img"
     android:paddingTop="10dp"
@@ -12,42 +12,41 @@
     >
 
         <TextView
-            android:text="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
+            android:text=""
             android:layout_width="105dp"
-            android:layout_height="60dp"
+            android:layout_height="65dp"
             android:textSize="13sp"
             android:textColor="@android:color/primary_text_light"
             android:id="@+id/note_title"
             android:typeface="serif"
             android:gravity="center"
             android:maxLines="3"
-            android:padding="2dp"
+            android:paddingTop="10dp"
             />
 
         <TextView
-            android:text="17/07/99"
+            android:text=""
             android:layout_width="105dp"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textStyle="italic"
             android:textColor="?android:colorPrimary"
             android:id="@+id/note_date"
             android:gravity="center"
             android:maxLines="1"
+            android:maxLength="8"
             />
 
     <TextView
-        android:text="Wednesday"
+        android:text=""
         android:layout_width="105dp"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textStyle="italic"
         android:textColor="?android:colorPrimary"
-        android:id="@+id/note_day"
-        android:gravity="top|center_horizontal"
-        android:paddingBottom="20dp"
+        android:id="@+id/note_time"
+        android:gravity="center_horizontal"
         android:maxLines="1"
         />
-
 
     </LinearLayout>

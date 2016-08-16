@@ -23,7 +23,7 @@ public class ErrorToast extends Toast {
 
         textView.setText(text);
 
-        setGravity(Gravity.CENTER|Gravity.RIGHT, 0, -200);
+        setGravity(Gravity.CENTER, 0, 0);
 
         this.setView(view);
 

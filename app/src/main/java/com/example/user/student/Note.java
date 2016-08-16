@@ -13,15 +13,16 @@ public class Note {
     private String description;
     private String xPos;
     private String yPos;
-    private ArrayList<ImageView> imagesList;
     private String date;
+    private String time;
 
-    public Note(String title, String description, String xPos, String yPos, String date) {
+    public Note(String title, String description, String xPos, String yPos, String date, String time) {
         this.title = title;
         this.description = description;
         this.xPos = xPos;
         this.yPos = yPos;
         this.date = date;
+        this.time = time;
     }
 
     public String getTitle() {
@@ -38,14 +39,6 @@ public class Note {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public ArrayList<ImageView> getImagesList() {
-        return imagesList;
-    }
-
-    public void setImagesList(ArrayList<ImageView> imagesList) {
-        this.imagesList = imagesList;
     }
 
     public String getDate() {
@@ -71,5 +64,13 @@ public class Note {
 
     public void setyPos(String yPos) {
         this.yPos = yPos;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

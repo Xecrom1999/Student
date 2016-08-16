@@ -55,17 +55,17 @@ public class NotesActivity extends ActionBarActivity {
         Cursor res = dataBase.getAllData();
 
         while (res.moveToNext()) {
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
         }
-
     }
 
-    private void addNote(String id, String title, String description, String xPos, String yPos, String date) {
+    private void addNote(String id, String title, String description, String xPos, String yPos, String date, String time) {
 
         final View note = getLayoutInflater().inflate(R.layout.note_item_layout, null, false);
 
         TextView title_text = (TextView) note.findViewById(R.id.note_title);
         TextView date_text = (TextView) note.findViewById(R.id.note_date);
+        TextView time_text = (TextView) note.findViewById(R.id.note_time);
 
         note.setOnTouchListener(new NoteListener());
 
@@ -76,6 +76,7 @@ public class NotesActivity extends ActionBarActivity {
 
         title_text.setText(title);
         date_text.setText(date);
+        time_text.setText(time);
 
         note.setTag(id);
 
@@ -169,7 +170,7 @@ public class NotesActivity extends ActionBarActivity {
 
                     notesPack.setImageResource(R.drawable.garbage_can);
 
-                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta), "");
+                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta), "", "");
 
                     id = v.getTag().toString();
                     break;
@@ -238,14 +239,17 @@ public class NotesActivity extends ActionBarActivity {
             String title = data.getStringExtra("title");
             String description = data.getStringExtra("description");
             String date = data.getStringExtra("date");
+            String time = data.getStringExtra("time");
 
             TextView title_text = (TextView) chosen.findViewById(R.id.note_title);
             TextView date_text = (TextView) chosen.findViewById(R.id.note_date);
+            TextView time_text = (TextView) chosen.findViewById(R.id.note_time);
 
-            dataBase.updateData(chosen.getTag().toString(),title, description, date);
+            dataBase.updateData(chosen.getTag().toString(),title, description, date, time);
 
             title_text.setText(title);
             date_text.setText(date);
+            time_text.setText(time);
         }
     }
 
@@ -254,7 +258,7 @@ public class NotesActivity extends ActionBarActivity {
         Note note = null;
         while (res.moveToNext())
             if (res.getString(0).equals(id))  {
-               note = new Note(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5));
+               note = new Note(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
                 break;
             }
         return note;
