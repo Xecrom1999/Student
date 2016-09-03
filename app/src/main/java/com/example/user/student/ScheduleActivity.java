@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import Database.ScheduleDB;
 import Fragments.DayFragment;
 import Interfaces.Communicator;
 import Interfaces.LessonsListener;
@@ -51,12 +52,10 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_activity);
 
-        daysView = (RelativeLayout) findViewById(R.id.days_view_schedule);
+        //daysView = (RelativeLayout) findViewById(R.id.days_view_schedule);
 
         sharedPreferences = getSharedPreferences("myData", Context.MODE_PRIVATE);
         isDaysView = sharedPreferences.getBoolean("isDaysView", true);
-
-        changeView();
 
         list = new ArrayList<>();
 
@@ -64,7 +63,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
 
         dataBase = new ScheduleDB(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolBar2);
+        toolbar = (Toolbar) findViewById(R.id.schedule_bar);
         toolbar.setTitle("Schedule");
         setSupportActionBar(toolbar);
 
@@ -150,7 +149,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
     }
 
     public void newLesson(Lesson lesson) {
-        Intent intent = new Intent(this, LessonActivity.class);
+        Intent intent = new Intent(this, NewLessonActivity.class);
 
         if (!lesson.getName().equals("")) {
             intent.putExtra("isNew", false);
@@ -163,6 +162,7 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
 }
+
     public ArrayList<Lesson> getList(int p) {
         ArrayList<Lesson> list = new ArrayList<>();
 
@@ -205,18 +205,6 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
         }
 
         return false;
-    }
-
-    private void changeView() {
-
-        if (isDaysView) {
-            //daysView.setVisibility(View.VISIBLE);
-            //weekView.setVisibility(View.GONE);
-        }
-        else {
-            //daysView.setVisibility(View.GONE);
-            //weekView.setVisibility(View.VISIBLE);
-        }
     }
 
     private void saveChoice() {

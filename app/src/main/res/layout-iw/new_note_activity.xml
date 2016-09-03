@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/new_note"
+    android:layoutDirection="rtl"
     android:id="@+id/rootLayout"
     tools:context=".NewNoteActivity">
 
@@ -14,7 +15,8 @@
         android:orientation="vertical"
         android:layout_below="@+id/note_item"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:id="@+id/linearLayout">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -41,21 +43,21 @@
             android:layout_height="wrap_content"
             >
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:id="@+id/description_edit"
-                android:hint="@string/description_hint_string"
-                android:layout_marginTop="15dp"
-                android:layout_alignParentStart="true"
-                android:background="@android:color/transparent"
-                android:gravity="top"
-                android:inputType="textCapSentences"
-                android:textColor="@android:color/secondary_text_light"
-                android:imeOptions="actionNext"
-                android:layout_below="@+id/title_edit"
-                android:paddingStart="16dp"
-                />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/description_edit"
+            android:hint="@string/description_hint_string"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/transparent"
+            android:gravity="top"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences"
+            android:textColor="@android:color/secondary_text_light"
+            android:layout_below="@+id/title_edit"
+            android:paddingStart="16dp"
+            />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -69,28 +71,26 @@
             >
 
             <TextView
-                android:paddingStart="16dp"
+                android:text="@string/date_hint_string"
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
-                android:hint="@string/date_hint_string"
                 android:layout_alignParentStart="true"
                 android:background="@android:color/transparent"
-                android:inputType="date"
                 android:id="@+id/date_edit"
-                android:maxLength="8"
                 android:textColor="@android:color/secondary_text_light"
-                android:imeOptions="actionDone"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
                 />
-
 
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:id="@+id/time_text"
-                android:textSize="18sp"
                 android:gravity="start|center_vertical"
                 android:textColor="?android:colorPrimary"
                 android:textStyle="italic|bold"
+                android:textSize="18sp"
                 />
 
             <ImageView
@@ -98,13 +98,11 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/calendar_img3"
-                android:background="?attr/selectableItemBackground"
                 android:layout_marginStart="20dp"/>
 
         </LinearLayout>
 
     </LinearLayout>
-
 
     <include
         android:layout_width="105dp"
@@ -127,6 +125,6 @@
         android:layout_margin="16dp"
         android:inputType="text"
         android:onClick="finishNote"
-        />
+        android:id="@+id/imageButton" />
 
 </RelativeLayout>

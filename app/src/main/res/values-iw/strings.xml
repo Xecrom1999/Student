@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">לתלמיד</string>
-    <string name="label">לתלמיד</string>
-    <string name="action_settings">הגדרות</string>
-    <string name="add_lesson_text">לא הוספו שיעורים.\nגע בכדי להוסיף.</string>
+    <string name="add_lesson_text">לא הוספו שיעורים.\nגע בכדי להוסיף</string>
+    <string name="month_string">בעוד חודש</string>
+    <string name="months_string">חודשים</string>
     <string name="today_string">היום</string>
+    <string name="week_string">בעוד שבוע</string>
+    <string name="weeks_string">שבועות</string>
+    <string name="year_string">בעוד שנה</string>
+    <string name="title_hint_string">כותרת</string>
+    <string name="description_hint_string">תיאור</string>
+    <string name="date_hint_string">תאריך</string>
+    <string name="event_title_string">אירוע</string>
+    <string name="passed_string">עבר</string>
+    <string name="tomorrow_string">מחר</string>
+    <string name="no_events_string">אין אירועים</string>
+    <string name="save_string">שמור</string>
+    <string name="reminder_string">תזכורת</string>
+    <string name="new_event_string">אירוע חדש</string>
+    <string name="calendar_string">לוח שנה</string>
+    <string name="starts_at_string">מתחיל ב:</string>
+    <string name="class_length_string">אורך השיעור:</string>
+    <string name="class_string">שיעור</string>
+
+    <string-array
+        name="days_names">
+        <item>ראשון</item>
+        <item>שני</item>
+        <item>שלישי</item>
+        <item>רביעי</item>
+        <item>חמישי</item>
+        <item>שישי</item>
+        <item>שבת</item>
+    </string-array>
 </resources>

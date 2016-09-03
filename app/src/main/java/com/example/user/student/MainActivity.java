@@ -51,10 +51,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
             switch (v.getId()) {
                 case R.id.calendar_img:
-                    //startActivity(new Intent(this, testActivity.class));
+                    startActivity(new Intent(this, CalendarActivity.class));
+                    overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
                     break;
                 case R.id.schedule_img:
-                    startActivity(new Intent(this, ScheduleActivity.class));
+                    startActivity(new Intent(this, ScheduleActivity2.class));
                     overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                     break;
                 case R.id.list_img:

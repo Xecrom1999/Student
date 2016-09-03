@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".CalendarActivity">
+
+   <include
+      layout="@layout/toolbar_layout"
+       android:id="@+id/calendar_bar"
+      />
+
+   <android.support.v4.view.ViewPager
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/calendar_bar"
+       android:id="@+id/calendar_pager">
+   </android.support.v4.view.ViewPager>
+
+   <android.support.design.widget.FloatingActionButton
+       android:id="@+id/calendar_fab"
+       android:layout_width="64dp"
+       android:layout_height="64dp"
+       android:src="@mipmap/ic_add"
+       app:backgroundTint="@color/fab_color"
+       app:borderWidth="0dp"
+       app:rippleColor="@android:color/white"
+       android:layout_margin="@dimen/fab_margin"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentEnd="true"
+       />
+
+</RelativeLayout>

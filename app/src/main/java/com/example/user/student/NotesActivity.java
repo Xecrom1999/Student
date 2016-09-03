@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -13,6 +14,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import Database.NotesDB;
 
 public class NotesActivity extends ActionBarActivity {
 
@@ -35,7 +43,7 @@ public class NotesActivity extends ActionBarActivity {
 
         notesPack = (ImageButton) findViewById(R.id.notes_img);
 
-        toolbar = (Toolbar) findViewById(R.id.toolBar2);
+        toolbar = (Toolbar) findViewById(R.id.schedule_bar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,11 +58,58 @@ public class NotesActivity extends ActionBarActivity {
         addNote();
     }
 
+    private String getTime(String dateString) {
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+
+        Date date;
+
+        String timeToDate;
+
+        Calendar cal = Calendar.getInstance();
+
+        try {
+            date = format.parse(dateString);
+
+            cal.setTime(date);
+            cal.add(Calendar.DATE, -1);
+
+            int diff = (int)((date.getTime() - System.currentTimeMillis()) / (24 * 60 * 60 * 1000) + 1);
+
+            if (diff > 365) timeToDate = getString(R.string.year_string);
+
+            else if (diff > 29) {
+                diff /= 30;
+                if (diff == 1) timeToDate = getString(R.string.month_string);
+                else timeToDate =  "  " + diff + "  " + getString(R.string.months_string);
+            }
+
+            else if (diff > 6) {
+                diff /= 7;
+                if (diff == 1) timeToDate = getString(R.string.week_string);
+                else timeToDate = "  " + diff + "  " + getString(R.string.weeks_string);
+            }
+
+            else if (DateUtils.isToday(cal.getTime().getTime())) timeToDate = getString(R.string.tomorrow_string);
+
+            else if (DateUtils.isToday(date.getTime())) timeToDate = getString(R.string.today_string);
+
+            else timeToDate = sdf.format(date);
+        } catch (ParseException e) {
+            timeToDate = getString(R.string.passed_string);
+        }
+    return timeToDate;
+    }
+
+
     private void showNotes() {
 
         Cursor res = dataBase.getAllData();
 
         while (res.moveToNext()) {
+            dataBase.updateData(res.getString(0), getTime(res.getString(5)));
             addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
         }
     }
@@ -85,6 +140,8 @@ public class NotesActivity extends ActionBarActivity {
         isNew = false;
     }
 
+
+
     private void addNote() {
         final View note = getLayoutInflater().inflate(R.layout.note_item_layout, null, false);
 
@@ -102,6 +159,12 @@ public class NotesActivity extends ActionBarActivity {
         theLayout.addView(note, params);
 
         isNew = false;
+    }
+
+    private void addNote(String id) {
+        Cursor res = dataBase.getRowById(id);
+        while (res.moveToNext())
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -182,7 +245,6 @@ public class NotesActivity extends ActionBarActivity {
 
                         if (inGarbageRange(x, y))
                             theLayout.removeView(v);
-
                         else {
                             note.setxPos(String.valueOf(x - _xDelta));
                             note.setyPos(String.valueOf(y - _yDelta));
@@ -193,13 +255,14 @@ public class NotesActivity extends ActionBarActivity {
                         }
                     }
                     else if (inGarbageRange(x, y)) {
-                        theLayout.removeView(v);
                         dataBase.deleteData(id);
+                        theLayout.removeView(v);
+                        addNote(id);
                     } else if (Math.abs((int) event.getRawX() - fx)  < 4 && Math.abs((int) event.getRawY() - fy)  < 4) {
                         noteClicked(v);
                     } else dataBase.updateData(id, String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
 
-                    notesPack.setImageResource(R.drawable.pack_of_notes);
+                    notesPack.setImageResource(R.drawable.new_note);
                     break;
 
                 case MotionEvent.ACTION_MOVE:
@@ -224,6 +287,7 @@ public class NotesActivity extends ActionBarActivity {
             return (x < 430 && y > 1360);
         }
     }
+
     public float convertDpToPixel(float dp){
         Resources resources = getApplicationContext().getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
