@@ -33,9 +33,9 @@ public class Lesson {
         this.length = length;
     }
 
-    public Lesson(String lesson, String timeFrom, String length) {
+    public Lesson(String lesson, String time, String length) {
         this.name = lesson;
-        this.time = timeFrom;
+        this.time = time;
         this.length = length;
     }
 

@@ -7,14 +7,14 @@
     tools:context=".NotesActivity"
     android:orientation="vertical"
     android:background="@color/background_color"
-    android:id="@+id/theLayout"
-    android:layoutDirection="ltr">
+    android:layoutDirection="ltr"
+    android:id="@+id/theLayout">
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/toolbar_layout"
-        android:id="@+id/schedule_bar"
+        android:id="@+id/notes_bar"
         />
 
     <ImageButton

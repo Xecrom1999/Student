@@ -1,6 +1,7 @@
 package com.example.user.student;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -43,12 +44,17 @@ public class NotesActivity extends ActionBarActivity {
 
         notesPack = (ImageButton) findViewById(R.id.notes_img);
 
-        toolbar = (Toolbar) findViewById(R.id.schedule_bar);
+        toolbar = (Toolbar) findViewById(R.id.notes_bar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button3);
-        toolbar.setTitle("To Do List");
+        Configuration config = getResources().getConfiguration();
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            toolbar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
+        }
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setTitle(getString(R.string.my_notes_string));
 
         width = (int) convertDpToPixel(105);
         height = (int) convertDpToPixel(125);
@@ -59,6 +65,8 @@ public class NotesActivity extends ActionBarActivity {
     }
 
     private String getTime(String dateString) {
+
+        if (dateString.equals("")) return "";
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
 

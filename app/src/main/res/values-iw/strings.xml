@@ -21,6 +21,17 @@
     <string name="starts_at_string">מתחיל ב:</string>
     <string name="class_length_string">אורך השיעור:</string>
     <string name="class_string">שיעור</string>
+    <string name="minutes_string">דקות</string>
+    <string name="schedule_string">מערכת שעות</string>
+    <string name="new_note_string">פתק חדש</string>
+    <string name="my_notes_string">הפתקים שלי</string>
+    <string name="menu_string">תפריט ראשי</string>
+    <string name="delete_day_string">מחק יום</string>
+    <string name="delete_all_string">מחק הכל</string>
+    <string name="delete_string">מחק</string>
+    <string name="cancel_string">ביטול</string>
+    <string name="week_view_string">תצוגה שבועית</string>
+    <string name="days_view">תצוגה יומית</string>
 
     <string-array
         name="days_names">
@@ -30,6 +41,5 @@
         <item>רביעי</item>
         <item>חמישי</item>
         <item>שישי</item>
-        <item>שבת</item>
     </string-array>
 </resources>

@@ -4,13 +4,17 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
@@ -38,6 +42,8 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     DatePickerDialog datePicker;
     final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
     InputMethodManager imm;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +93,16 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     }
 
     private void initializeViews() {
+
+        toolbar = (Toolbar) findViewById(R.id.new_note_bar);
+        setSupportActionBar(toolbar);
+
+        Configuration config = getResources().getConfiguration();
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setTitle(getString(R.string.new_note_string));
+
         time_edit = (TextView) findViewById(R.id.time_text);
 
         note_item = findViewById(R.id.note_item);
@@ -100,13 +116,30 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.new_note_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.done_id) finishNote();
+
+        if (id == android.R.id.home) onBackPressed();
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
     }
 
-    public void finishNote(View view) {
+    public void finishNote() {
 
         if (!isDateValid()) {
             new ErrorToast(this, "Date is not valid");

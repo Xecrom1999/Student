@@ -1,6 +1,7 @@
 package com.example.user.student;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,18 +13,17 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
-    Toolbar theToolBar;
+    Toolbar toolbar;
     ImageView calender_img;
     ImageView schedule_img;
     ImageView list_img;
+    Configuration config;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        theToolBar = (Toolbar) findViewById(R.id.toolBar);
-        theToolBar.setTitle("Menu");
-        setSupportActionBar(theToolBar);
+        setupToolbar();
 
         calender_img = (ImageView) findViewById(R.id.calendar_img);
         calender_img.setOnClickListener(this);
@@ -35,9 +35,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         list_img.setOnClickListener(this);
 }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
+    private void setupToolbar() {
+        config = getResources().getConfiguration();
+        toolbar = (Toolbar) findViewById(R.id.main_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.menu_string);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
                     break;
                 case R.id.schedule_img:
-                    startActivity(new Intent(this, ScheduleActivity2.class));
+                    startActivity(new Intent(this, ScheduleActivity.class));
                     overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                     break;
                 case R.id.list_img:

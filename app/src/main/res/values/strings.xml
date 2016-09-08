@@ -21,6 +21,17 @@
     <string name="starts_at_string">starts at:</string>
     <string name="class_length_string">class length (min)</string>
     <string name="class_string">Class</string>
+    <string name="minutes_string">minutes</string>
+    <string name="schedule_string">Schedule</string>
+    <string name="new_note_string">New note</string>
+    <string name="my_notes_string">My notes</string>
+    <string name="menu_string">Main menu</string>
+    <string name="delete_day_string">Delete day</string>
+    <string name="delete_all_string">Delete all</string>
+    <string name="delete_string">Delete</string>
+    <string name="cancel_string">Cancel</string>
+    <string name="week_view_string">Week view</string>
+    <string name="days_view">Days view</string>
 
     <string-array
         name="days_names">
@@ -30,6 +41,5 @@
         <item>Wednesday</item>
         <item>Thursday</item>
         <item>Friday</item>
-        <item>Saturday</item>
     </string-array>
 </resources>

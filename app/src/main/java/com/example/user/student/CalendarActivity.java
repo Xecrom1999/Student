@@ -1,6 +1,7 @@
 package com.example.user.student;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -46,7 +47,12 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         toolbar = (Toolbar) findViewById(R.id.calendar_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button3);
+
+        Configuration config = getResources().getConfiguration();
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+
         getSupportActionBar().setTitle("Calendar");
 
         pager = (ViewPager) findViewById(R.id.calendar_pager);
@@ -117,5 +123,12 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
     }
 }

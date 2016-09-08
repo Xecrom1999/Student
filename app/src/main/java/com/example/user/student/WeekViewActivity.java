@@ -1,13 +1,18 @@
 package com.example.user.student;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import Database.ScheduleDB;
 
@@ -20,23 +25,34 @@ public class WeekViewActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView weekGrid;
     ScheduleDB dataBase;
+    Configuration config;
+    final int DAYS_NUM = 6;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.week_view_schedule);
 
+        setupToolbar();
+
         dataBase = new ScheduleDB(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolBar3);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Week View Schedule");
-
         weekGrid = (RecyclerView) findViewById(R.id.gridRecyclerView);
-        weekGrid.setLayoutManager(new GridLayoutManager(this, 7));
-        ArrayList <Lesson>[] lessons = new ArrayList[7];
+        weekGrid.setLayoutManager(new GridLayoutManager(this, DAYS_NUM));
+        ArrayList <Lesson>[] lessons = new ArrayList[DAYS_NUM];
         for (int i = 0; i < lessons.length; i++) lessons[i] = getList(i);
         weekGrid.setAdapter(new WeekAdapter(this, lessons));
         weekGrid.setHasFixedSize(true);
+    }
+
+    private void setupToolbar() {
+        config = getResources().getConfiguration();
+        toolbar = (Toolbar) findViewById(R.id.week_view_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setTitle(R.string.schedule_string);
     }
 
     public ArrayList<Lesson> getList(int p) {
@@ -62,7 +78,7 @@ public class WeekViewActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.schedule_menu, menu);
+        getMenuInflater().inflate(R.menu.week_view_menu, menu);
         return true;
     }
 
@@ -75,12 +91,11 @@ public class WeekViewActivity extends AppCompatActivity {
             return true;
         }
 
-        if (id == R.id.changeView) {
-
-           finish();
+        else if (id == R.id.view_id2) {
+            finish();
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 
-        return false;
+        return true;
     }
 }

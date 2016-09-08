@@ -16,37 +16,42 @@
         android:id="@+id/schedule_bar"
         />
 
-   <android.support.v4.view.ViewPager
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/schedule_pager"
-       android:layout_below="@id/schedule_bar">
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/schedule_bar"
+        android:background="@color/primary_color"
+        app:tabTextColor="#004D40"
+        app:tabIndicatorColor="#00695C"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="scrollable"
+        android:layoutDirection="ltr"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        />
 
-
-       <android.support.v4.view.PagerTitleStrip
-           android:id="@+id/pager_title_strip"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_gravity="top"
-           android:background="#33b5e5"
-           android:textColor="#fff"
-           android:paddingTop="4dp"
-           android:paddingBottom="4dp" />
-   </android.support.v4.view.ViewPager>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/schedule_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_below="@id/tabs"
+            />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton3"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@mipmap/ic_add"
-        app:backgroundTint="#4CAF50"
+        app:backgroundTint="#43A047"
         app:borderWidth="0dp"
         app:rippleColor="@android:color/white"
         android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         app:elevation="4dp"
-        android:onClick="newLesson"
-        ></android.support.design.widget.FloatingActionButton>
+        android:onClick="addNewLesson"
+        />
 
 </RelativeLayout>

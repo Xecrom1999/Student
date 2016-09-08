@@ -4,112 +4,14 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#5C6BC0"
-    android:layoutDirection="ltr"
+    android:background="#FAFAFA"
     >
 
 
     <include
         layout="@layout/toolbar_layout"
-        android:id="@+id/toolBar3"
+        android:id="@+id/week_view_bar"
     />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:background="#1A237E"
-            android:textStyle="bold"
-            android:layout_width="51dp"
-            android:layout_height="55dp"
-            android:textSize="18dp"
-            android:text="Sun"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginRight="1dp"
-            android:layout_marginBottom="1dp"
-            />
-
-        <TextView
-            android:background="#1A237E"
-            android:textStyle="bold"
-            android:layout_width="51dp"
-            android:layout_height="55dp"
-            android:textSize="18dp"
-            android:text="Mon"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginRight="1dp"
-            android:layout_marginBottom="1dp"
-            />
-
-        <TextView
-            android:background="#1A237E"
-            android:textStyle="bold"
-            android:layout_width="51dp"
-            android:layout_height="55dp"
-            android:textSize="18dp"
-            android:text="Tue"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginRight="1dp"
-            android:layout_marginBottom="1dp"
-            />
-
-        <TextView
-            android:background="#1A237E"
-            android:textStyle="bold"
-            android:layout_width="51dp"
-            android:layout_height="55dp"
-            android:textSize="18dp"
-            android:text="Wed"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginRight="1dp"
-            android:layout_marginBottom="1dp"
-            />
-
-        <TextView
-            android:background="#1A237E"
-            android:textStyle="bold"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
-            android:textSize="18dp"
-            android:text="Thu"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginRight="1dp"
-            android:layout_marginBottom="1dp"
-            />
-
-        <TextView
-            android:background="#1A237E"
-            android:textStyle="bold"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
-            android:textSize="18dp"
-            android:text="Fri"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginRight="1dp"
-            android:layout_marginBottom="1dp"
-            />
-
-        <TextView
-            android:background="#1A237E"
-            android:textStyle="bold"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
-            android:textSize="18dp"
-            android:text="Sat"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginBottom="1dp"
-            />
-
-    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

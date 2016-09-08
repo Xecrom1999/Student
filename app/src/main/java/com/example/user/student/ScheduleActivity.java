@@ -1,181 +1,151 @@
 package com.example.user.student;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import Database.ScheduleDB;
 import Fragments.DayFragment;
-import Interfaces.Communicator;
-import Interfaces.LessonsListener;
-import it.neokree.materialtabs.MaterialTab;
-import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
+import Interfaces.EditModeListener;
 
+/**
+ * Created by gamrian on 03/09/2016.
+ */
+public class ScheduleActivity extends AppCompatActivity implements EditModeListener {
 
-public class ScheduleActivity extends ActionBarActivity implements MaterialTabListener, View.OnClickListener, Communicator, LessonsListener {
-
-    String[] daysNames;
-    FragmentManager fm;
-    MaterialTabHost tabHost;
-    ViewPager pager;
+    PagerAdapter adapter;
+    static ViewPager viewPager;
     DayFragment[] daysFragments;
-    FloatingActionButton fab;
-    Toolbar toolbar;
     ScheduleDB dataBase;
-    int position;
-    int itemPosition;
-    ArrayList<Integer> list;
-    SharedPreferences sharedPreferences;
-    boolean isDaysView;
-    RelativeLayout daysView;
+    TabLayout tabLayout;
+    Toolbar toolbar;
+    boolean rtl;
+    Configuration config;
+    final int DAYS_NUM = 6;
+    boolean editMode;
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_activity);
 
-        //daysView = (RelativeLayout) findViewById(R.id.days_view_schedule);
+        editMode = false;
 
-        sharedPreferences = getSharedPreferences("myData", Context.MODE_PRIVATE);
-        isDaysView = sharedPreferences.getBoolean("isDaysView", true);
-
-        list = new ArrayList<>();
-
-        position = 0;
+        setupToolbar();
 
         dataBase = new ScheduleDB(this);
 
+        adapter = new PagerAdapter(getSupportFragmentManager());
+
+        viewPager = (ViewPager) findViewById(R.id.schedule_pager);
+
+        daysFragments = new DayFragment[DAYS_NUM];
+        rtl = (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL);
+        if (rtl) for (int i = 0; i < DAYS_NUM; i++) daysFragments[i] = new DayFragment(i, dataBase, this);
+        else for (int i = 0; i < DAYS_NUM; i++) daysFragments[i] = new DayFragment(DAYS_NUM - 1 - i, dataBase, this);
+
+        viewPager.setAdapter(adapter);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        Calendar calendar = Calendar.getInstance();
+        if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+            viewPager.setCurrentItem(DAYS_NUM - (calendar.get(Calendar.DAY_OF_WEEK)));
+        else viewPager.setCurrentItem(calendar.get(Calendar.DAY_OF_WEEK) - 1);
+    }
+
+    private void setupToolbar() {
+        config = getResources().getConfiguration();
         toolbar = (Toolbar) findViewById(R.id.schedule_bar);
-        toolbar.setTitle("Schedule");
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button3);
-
-        fab = (FloatingActionButton) findViewById(R.id.floatingActionButton3);
-        fab.setOnClickListener(this);
-
-        fm = getSupportFragmentManager();
-
-        daysNames = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-
-        daysFragments = new DayFragment[7];
-        for (int i = 0; i < daysFragments.length; i++) daysFragments[i] = new DayFragment(i, this);
-
-        tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
-        pager = (ViewPager) findViewById(R.id.viewPager);
-
-        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm, daysFragments);
-        pager.setOffscreenPageLimit(0);
-        pager.setAdapter(pagerAdapter);
-
-        pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-
-            public void onPageSelected(int position) {
-                tabHost.setSelectedNavigationItem(position);
-                setPosition(position);
-            }
-        });
-
-        for (int i = 0; i < daysNames.length; i++) {
-            tabHost.addTab(tabHost.newTab().setText(daysNames[i]).setTabListener(this));
-        }
-
-        tabHost.setSelectedNavigationItem(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1);
-        pager.setCurrentItem(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1);
-
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setTitle(R.string.schedule_string);
     }
 
-    public void onTabSelected(MaterialTab tab) {
-        pager.setCurrentItem(tab.getPosition());
-        setPosition(tab.getPosition());
-    }
-
-    public void onTabReselected(MaterialTab tab) {
-    }
-
-    public void onTabUnselected(MaterialTab tab) {
-    }
-
-    public void onClick(View v) {
-        newLesson(new Lesson("", "", ""));
+    private int getPosition() {
+        return viewPager.getCurrentItem();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (data != null) {
-                boolean isNew = data.getBooleanExtra("isNew", false);
-
-                String name = data.getStringExtra("name");
-                String time = data.getStringExtra("time");
-                int length = data.getIntExtra("length", 45);
-                Lesson lesson = new Lesson(name, time, String.valueOf(length));
-
-                if (isNew) {
-                    dataBase.insertData(getPosition(), lesson);
-                    daysFragments[getPosition()].lessonDone(lesson);
-                }
-            else {
-                    dataBase.updateData(getPosition(), daysFragments[getPosition()].getAdapter().getItemAtPosition(itemPosition), lesson);
-                    daysFragments[getPosition()].updateLesson(itemPosition, lesson);
-                }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.view_id:
+                changeView();
+                break;
+            case R.id.delete_day_id:
+                userDialog(false);
+                break;
+            case R.id.delete_all_id:
+                userDialog(true);
+                break;
+            case R.id.edit_id:
+                toggleEditMode();
+                item.setIcon(editMode ? R.mipmap.ic_done : R.drawable.ic_edit);
+                break;
         }
+        return true;
     }
 
-    public void lessonDone(Lesson lesson) {
+    private void toggleEditMode() {
+        editMode = !editMode;
+
+        for (int i = 0; i < DAYS_NUM; i++) daysFragments[i].toggleEditMode();
     }
 
-    public void updateLesson(int position, Lesson lesson) {
-    }
+    private void userDialog(final boolean choice) {
+        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        if (!choice)
+                            daysFragments[getPosition()].deleteDay();
 
-    public void newLesson(Lesson lesson) {
-        Intent intent = new Intent(this, NewLessonActivity.class);
+                        else {
+                            for (int i = 0; i < DAYS_NUM; i++)
+                                try {
+                                    daysFragments[i].deleteDay();
+                                } catch (NullPointerException e) {
+                                }
+                        }
+                        break;
 
-        if (!lesson.getName().equals("")) {
-            intent.putExtra("isNew", false);
-            intent.putExtra("name", lesson.getName());
-            intent.putExtra("time", lesson.getTime());
-            intent.putExtra("length", lesson.getLength());
-            intent.putExtra("itemPosition", itemPosition);
-        }
-        else intent.putExtra("isNew", true);
-        startActivityForResult(intent, 1);
-        overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
-}
-
-    public ArrayList<Lesson> getList(int p) {
-        ArrayList<Lesson> list = new ArrayList<>();
-
-        Cursor res = dataBase.getData(p);
-
-            while (res.moveToNext()) {
-                String name = res.getString(1);
-                String time = res.getString(2);
-                String length = res.getString(3);
-                Lesson lesson = new Lesson(name, time, length);
-                list.add(lesson);
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
             }
-        return list;
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(choice ? R.string.delete_all_string : R.string.delete_day_string) + "?").setPositiveButton(getString(R.string.delete_string), dialogClickListener)
+                .setNegativeButton(getString(R.string.cancel_string), dialogClickListener).show();
+    }
+
+    private void changeView() {
+        Intent intent = new Intent(this, WeekViewActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -185,96 +155,53 @@ public class ScheduleActivity extends ActionBarActivity implements MaterialTabLi
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-
-        if (id == R.id.changeView) {
-
-            if (isDaysView) isDaysView = false;
-            else isDaysView = true;
-
-            startActivity(new Intent(this, WeekViewActivity.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            saveChoice();
-        }
-
-        return false;
-    }
-
-    private void saveChoice() {
-        SharedPreferences sp = getSharedPreferences("myData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean("isDaysView", isDaysView);
-        editor.commit();
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     public void onBackPressed() {
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
-}
-
-    public void showMenu(final int position, final Lesson lesson) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setItems(new String[]{"Edit", "Delete"}, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (which == 0) {
-                    newLesson(lesson);
-                    setCurrentItemPosition(position);
-                }
-
-                if (which == 1) {
-                    deleteLesson(position, lesson);
-                }
-            }
-        });
-        Dialog dialog = builder.create();
-        dialog.show();
     }
 
-    public void setCurrentItemPosition(int p) {
-        this.itemPosition = p;
+    public void addNewLesson(View view) {
+        Intent intent = new Intent(this, NewLessonActivity.class);
+        intent.putExtra("isNew", true);
+        startActivityForResult(intent, 1);
+        overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
     }
 
-    private void deleteLesson(int position, Lesson lesson) {
-        daysFragments[getPosition()].deleteLesson(position);
-        dataBase.deleteData(getPosition(), lesson);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null)
+        daysFragments[getPosition()].lessonDone(new Lesson(data.getStringExtra("name"), data.getStringExtra("time"), data.getStringExtra("length")));
     }
 
-    public int getPosition() {
-        return this.position;
+    @Override
+    public void toggleEditMode(boolean isEditMode) {
+
     }
 
-    class ViewPagerAdapter extends FragmentStatePagerAdapter {
+    public class PagerAdapter extends FragmentStatePagerAdapter {
 
-        DayFragment[] fragments;
+        String[] days_names;
 
-        public ViewPagerAdapter(FragmentManager fm, DayFragment[] daysFragments) {
+        public PagerAdapter(FragmentManager fm) {
             super(fm);
-
-            this.fragments = daysFragments;
+            days_names = getResources().getStringArray(R.array.days_names);
         }
 
-        public android.support.v4.app.Fragment getItem(int position) {
-
-            return this.fragments[position];
+        @Override
+        public Fragment getItem(int position) {
+            return daysFragments[position];
         }
 
+        @Override
         public int getCount() {
-            return fragments.length;
+            return DAYS_NUM;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (rtl) return days_names[DAYS_NUM - position - 1];
+            return days_names[position];
         }
     }
 }
-
