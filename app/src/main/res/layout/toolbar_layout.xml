@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolBar"
-    android:background="@color/primary_color"
+    android:background="@drawable/lesson_item"
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
     app:titleTextColor="@android:color/primary_text_dark"

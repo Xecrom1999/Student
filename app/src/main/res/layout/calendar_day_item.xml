@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:background="@drawable/calendar_day_item_background"
+    android:elevation="10dp">
+
+    <TextView
+        android:id="@+id/day_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="הכותרת שלי"
+        android:textSize="28dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:ellipsize="end"
+        android:textColor="@android:color/secondary_text_light"
+        />
+
+</LinearLayout>

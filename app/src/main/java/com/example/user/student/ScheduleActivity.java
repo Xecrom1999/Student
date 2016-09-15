@@ -1,5 +1,6 @@
 package com.example.user.student;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,25 +13,26 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.Calendar;
 
 import Database.ScheduleDB;
-import Fragments.DayFragment;
+import Fragments.ScheduleDayFragment;
 import Interfaces.EditModeListener;
+import Interfaces.ScheduleListener;
 
 /**
  * Created by gamrian on 03/09/2016.
  */
-public class ScheduleActivity extends AppCompatActivity implements EditModeListener {
+public class ScheduleActivity extends AppCompatActivity implements EditModeListener, ScheduleListener {
 
     PagerAdapter adapter;
     static ViewPager viewPager;
-    DayFragment[] daysFragments;
+    ScheduleDayFragment[] daysFragments;
     ScheduleDB dataBase;
     TabLayout tabLayout;
     Toolbar toolbar;
@@ -38,6 +40,8 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     Configuration config;
     final int DAYS_NUM = 6;
     boolean editMode;
+    Menu menu;
+    InputMethodManager imm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,17 +51,17 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         editMode = false;
 
         setupToolbar();
-
+        
         dataBase = new ScheduleDB(this);
 
         adapter = new PagerAdapter(getSupportFragmentManager());
 
         viewPager = (ViewPager) findViewById(R.id.schedule_pager);
 
-        daysFragments = new DayFragment[DAYS_NUM];
+        daysFragments = new ScheduleDayFragment[DAYS_NUM];
         rtl = (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL);
-        if (rtl) for (int i = 0; i < DAYS_NUM; i++) daysFragments[i] = new DayFragment(i, dataBase, this);
-        else for (int i = 0; i < DAYS_NUM; i++) daysFragments[i] = new DayFragment(DAYS_NUM - 1 - i, dataBase, this);
+        if (rtl) for (int i = 0; i < DAYS_NUM; i++) daysFragments[i] = new ScheduleDayFragment(i, dataBase, this, this, this);
+        else for (int i = 0; i < DAYS_NUM; i++) daysFragments[i] = new ScheduleDayFragment(DAYS_NUM - 1 - i, dataBase, this, this, this);
 
         viewPager.setAdapter(adapter);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -66,6 +70,8 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
             viewPager.setCurrentItem(DAYS_NUM - (calendar.get(Calendar.DAY_OF_WEEK)));
         else viewPager.setCurrentItem(calendar.get(Calendar.DAY_OF_WEEK) - 1);
+
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     private void setupToolbar() {
@@ -101,7 +107,6 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
                 break;
             case R.id.edit_id:
                 toggleEditMode();
-                item.setIcon(editMode ? R.mipmap.ic_done : R.drawable.ic_edit);
                 break;
         }
         return true;
@@ -109,6 +114,8 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
 
     private void toggleEditMode() {
         editMode = !editMode;
+
+        menu.getItem(0).setIcon(editMode ? R.mipmap.ic_done : R.drawable.ic_edit);
 
         for (int i = 0; i < DAYS_NUM; i++) daysFragments[i].toggleEditMode();
     }
@@ -151,6 +158,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.schedule_menu, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -161,22 +169,34 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
 
-    public void addNewLesson(View view) {
-        Intent intent = new Intent(this, NewLessonActivity.class);
-        intent.putExtra("isNew", true);
-        startActivityForResult(intent, 1);
-        overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
+    @Override
+    public void startEditMode() {
+        if (editMode) return;
+
+        editMode = !editMode;
+
+        menu.getItem(0).setIcon(editMode ? R.mipmap.ic_done : R.drawable.ic_edit);
+
+        for (int i = 0; i < DAYS_NUM; i++) daysFragments[i].toggleEditMode();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null)
-        daysFragments[getPosition()].lessonDone(new Lesson(data.getStringExtra("name"), data.getStringExtra("time"), data.getStringExtra("length")));
+    public void deleteLesson(int position, Lesson lesson) {
+        daysFragments[getPosition()].deleteLesson(position, lesson);
     }
 
     @Override
-    public void toggleEditMode(boolean isEditMode) {
+    public void openLesson(Lesson lesson) {
 
+    }
+
+    @Override
+    public void newLesson() {
+        daysFragments[getPosition()].newLesson();
+    }
+
+    public void newLesson(View view) {
+        newLesson();
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -202,6 +222,15 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         public CharSequence getPageTitle(int position) {
             if (rtl) return days_names[DAYS_NUM - position - 1];
             return days_names[position];
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        View view = getCurrentFocus();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

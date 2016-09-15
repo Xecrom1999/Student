@@ -6,4 +6,6 @@
     <color name="secondary_text">#757575</color>
     <color name="fab_color">#4CAF50</color>
     <color name="background_color">#FAFAFA</color>
+    <color name="primary_600">#00897B</color>
+    <color name="event_text">#7F7F7F</color>
 </resources>

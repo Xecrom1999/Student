@@ -16,4 +16,13 @@
         android:id="@+id/calendar_item_text"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="9sp"
+        android:textColor="@android:color/secondary_text_light"
+        android:id="@+id/calendar_item_title"
+        android:scrollHorizontally="true"/>
+
 </LinearLayout>

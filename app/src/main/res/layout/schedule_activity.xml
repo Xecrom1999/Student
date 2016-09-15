@@ -39,19 +39,4 @@
             android:layout_below="@id/tabs"
             />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@mipmap/ic_add"
-        app:backgroundTint="#43A047"
-        app:borderWidth="0dp"
-        app:rippleColor="@android:color/white"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:elevation="4dp"
-        android:onClick="addNewLesson"
-        />
-
 </RelativeLayout>

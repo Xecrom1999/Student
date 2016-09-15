@@ -114,4 +114,10 @@ public class NotesDB extends SQLiteOpenHelper {
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }
+
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_NAME, null, null);
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="add_lesson_text">לא הוספו שיעורים.\nגע בכדי להוסיף</string>
+    <string name="add_lesson_text">לא הוספו שיעורים,\nגע בכדי להוסיף</string>
     <string name="month_string">בעוד חודש</string>
     <string name="months_string">חודשים</string>
     <string name="today_string">היום</string>
@@ -10,12 +10,12 @@
     <string name="title_hint_string">כותרת</string>
     <string name="description_hint_string">תיאור</string>
     <string name="date_hint_string">תאריך</string>
-    <string name="event_title_string">אירוע</string>
+    <string name="comments_string">הוסף הערה</string>
     <string name="passed_string">עבר</string>
     <string name="tomorrow_string">מחר</string>
     <string name="no_events_string">אין אירועים</string>
     <string name="save_string">שמור</string>
-    <string name="reminder_string">תזכורת</string>
+    <string name="reminder_string">הוסף תזכורת</string>
     <string name="new_event_string">אירוע חדש</string>
     <string name="calendar_string">לוח שנה</string>
     <string name="starts_at_string">מתחיל ב:</string>
@@ -32,6 +32,9 @@
     <string name="cancel_string">ביטול</string>
     <string name="week_view_string">תצוגה שבועית</string>
     <string name="days_view">תצוגה יומית</string>
+    <string name="lesson_string">שיעור</string>
+    <string name="add_time_string">הוסף שעה</string>
+    <string name="enter_title_string">הכנס כותרת</string>
 
     <string-array
         name="days_names">

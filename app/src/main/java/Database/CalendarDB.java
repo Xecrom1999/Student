@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.user.student.Note;
+import com.example.user.student.Event;
 
 /**
  * Created by gamrian on 09/08/2016.
@@ -22,16 +22,14 @@ public class CalendarDB extends SQLiteOpenHelper {
     public static final String COL_2 = "TITLE";
     public static final String COL_3 = "DATE";
     public static final String COL_4 = "TIME";
-
-    Context ctx;
+    public static final String COL_5 = "COMMENT";
 
     public CalendarDB(Context context) {
-        super(context, DATABASE_NAME, null, 1);
-        this.ctx = context;
+        super(context, DATABASE_NAME, null, 6);
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DATE TEXT,TIME TEXT)");
+        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DATE TEXT,TIME TEXT,COMMENT TEXT)");
 
     }
 
@@ -41,15 +39,16 @@ public class CalendarDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertData(Note note) {
+    public long insertData(Event event) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_2, note.getTitle());
-        contentValues.put(COL_3, note.getDate());
-        contentValues.put(COL_4, note.getTime());
+        contentValues.put(COL_2, event.getTitle());
+        contentValues.put(COL_3, event.getDate());
+        contentValues.put(COL_4, event.getTime());
+        contentValues.put(COL_5, event.getComment());
 
         return db.insert(TABLE_NAME, null, contentValues);
     }
@@ -73,16 +72,23 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public void updateData(String id, String title, String date, String time) {
+    public void updateData(String id, Event event) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_2, title);
-        contentValues.put(COL_3, date);
-        contentValues.put(COL_4, time);
+        contentValues.put(COL_2, event.getTitle());
+        contentValues.put(COL_3, event.getDate());
+        contentValues.put(COL_4, event.getTime());
+        contentValues.put(COL_5, event.getComment());
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
+    }
+
+    public Cursor getAllTitles(String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + date + "'" , null);
+        return res;
     }
 }

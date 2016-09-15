@@ -17,9 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class NewNoteActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
+public class NewNoteActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
 
     EditText title_edit;
     EditText description_edit;
@@ -38,12 +42,20 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     TextView date_text;
     TextView time_text;
 
+    LinearLayout date_layout;
+    CheckBox checkBox;
+    Configuration config;
+
+    boolean editMode;
+
     View note_item;
     DatePickerDialog datePicker;
     final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
     InputMethodManager imm;
 
     Toolbar toolbar;
+    LinearLayout box_layout;
+    LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +66,25 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
         setListeners();
         setTexts();
 
+        setupToolbar();
+
         format.setLenient(false);
 
         title_edit.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboardVisible(true);
 
-        //updateAll();
+    }
+
+    private void setupToolbar() {
+        config = getResources().getConfiguration();
+        toolbar = (Toolbar) findViewById(R.id.new_note_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setTitle(R.string.new_note_string);
     }
 
     private void setTexts() {
@@ -71,12 +95,20 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
         title_edit.setText(title);
         description_edit.setText(description);
 
-        if (date.isEmpty()) setTomorrowDate();
+        if (title.isEmpty()) {
+            setTomorrowDate();
+            editMode = true;
+        }
+
+        else if (date.isEmpty()) checkBox.setChecked(false);
+
         else {
             date_edit.setText(date);
             date_text.setText(date);
             setTime();
         }
+
+        if (!title.isEmpty()) cantEdit();
 
         String date2 = date_edit.getText().toString();
         Calendar cal = Calendar.getInstance();
@@ -87,21 +119,41 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
         } catch (ParseException e) {}
     }
 
+    private void cantEdit() {
+        editMode = false;
+
+        title_edit.setEnabled(false);
+        description_edit.setEnabled(false);
+        date_layout.setEnabled(false);
+        box_layout.setEnabled(false);
+        checkBox.setEnabled(false);
+    }
+
+    private void startEditing() {
+        editMode = true;
+
+        title_edit.setEnabled(true);
+        description_edit.setEnabled(true);
+        date_layout.setEnabled(true);
+        box_layout.setEnabled(true);
+        checkBox.setEnabled(true);
+    }
+
     private void setListeners() {
         title_edit.addTextChangedListener(this);
         description_edit.setOnFocusChangeListener(this);
+        checkBox.setOnCheckedChangeListener(this);
     }
 
     private void initializeViews() {
 
-        toolbar = (Toolbar) findViewById(R.id.new_note_bar);
-        setSupportActionBar(toolbar);
+        layout = (LinearLayout) findViewById(R.id.linearLayout);
 
-        Configuration config = getResources().getConfiguration();
-        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
-        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        getSupportActionBar().setTitle(getString(R.string.new_note_string));
+        box_layout = (LinearLayout) findViewById(R.id.box_layout);
+
+        date_layout = (LinearLayout) findViewById(R.id.date_layout);
+
+        checkBox = (CheckBox) findViewById(R.id.date_check_box);
 
         time_edit = (TextView) findViewById(R.id.time_text);
 
@@ -118,6 +170,7 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_note_menu, menu);
+        if (!getIntent().getStringExtra("title").isEmpty()) menu.getItem(0).setIcon(R.drawable.ic_edit);
         return true;
     }
 
@@ -126,7 +179,13 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
         int id = item.getItemId();
 
-        if (id == R.id.done_id) finishNote();
+        if (id == R.id.done_id) {
+            if (!editMode) {
+                item.setIcon(R.mipmap.ic_done);
+                startEditing();
+            }
+            else finishNote();
+        }
 
         if (id == android.R.id.home) onBackPressed();
         return true;
@@ -140,18 +199,22 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     }
 
     public void finishNote() {
-
-        if (!isDateValid()) {
-            new ErrorToast(this, "Date is not valid");
-            date_edit.requestFocus();
+        
+        if (title_edit.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), R.string.enter_title_string, Toast.LENGTH_SHORT).show();
             return;
         }
 
         Intent intent = new Intent();
         intent.putExtra("title", title_edit.getText().toString());
         intent.putExtra("description", description_edit.getText().toString());
-        intent.putExtra("date", date_edit.getText().toString());
-        intent.putExtra("time", time_edit.getText().toString());
+        if (checkBox.isChecked()) {
+            intent.putExtra("date", date_edit.getText().toString());
+            intent.putExtra("time", time_edit.getText().toString());
+        } else {
+            intent.putExtra("date", "");
+            intent.putExtra("time", "");
+        }
 
         setResult(0, intent);
 
@@ -173,7 +236,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
             View view = this.getCurrentFocus();
             if (view != null) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         }
@@ -229,6 +291,21 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         description_edit.setSelection(description_edit.length());
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        date_layout.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
+
+        date_text.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
+        time_text.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
+
+        if (date_edit.getText().toString().trim().isEmpty()) setTomorrowDate();
+    }
+
+    public void toggleBox(View view) {
+        checkBox.toggle();
     }
 
     public class DatePickerListener implements DatePickerDialog.OnDateSetListener {

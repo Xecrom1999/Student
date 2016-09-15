@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,9 +13,12 @@ import android.widget.TextView;
 
 import com.example.user.student.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import Database.CalendarDB;
 import Interfaces.CalendarListener;
 
 /**
@@ -29,8 +33,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     int position;
     int month;
     CalendarListener listener;
+    CalendarDB database;
+    ArrayList<String> datesList;
+    ArrayList<String> titlesList;
+    final static SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
 
-    public CalendarAdapter(Context ctx, int position, CalendarListener listener) {
+    public CalendarAdapter(Context ctx, int position, CalendarListener listener, CalendarDB database) {
         this.listener = listener;
         this.ctx = ctx;
         this.position = position;
@@ -41,6 +49,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         month = calendar.get(Calendar.MONTH);
         calendar.set(Calendar.DAY_OF_WEEK, 1);
         calendar.add(Calendar.DATE, -7);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        this.database = database;
+        datesList = getDatesList();
+        titlesList = getTitlesList();
     }
 
     @Override
@@ -69,7 +84,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             Calendar cal = Calendar.getInstance();
             if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month)
                 holder.root.setBackground(ctx.getResources().getDrawable(R.drawable.rectangle_drawable2));
-            if (month != calendar.get(Calendar.MONTH)) holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
+            if (month != calendar.get(Calendar.MONTH))
+                holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
+            for (int i = 0; i < datesList.size(); i++) {
+                    if (datesList.get(i).equals(String.valueOf(calendar.getTime()))) {
+                        holder.title_text.setText(titlesList.get(i));
+                        datesList.remove(i);
+                        titlesList.remove(i);
+                    }
+            }
         }
         calendar.add(Calendar.DATE, 1);
     }
@@ -85,11 +108,34 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         return 49;
     }
 
+    public ArrayList<String> getDatesList() {
+        Cursor res = database.getAllData();
+        ArrayList<String> datesList = new ArrayList<>();
+
+        while (res.moveToNext()) {
+            datesList.add(res.getString(2));
+        }
+
+        return datesList;
+    }
+
+    public ArrayList<String> getTitlesList() {
+        Cursor res = database.getAllData();
+        ArrayList<String> titlesList = new ArrayList<>();
+
+        while (res.moveToNext()) {
+            titlesList.add(res.getString(1));
+        }
+
+        return titlesList;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView day_text;
         LinearLayout root;
         int month;
+        TextView title_text;
 
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -98,6 +144,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             else {
                 day_text = (TextView) itemView.findViewById(R.id.calendar_item_text);
                 root = (LinearLayout) itemView.findViewById(R.id.item_root);
+                title_text = (TextView) itemView.findViewById(R.id.calendar_item_title);
                 itemView.setOnClickListener(this);
             }
         }

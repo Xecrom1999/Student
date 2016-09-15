@@ -1,5 +1,6 @@
 package com.example.user.student;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,12 +12,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import Database.CalendarDB;
 import Fragments.MonthFragment;
 
 public class CalendarActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
@@ -28,15 +32,27 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     final static int NUM_OF_FRAGMENTS = 25;
     Toolbar toolbar;
     FloatingActionButton fab;
+    InputMethodManager imm;
+
+    CalendarDB database;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_activity);
 
+        database = new CalendarDB(this);
+
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         fragments = new MonthFragment[NUM_OF_FRAGMENTS];
         for (int i = 0; i < NUM_OF_FRAGMENTS; i++) {
-            fragments[i] = new MonthFragment(i);
+            fragments[i] = new MonthFragment(i, database);
         }
 
         initializeViews();

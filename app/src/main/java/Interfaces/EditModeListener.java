@@ -1,10 +1,10 @@
 package Interfaces;
 
 /**
- * Created by gamrian on 07/09/2016.
+ * Created by gamrian on 09/09/2016.
  */
 public interface EditModeListener {
 
-    void toggleEditMode(boolean isEditMode);
+    void startEditMode();
 
 }

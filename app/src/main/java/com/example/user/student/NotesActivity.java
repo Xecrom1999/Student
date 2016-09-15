@@ -1,18 +1,23 @@
 package com.example.user.student;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -104,13 +109,15 @@ public class NotesActivity extends ActionBarActivity {
 
             else if (DateUtils.isToday(date.getTime())) timeToDate = getString(R.string.today_string);
 
-            else timeToDate = sdf.format(date);
+            else if (diff < 0)timeToDate = sdf.format(date);
+
+            else timeToDate = getString(R.string.passed_string);
+
         } catch (ParseException e) {
-            timeToDate = getString(R.string.passed_string);
+            timeToDate = "";
         }
     return timeToDate;
     }
-
 
     private void showNotes() {
 
@@ -120,6 +127,7 @@ public class NotesActivity extends ActionBarActivity {
             dataBase.updateData(res.getString(0), getTime(res.getString(5)));
             addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
         }
+        theLayout.invalidate();
     }
 
     private void addNote(String id, String title, String description, String xPos, String yPos, String date, String time) {
@@ -175,6 +183,12 @@ public class NotesActivity extends ActionBarActivity {
             addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.notes_menu, menu);
+        return true;
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
@@ -184,7 +198,57 @@ public class NotesActivity extends ActionBarActivity {
             return true;
         }
 
-        return false;
+        if (id == R.id.notes_delete_id)
+            userDialog();
+
+        return true;
+    }
+
+    private void userDialog() {
+        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dataBase.deleteAll();
+                        removeAllNotes();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.delete_all_string) + "?").setPositiveButton(getString(R.string.delete_string), dialogClickListener)
+                .setNegativeButton(getString(R.string.cancel_string), dialogClickListener).show();
+    }
+
+    private void removeNotes() {
+        for (int i = 0; i < theLayout.getChildCount(); i++) {
+            View v = theLayout.getChildAt(i);
+            if (v.getId() != toolbar.getId() && v.getId() != notesPack.getId())
+                theLayout.removeView(v);
+        }
+    }
+
+    private void removeAllNotes() {
+        boolean doBreak = false;
+        while (!doBreak) {
+            int childCount = theLayout.getChildCount();
+            int i;
+            for(i=0; i<childCount; i++) {
+                View currentChild = theLayout.getChildAt(i);
+                if (currentChild.getId() != toolbar.getId() && currentChild.getId() != notesPack.getId()) {
+                    theLayout.removeView(currentChild);
+                    break;
+                }
+            }
+
+            if (i == childCount) {
+                doBreak = true;
+            }
+        }
     }
 
     public void onBackPressed() {
@@ -239,7 +303,7 @@ public class NotesActivity extends ActionBarActivity {
 
                     v.setAlpha(1);
 
-                    notesPack.setImageResource(R.drawable.garbage_can);
+                    notesPack.setImageResource(R.drawable.ic_can);
 
                     note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta), "", "");
 
@@ -282,6 +346,8 @@ public class NotesActivity extends ActionBarActivity {
                     layoutParams.bottomMargin = -250;
                     v.setLayoutParams(layoutParams);
 
+                    if (inGarbageRange(x, y)) v.setAlpha((float) 0.75);
+                    else  v.setAlpha((float) 1);
                     break;
                 default:
                     break;
@@ -312,6 +378,9 @@ public class NotesActivity extends ActionBarActivity {
             String description = data.getStringExtra("description");
             String date = data.getStringExtra("date");
             String time = data.getStringExtra("time");
+
+            date = (date.equals("none") ? "" : date);
+            time = (time.equals("none") ? "" : time);
 
             TextView title_text = (TextView) chosen.findViewById(R.id.note_title);
             TextView date_text = (TextView) chosen.findViewById(R.id.note_date);

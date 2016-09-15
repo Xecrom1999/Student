@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.user.student.CalendarDayActivity;
 import com.example.user.student.R;
@@ -19,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import Adapters.CalendarAdapter;
+import Database.CalendarDB;
 import Interfaces.CalendarListener;
 
 /**
@@ -28,14 +28,15 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
     RecyclerView recyclerView;
     CalendarAdapter adapter;
-    TextView month_text;
     int position;
     SimpleDateFormat format;
     Calendar calendar;
     String month;
+    CalendarDB database;
 
-    public MonthFragment(int position) {
+    public MonthFragment(int position, CalendarDB database) {
         this.position = position;
+        this.database = database;
     }
 
     @Nullable
@@ -49,14 +50,24 @@ public class MonthFragment extends Fragment implements CalendarListener{
         calendar.add(Calendar.MONTH, position);
         month = format.format(calendar.getTime());
 
-        adapter = new CalendarAdapter(getContext(), position, this);
+        return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        adapter = new CalendarAdapter(getContext(), position, this, database);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.calendar_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
         recyclerView.setAdapter(adapter);
-
-        return view;
     }
 
     @Override
