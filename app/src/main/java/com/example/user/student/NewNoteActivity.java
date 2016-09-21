@@ -84,7 +84,9 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
         if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        getSupportActionBar().setTitle(R.string.new_note_string);
+        if (title_text.getText().toString().isEmpty())
+            getSupportActionBar().setTitle(R.string.new_note_string);
+        else getSupportActionBar().setTitle("");
     }
 
     private void setTexts() {

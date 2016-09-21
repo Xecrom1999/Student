@@ -5,19 +5,17 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.ActionMenuView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.EditorInfo;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -50,12 +48,18 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     LinearLayout comment_layout;
     EditText comment_edit;
     ImageView remove_time;
-    boolean hasTime;
     EditText title_edit;
-
     CalendarDB database;
+    TextView reminder_text;
 
+    boolean isOld;
     final static SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+
+    String id;
+    String title;
+    String time;
+    String comment;
+    String reminder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +67,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.new_event_activity);
 
         database = new CalendarDB(this);
-
-        hasTime = false;
 
         date_layout = (LinearLayout) findViewById(R.id.event_date_layout);
         time_layout = (LinearLayout) findViewById(R.id.event_time_layout);
@@ -79,7 +81,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         title_edit = (EditText) findViewById(R.id.event_title_edit);
         comment_edit = (EditText) findViewById(R.id.comment_edit);
         remove_time = (ImageView) findViewById(R.id.remove_time);
-        remove_time.setVisibility(View.INVISIBLE);
         remove_time.setOnClickListener(this);
 
         time_text = (TextView) findViewById(R.id.event_time_text);
@@ -89,40 +90,54 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         date_text = (TextView) findViewById(R.id.event_date_text);
         date_text.setOnClickListener(this);
 
-        calendar = Calendar.getInstance();
+        reminder_text = (TextView) findViewById(R.id.reminder_text);
 
-        mDay = getIntent().getIntExtra("day", 0);
-        mMonth = getIntent().getIntExtra("month", 0);
-        mYear = getIntent().getIntExtra("year", 0);
+        Intent intent = getIntent();
+
+        calendar = (Calendar) intent.getExtras().get("calendar");
+
+        setDate(calendar);
+
+        isOld = intent.getBooleanExtra("isOld", false);
+
+        if (isOld) {
+            id = intent.getStringExtra("id");
+            title = intent.getStringExtra("title");
+            time = intent.getStringExtra("time");
+            comment = intent.getStringExtra("comment");
+            reminder = intent.getStringExtra("reminder");
+
+            title_edit.setText(title);
+            title_edit.setSelection(title_edit.length());
+            time_text.setText(time);
+            comment_edit.setText(comment);
+            reminder_text.setText(reminder);
+        }
+
+        remove_time.setVisibility(time_text.getText().toString().isEmpty() ? View.INVISIBLE : View.VISIBLE);
 
         setSupportActionBar(toolbar);
 
-        toolbar.setOnClickListener(this);
-
-        if (mYear == 0)
-            setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-        else setDate(mYear, mMonth, mDay);
-
-        calendar.set(mYear, mMonth, mDay);
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
         getSupportActionBar().setTitle("");
+        toolbar.setBackgroundColor(getColor(R.color.primary_second));
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
+    private void setDate(Calendar calendar) {
+        String str = format.format(calendar.getTime());
+
+        date_text.setText(str);
+    }
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         String hour = String.valueOf(hourOfDay);
         String min = String.valueOf(minute);
-
-        if (hourOfDay < 10)
-            hour = "0" + hourOfDay;
 
         if (minute < 10)
             min = "0" + minute;
@@ -145,7 +160,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (id == R.id.save_id) {
 
             if (title_edit.getText().toString().trim().isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please enter a title", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.enter_title_string), Toast.LENGTH_SHORT).show();
                 title_edit.requestFocus();
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 return true;
@@ -153,14 +168,21 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
             hideKeyboard();
             String title = title_edit.getText().toString();
-            String date = "error";
-            try {
-                date = String.valueOf(format.parse(date_text.getText().toString()));
-            } catch (ParseException e) {}
+            String date = String.valueOf(calendar.getTime());
             String time = time_text.getText().toString();
             String comment = comment_edit.getText().toString();
-            database.insertData(new Event(title, date, time, comment));
+            String reminder = reminder_text.getText().toString();
+
             finish();
+
+            if (isOld) {
+                database.updateData(this.id, new Event(title, date, time, comment, reminder));
+                Toast.makeText(getApplicationContext(), getString(R.string.event_saved_string), Toast.LENGTH_SHORT).show();
+            }
+            else {
+                database.insertData(new Event(title, date, time, comment, reminder));
+                Toast.makeText(getApplicationContext(), getString(R.string.event_created_string), Toast.LENGTH_SHORT).show();
+            }
         }
 
         if (id == android.R.id.home) {
@@ -180,7 +202,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.event_date_layout:
             case R.id.event_date_text:
-                datePicker = new DatePickerDialog(this, new DatePickerListener(), mYear, mMonth, mDay);
+                datePicker = new DatePickerDialog(this, R.style.PickersStyle, new DatePickerListener(), mYear, mMonth, mDay);
                 datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 showDialog(0);
                 break;
@@ -188,9 +210,18 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
             case R.id.event_time_layout:
             case R.id.event_time_text:
                 String str = time_text.getText().toString();
-                new TimePickerDialog(this, this, 8, 0, true).show();
+                int hour;
+                int min;
+                if (str.isEmpty()) {
+                    hour = 8;
+                    min = 0;
+                }
+                else {
+                    hour = Integer.parseInt(str.substring(0, str.indexOf(':')));
+                    min = Integer.parseInt(str.substring(str.indexOf(':') + 1));
+                }
+                new TimePickerDialog(this, R.style.PickersStyle, this, hour, min, true).show();
                 break;
-
 
             case R.id.remove_time:
                 time_text.setText("");
@@ -199,20 +230,14 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.event_comment_layout:
                 comment_edit.requestFocus();
+                comment_edit.setSelection(comment_edit.length());
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 break;
 
             case R.id.event_reminder_layout:
 
                 break;
-
-            case R.id.event_toolbar:
-                hideKeyboard();
-                finish();
-                break;
         }
-
-
     }
 
     @Override
@@ -229,10 +254,9 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
     private void setDate(int year, int month, int day) {
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month, day);
+        calendar.set(year, month, day);
 
-        String str = format.format(cal.getTime());
+        String str = format.format(calendar.getTime());
 
         date_text.setText(str);
 
@@ -240,13 +264,35 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onPause() {
         super.onPause();
-            hideKeyboard();
+        hideKeyboard();
     }
 
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        changeColor(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        changeColor(true);
+    }
+
+    private void changeColor(boolean isStarted) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_second : R.color.primary_dark));
         }
     }
 }

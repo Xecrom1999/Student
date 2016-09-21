@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/view_id2"
-        android:title="@string/days_view_string" />
+    <item android:title="@string/edit_string"
+        android:id="@+id/event_edit"
+        app:showAsAction="always" />
 
 </menu>

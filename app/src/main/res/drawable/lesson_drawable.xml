@@ -5,9 +5,10 @@
         android:color="@android:color/white">
     <item >
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
-               android:shape="rectangle" android:padding="10dp">
-<corners android:radius="40dp"/>
-            <solid android:color="@color/primary_600"/>
+               android:shape="rectangle" >
+            <solid android:color="#43A047"/>
+
+            <stroke android:color="@android:color/white" android:width="0.1dp"/>
         </shape>
     </item>
 </ripple>

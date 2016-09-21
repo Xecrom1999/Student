@@ -2,14 +2,14 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,19 +19,19 @@ import java.util.Calendar;
 
 import Database.CalendarDB;
 import Fragments.CalendarDayFragment;
+import Interfaces.CalendarDayListener;
+import Interfaces.EventDateListener;
 
-public class CalendarDayActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class CalendarDayActivity extends AppCompatActivity implements View.OnClickListener, EventDateListener {
 
     Toolbar toolbar;
     ViewPager pager;
-    int day;
-    int month;
-    int year;
     PagerAdapter adapter;
     Calendar calendar;
-    Calendar cal;
+    Calendar mCalendar;
     Configuration config;
     CalendarDB database;
+    final static SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +41,42 @@ public class CalendarDayActivity extends AppCompatActivity implements ViewPager.
         toolbar = (Toolbar) findViewById(R.id.calendar_day_toolbar);
         database = new CalendarDB(this);
 
-        day = getIntent().getIntExtra("day", 0);
-        month = getIntent().getIntExtra("month", 0);
-        year = getIntent().getIntExtra("year", 0);
+        Intent intent = getIntent();
 
-        cal = Calendar.getInstance();
-        calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
+        calendar = (Calendar) intent.getExtras().get("calendar");
+        mCalendar = (Calendar) intent.getExtras().get("calendar");
 
         pager = (ViewPager) findViewById(R.id.calendar_day_pager);
-        adapter = new PagerAdapter(getSupportFragmentManager());
+        adapter = new PagerAdapter(getSupportFragmentManager(), this);
         calendar.add(Calendar.DATE, -adapter.getCount()/2);
 
         pager.setAdapter(adapter);
-        pager.setOnPageChangeListener(this);
         pager.setCurrentItem(adapter.getCount()/2);
 
         setupToolbar();
+
+    }
+
+    @Override
+    public Calendar getCurrentDate() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(calendar.getTime());
+        cal.add(Calendar.DATE, pager.getCurrentItem());
+
+        adapter.notifyDataSetChanged();
+
+        return cal;
+    }
+
+    @Override
+    public void update() {
+
+        int position = pager.getCurrentItem();
+
+        pager.setAdapter(new PagerAdapter(getSupportFragmentManager(), this));
+
+        pager.setCurrentItem(position);
     }
 
     private void setupToolbar() {
@@ -67,9 +86,8 @@ public class CalendarDayActivity extends AppCompatActivity implements ViewPager.
         if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        getSupportActionBar().setTitle(day + "/" + (month+1) + "/" + year);
-        toolbar.setOnClickListener(this);
 
+        getSupportActionBar().setTitle(getString(R.string.today_events_string));
     }
 
     @Override
@@ -81,9 +99,7 @@ public class CalendarDayActivity extends AppCompatActivity implements ViewPager.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.addEvent) {
-            addEvent();
-        }
+        if (item.getItemId() == R.id.addEvent) addEvent();
 
         if (item.getItemId() == android.R.id.home) finish();
 
@@ -92,29 +108,10 @@ public class CalendarDayActivity extends AppCompatActivity implements ViewPager.
 
     private void addEvent() {
         Intent intent = new Intent(this, NewEventActivity.class);
-        intent.putExtra("year", cal.get(Calendar.YEAR));
-        intent.putExtra("month", cal.get(Calendar.MONTH));
-        intent.putExtra("day", cal.get(Calendar.DAY_OF_MONTH));
+
+        intent.putExtra("calendar", getCurrentDate());
+
         startActivity(intent);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-        cal.setTime(calendar.getTime());
-        cal.add(Calendar.DATE, position);
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
-        toolbar.setTitle(format.format(cal.getTime()));
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     @Override
@@ -124,8 +121,12 @@ public class CalendarDayActivity extends AppCompatActivity implements ViewPager.
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
 
-        public PagerAdapter(FragmentManager fm) {
+        EventDateListener listener;
+
+        public PagerAdapter(FragmentManager fm, EventDateListener listener) {
             super(fm);
+
+            this.listener = listener;
         }
 
         @Override
@@ -137,12 +138,14 @@ public class CalendarDayActivity extends AppCompatActivity implements ViewPager.
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
-            return new CalendarDayFragment(getApplicationContext(), database, cal.getTime());
+            return new CalendarDayFragment(getApplicationContext(), database, cal, listener);
         }
 
         @Override
         public int getCount() {
             return 365;
         }
+
+
     }
 }

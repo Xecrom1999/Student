@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.example.user.student.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import Database.CalendarDB;
+import Interfaces.CalendarDayListener;
 
 /**
  * Created by gamrian on 14/09/2016.
@@ -22,30 +24,37 @@ import Database.CalendarDB;
 public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.ViewHolder> {
 
     private final CalendarDB database;
-    private final String date;
+    private final Calendar calendar;
     Context ctx;
     ArrayList<String> titles;
+    static CalendarDayListener listener;
 
-    public CalendarDayAdapter(Context ctx, CalendarDB database, Date date) {
+    public CalendarDayAdapter(Context ctx, CalendarDB database, Calendar calendar, CalendarDayListener listener) {
         this.ctx = ctx;
         this.database = database;
-        this.date = String.valueOf(date);
+        this.calendar = calendar;
+        this.listener = listener;
 
         titles = getTitles();
+    }
+
+    public void update() {
+        titles = getTitles();
+        notifyDataSetChanged();
     }
 
     @Override
     public CalendarDayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(ctx).inflate(R.layout.calendar_day_item, parent);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.calendar_day_item, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(view);
+        CalendarDayAdapter.ViewHolder viewHolder = new CalendarDayAdapter.ViewHolder(view);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(CalendarDayAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title_text.setText(titles.get(position));
     }
 
@@ -55,7 +64,7 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
     }
 
     public ArrayList<String> getTitles() {
-        Cursor res = database.getAllTitles(date);
+        Cursor res = database.getAllTitles(calendar);
         ArrayList<String> titlesList = new ArrayList<>();
 
         while (res.moveToNext()) {
@@ -65,7 +74,7 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
         return titlesList;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView title_text;
 
@@ -73,6 +82,20 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
             super(itemView);
 
             title_text = (TextView) itemView.findViewById(R.id.day_item_title);
+
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.openEvent(getPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            listener.deleteEvent(getPosition(), v);
+            return true;
         }
     }
 }

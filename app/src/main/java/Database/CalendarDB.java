@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.user.student.Event;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by gamrian on 09/08/2016.
@@ -17,19 +21,19 @@ public class CalendarDB extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME = "calendar_table";
 
-
     public static final String COL_1 = "ID";
     public static final String COL_2 = "TITLE";
     public static final String COL_3 = "DATE";
     public static final String COL_4 = "TIME";
     public static final String COL_5 = "COMMENT";
+    public static final String COL_6 = "REMINDER";
 
     public CalendarDB(Context context) {
-        super(context, DATABASE_NAME, null, 6);
+        super(context, DATABASE_NAME, null, 9);
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DATE TEXT,TIME TEXT,COMMENT TEXT)");
+        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DATE TEXT,TIME TEXT,COMMENT TEXT, REMINDER TEXT)");
 
     }
 
@@ -49,6 +53,7 @@ public class CalendarDB extends SQLiteOpenHelper {
         contentValues.put(COL_3, event.getDate());
         contentValues.put(COL_4, event.getTime());
         contentValues.put(COL_5, event.getComment());
+        contentValues.put(COL_6, event.getReminder());
 
         return db.insert(TABLE_NAME, null, contentValues);
     }
@@ -66,9 +71,9 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public Cursor getRowById(String id) {
+    public Cursor getRowByDate(String date) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + "='" + id + "'" , null);
+        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + date + "'" , null);
         return res;
     }
 
@@ -82,13 +87,15 @@ public class CalendarDB extends SQLiteOpenHelper {
         contentValues.put(COL_3, event.getDate());
         contentValues.put(COL_4, event.getTime());
         contentValues.put(COL_5, event.getComment());
+        contentValues.put(COL_6, event.getReminder());
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }
 
-    public Cursor getAllTitles(String date) {
+    public Cursor getAllTitles(Calendar calendar) {
+
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + date + "'" , null);
+        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + String.valueOf(calendar.getTime()) + "'" , null);
         return res;
     }
 }

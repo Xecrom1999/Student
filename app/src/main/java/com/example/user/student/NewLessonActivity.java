@@ -1,93 +1,149 @@
 package com.example.user.student;
 
-import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import Database.DefaultLessonsDB;
+
 /**
  * Created by user on 15/01/16.
  */
-public class NewLessonActivity extends Activity implements View.OnClickListener {
+public class NewLessonActivity extends AppCompatActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener {
 
-    EditText name_input;
-    TextView setTime_text;
-    NumberPicker numberPicker;
-    ImageButton done_button;
-    ImageButton cancel_button;
+    EditText subject_edit;
+    TextView time_text;
+    Button done_button;
+    Button cancel_button;
+    EditText length_edit;
     boolean isNew;
+    Toolbar toolbar;
+    CheckBox checkBox;
+    DefaultLessonsDB database;
+    int lessonPosition;
+    Configuration config;
+    String id;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.new_lesson_activity);
 
-       setContentView(R.layout.new_lesson_activity);
+        database = new DefaultLessonsDB(this);
 
-        name_input = (EditText) findViewById(R.id.name_input);
-        name_input.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        setTime_text = (TextView) findViewById(R.id.setTime_text);
-        numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(180);
-        numberPicker.setValue(45);
+        checkBox = (CheckBox) findViewById(R.id.default_checkBox);
 
-        setTime_text.setOnClickListener(this);
+        subject_edit = (EditText) findViewById(R.id.subject_edit);
 
-        done_button = (ImageButton) findViewById(R.id.done_button);
+        time_text = (TextView) findViewById(R.id.setTime_text);
+
+        done_button = (Button) findViewById(R.id.done_button);
         done_button.setOnClickListener(this);
 
-        cancel_button = (ImageButton) findViewById(R.id.cancel_button);
+        cancel_button = (Button) findViewById(R.id.cancel_button);
         cancel_button.setOnClickListener(this);
 
+        length_edit = (EditText) findViewById(R.id.length_edit);
+        length_edit.setOnClickListener(this);
+
         Intent intent = getIntent();
+        lessonPosition = intent.getIntExtra("itemPosition", 99);
+
+        checkBox.setText(getString(R.string.setDefaultLesson_string) + " " + (lessonPosition + 1));
+        setToolbar();
+        getSupportActionBar().setTitle(getString(R.string.lesson_string) + " " + (lessonPosition + 1));
+
         isNew = intent.getBooleanExtra("isNew", false);
         if (!isNew) {
             String name = intent.getStringExtra("name");
             String time = intent.getStringExtra("time");
             String length = intent.getStringExtra("length");
 
-            name_input.setText(name);
-            setTime_text.setText(time.substring(time.indexOf('0')));
-            numberPicker.setValue(Integer.valueOf(length));
+            subject_edit.setText(name);
+            time_text.setText(time);
+            length_edit.setText(length);
+            subject_edit.setSelection(name.length());
         }
+
+        else if (lessonPosition < 12){
+            Cursor res = database.getAllData();
+            res.moveToNext();
+            while (lessonPosition > 0 && res.moveToNext()) lessonPosition--;
+
+            time_text.setText(res.getString(1));
+            id = res.getString(0);
+        }
+    }
+
+    private void setToolbar() {
+        config = getResources().getConfiguration();
+        toolbar = (Toolbar) findViewById(R.id.new_lesson_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+
+        toolbar.setBackgroundColor(getColor(R.color.primary_second));
     }
 
     public void onClick(View v) {
 
-        if (v.getId() == R.id.setTime_text) {
-            String str = setTime_text.getText().toString();
-            new TimePickerDialog(this, onTimeSetListener, Integer.valueOf(str.substring(0, str.indexOf(':'))), Integer.valueOf(str.substring(str.indexOf(':') + 1, str.length())), true).show();
+        if (v.getId() == R.id.length_edit)
+            length_edit.selectAll();
+
+        if (v.getId() == R.id.cancel_button)
+            onBackPressed();
+        
+        if (v.getId() == R.id.done_button)
+            lessonDone();
+    }
+
+    private void lessonDone() {
+        if (subject_edit.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, getString(R.string.enter_name_string), Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        if (v.getId() == R.id.cancel_button) {
-            finish();
-            overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
+        if (length_edit.getText().toString().isEmpty()) {
+            Toast.makeText(this, getString(R.string.enter_length_string), Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        if (v.getId() == R.id.done_button) {
-            if (name_input.getText().toString().trim().isEmpty()) {
-                Toast.makeText(this, "Enter the class name!", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Intent intent = new Intent();
-                intent.putExtra("name", name_input.getText().toString());
-                intent.putExtra("time", setTime_text.getText().toString());
-                intent.putExtra("length", String.valueOf(numberPicker.getValue()));
-                intent.putExtra("isNew", isNew);
-                setResult(1, intent);
-                finish();
-                overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
-            }
+        String time = time_text.getText().toString();
+        String length = length_edit.getText().toString();
+
+        Intent intent = new Intent();
+        intent.putExtra("name", subject_edit.getText().toString());
+        intent.putExtra("time", time);
+        intent.putExtra("length", length);
+        intent.putExtra("isNew", isNew);
+        intent.putExtra("position", lessonPosition);
+        setResult(1, intent);
+
+        if (checkBox.isChecked()) {
+            database.updateData(id, time, length);
         }
+
+        finish();
     }
 
     TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
@@ -98,18 +154,81 @@ public class NewLessonActivity extends Activity implements View.OnClickListener 
             String hour = String.valueOf(hourOfDay);
             String min = String.valueOf(minute);
 
-
             if (hourOfDay < 10)
                 hour = "0" + hourOfDay;
 
             if (minute < 10)
                 min = "0" + minute;
 
-            setTime_text.setText(hour + ":" + min);
+            time_text.setText(hour + ":" + min);
         }
     };
 
     public void deleteInput(View view) {
-        name_input.setText("");
+        subject_edit.setText("");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        changeColor(false);
+    }
+
+    private void changeColor(boolean isStarted) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_second : R.color.primary_dark));
+        }
+    }
+
+    public void openTimeDialog(View view) {
+
+        String time = time_text.getText().toString();
+
+        int hour = Integer.parseInt(time.substring(0, time.indexOf(':')));
+        int minute = Integer.parseInt(time.substring(time.indexOf(':') + 1));
+
+        new TimePickerDialog(this, R.style.PickersStyle, this, hour, minute, true).show();
+    }
+
+    public void lengthClicked(View view) {
+        length_edit.requestFocus();
+        length_edit.selectAll();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String hour = String.valueOf(hourOfDay);
+        String min = String.valueOf(minute);
+
+        if (minute < 10)
+            min = "0" + minute;
+
+        time_text.setText(hour + ":" + min);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+        overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) onBackPressed();
+        return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        changeColor(true);
     }
 }

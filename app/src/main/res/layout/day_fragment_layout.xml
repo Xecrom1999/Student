@@ -2,17 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="35dp"
-    android:paddingRight="35dp"
-    android:paddingTop="4dp"
     >
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/lessonsRecyclerView"
         android:scrollbars="vertical"
         android:scrollbarThumbVertical="@android:color/white"
-        android:scrollbarSize="1dp">
+        android:scrollbarSize="1dp"
+        android:layout_marginTop="6dp"
+        android:layout_centerHorizontal="true">
     </android.support.v7.widget.RecyclerView>
 
 
@@ -21,10 +20,10 @@
         android:layout_height="wrap_content"
         android:text="@string/add_lesson_text"
         android:gravity="center"
-        android:textSize="23dp"
+        android:textSize="20dp"
         android:layout_centerInParent="true"
         android:id="@+id/addLesson_text"
-        android:textColor="@color/secondary_text"
+        android:textColor="@android:color/tertiary_text_light"
         />
 
 </RelativeLayout>

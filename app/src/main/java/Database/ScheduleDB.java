@@ -23,13 +23,13 @@ public class ScheduleDB extends SQLiteOpenHelper {
     public static final String FRIDAY_TABLE_NAME = "friday_table";
     public static final String LESSONS_TIME = "time_table";
 
-    public static final String COL_1_ = "ID";
+    public static final String COL_1 = "ID";
     public static final String COL_2 = "NAME";
     public static final String COL_3 = "TIME";
     public static final String COL_4 = "LENGTH";
 
     public ScheduleDB(Context context) {
-        super(context, DATABASE_NAME, null, 14);
+        super(context, DATABASE_NAME, null, 15);
     }
 
     public void onCreate(SQLiteDatabase db) {
@@ -113,8 +113,6 @@ public class ScheduleDB extends SQLiteOpenHelper {
         contentValues.put(COL_2, lesson.getName());
         contentValues.put(COL_3, lesson.getTime());
         contentValues.put(COL_4, lesson.getLength());
-
-
 
         db.update(tableName, contentValues, "NAME = ? AND TIME = ? AND LENGTH = ?", new String[]{name, time, length});
     }

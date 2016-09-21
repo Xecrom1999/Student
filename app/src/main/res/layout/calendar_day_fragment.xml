@@ -3,18 +3,30 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ום רביעי, 14 ספטמבר 2016"
+        android:id="@+id/day_date_text"
+        android:textSize="14sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@android:color/tertiary_text_light" />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/calendar_day_list">
+        android:layout_height="wrap_content"
+        android:id="@+id/calendar_day_list"
+        android:layout_below="@id/day_date_text"
+        android:layout_marginTop="8dp">
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        android:textColor="@color/secondary_text"
+        android:textColor="@android:color/tertiary_text_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_events_string"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:layout_centerInParent="true"
         android:id="@+id/no_events_text"
         />

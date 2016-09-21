@@ -31,10 +31,18 @@
     <string name="delete_string">מחק</string>
     <string name="cancel_string">ביטול</string>
     <string name="week_view_string">תצוגה שבועית</string>
-    <string name="days_view">תצוגה יומית</string>
+    <string name="days_view_string">תצוגה יומית</string>
     <string name="lesson_string">שיעור</string>
     <string name="add_time_string">הוסף שעה</string>
     <string name="enter_title_string">הכנס כותרת</string>
+    <string name="subject_string">מקצוע</string>
+    <string name="setDefaultLesson_string">קבע ברירת מחדל לשיעור</string>
+    <string name="enter_length_string">הכנס אורך שיעור</string>
+    <string name="enter_name_string">הכנס מקצוע</string>
+    <string name="today_events_string">אירועי היום</string>
+    <string name="edit_string">ערוך</string>
+    <string name="event_created_string">אירוע נוצר!</string>
+    <string name="event_saved_string">אירוע נשמר!</string>
 
     <string-array
         name="days_names">

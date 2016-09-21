@@ -40,10 +40,10 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.ViewHolder> {
         View itemLayoutView;
 
         if (viewType == HEADER_TYPE) {
-            itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.week_view_header, parent, false);
+            itemLayoutView = LayoutInflater.from(ctx).inflate(R.layout.week_view_header, parent, false);
         }
 
-        else itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.week_view_item, parent, false);
+        else itemLayoutView = LayoutInflater.from(ctx).inflate(R.layout.week_view_item, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(itemLayoutView, viewType);
         return viewHolder;

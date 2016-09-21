@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.Calendar;
 
+import Database.DefaultLessonsDB;
 import Database.ScheduleDB;
 import Fragments.ScheduleDayFragment;
 import Interfaces.EditModeListener;
@@ -42,6 +43,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     boolean editMode;
     Menu menu;
     InputMethodManager imm;
+    DefaultLessonsDB db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,25 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         setupToolbar();
         
         dataBase = new ScheduleDB(this);
+
+        db = new DefaultLessonsDB(this);
+
+        boolean isNew = getSharedPreferences("data", MODE_PRIVATE).getBoolean("isNew", true);
+        getSharedPreferences("data", MODE_PRIVATE).edit().putBoolean("isNew", false);
+        if (isNew) {
+            db.insertData("8:00", "45");
+            db.insertData("8:45", "45");
+            db.insertData("9:30", "45");
+            db.insertData("10:15", "45");
+            db.insertData("12:00", "45");
+            db.insertData("12:45", "45");
+            db.insertData("13:30", "45");
+            db.insertData("14:15", "45");
+            db.insertData("15:00", "45");
+            db.insertData("15:45", "45");
+            db.insertData("16:30", "45");
+            db.insertData("17:15", "45");
+        }
 
         adapter = new PagerAdapter(getSupportFragmentManager());
 
@@ -186,8 +207,8 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     }
 
     @Override
-    public void openLesson(Lesson lesson) {
-
+    public void openLesson(int position, Lesson lesson) {
+        daysFragments[getPosition()].openLesson(position, lesson);
     }
 
     @Override

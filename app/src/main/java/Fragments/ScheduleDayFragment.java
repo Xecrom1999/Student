@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.student.Lesson;
 import com.example.user.student.NewLessonActivity;
@@ -92,35 +93,28 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
         return list;
     }
 
-    public void newLesson(Lesson lesson) {
-        Intent intent = new Intent(ctx, NewLessonActivity.class);
-
-        intent.putExtra("isNew", false);
-        intent.putExtra("name", lesson.getName());
-        intent.putExtra("time", lesson.getTime());
-        intent.putExtra("length", lesson.getLength());
-        intent.putExtra("itemPosition", position);
-
-        startActivityForResult(intent, 1);
-        getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
+    public void newLesson() {
+        newLesson(true);
     }
 
-    public void newLesson() {
-        /*Intent intent = new Intent(ctx, NewLessonActivity.class);
-        
+    private void newLesson(boolean isNew) {
+        Intent intent = new Intent(ctx, NewLessonActivity.class);
+
         intent.putExtra("isNew", true);
-       
-        startActivityForResult(intent, 1);
-        getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);*/
 
         int number = adapter.getItemCount();
         if (editMode) number--;
 
+        intent.putExtra("itemPosition", number);
+
         InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
-        new NewLessonFragment(getActivity(), editMode ? adapter.getItemCount() : adapter.getItemCount() + 1).show(getFragmentManager(), "TAG");
-
+        startActivityForResult(intent, 1);
+        if (isNew)
+            getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
+        //else
+            //getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
     }
 
     public void onClick(View v) {
@@ -134,9 +128,9 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
         listener.startEditMode();
     }
 
-    public void updateLesson(int position,  Lesson lesson) {
+    public void updateLesson(int position, Lesson lesson) {
+        database.updateData(this.position, adapter.getItemAtPosition(position), lesson);
         adapter.updateLesson(position, lesson);
-        database.updateData(position, adapter.getItemAtPosition(position), lesson);
     }
 
     public void deleteLesson(int position, Lesson lesson) {
@@ -149,9 +143,14 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
             Lesson lesson = new Lesson(data.getStringExtra("name"), data.getStringExtra("time"), data.getStringExtra("length"));
-            if (data.getBooleanExtra("isNew", true))
+            if (data.getBooleanExtra("isNew", true)) {
                 lessonDone(lesson);
+                Toast.makeText(ctx, "שיעור נוסף", Toast.LENGTH_SHORT).show();
+                newLesson(false);
+            }
             else updateLesson(data.getIntExtra("position", 0), lesson);
+
+
         }
     }
 
@@ -165,5 +164,19 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
         editMode = !editMode;
         adapter.toggleEditMode();
         updateText();
+    }
+
+    public void openLesson(int position, Lesson lesson) {
+
+            Intent intent = new Intent(ctx, NewLessonActivity.class);
+
+            intent.putExtra("isNew", false);
+            intent.putExtra("name", lesson.getName());
+            intent.putExtra("time", lesson.getTime());
+            intent.putExtra("length", lesson.getLength());
+            intent.putExtra("itemPosition", position);
+
+            startActivityForResult(intent, 1);
+            getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
     }
 }

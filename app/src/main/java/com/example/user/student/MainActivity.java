@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,13 +16,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     ImageView calender_img;
     ImageView schedule_img;
     ImageView list_img;
-    Configuration config;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        setupToolbar();
+        setContentView(R.layout.main_activity);
 
         calender_img = (ImageView) findViewById(R.id.calendar_img);
         calender_img.setOnClickListener(this);
@@ -34,13 +30,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         list_img = (ImageView) findViewById(R.id.list_img);
         list_img.setOnClickListener(this);
 }
-
-    private void setupToolbar() {
-        config = getResources().getConfiguration();
-        toolbar = (Toolbar) findViewById(R.id.main_bar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.menu_string);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -53,8 +42,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
             switch (v.getId()) {
                 case R.id.calendar_img:
-                    startActivity(new Intent(this, CalendarActivity.class));
-                    overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+                    //startActivity(new Intent(this, CalendarActivity.class));
+                    //overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/html");
+                    intent.putExtra(Intent.EXTRA_EMAIL, "arielg1000@gmail.com");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Student");
+                    intent.putExtra(Intent.EXTRA_TEXT, "This is my email.");
+                    startActivity(Intent.createChooser(intent, "Send Email"));
                     break;
                 case R.id.schedule_img:
                     startActivity(new Intent(this, ScheduleActivity.class));

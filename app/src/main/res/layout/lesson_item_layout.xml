@@ -5,7 +5,7 @@
     android:background="@drawable/lesson_item"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:layout_marginTop="5dp"
+    android:layout_marginBottom="6dp"
     android:id="@+id/lesson_layout"
 >
     <TextView

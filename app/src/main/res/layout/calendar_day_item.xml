@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:background="@drawable/calendar_day_item_background"
-    android:elevation="10dp">
+    android:layout_height="72dp"
+    android:background="@drawable/calendar_day_item_background">
 
-    <TextView
-        android:id="@+id/day_item_title"
+        <TextView
+            android:id="@+id/day_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="71dp"
+            android:text="הכותרת שלי"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:ellipsize="end"
+            android:textColor="@android:color/secondary_text_light"
+            android:layout_marginStart="48dp"/>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="הכותרת שלי"
-        android:textSize="28dp"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:ellipsize="end"
-        android:textColor="@android:color/secondary_text_light"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_below="@id/day_item_title"
+        android:layout_centerHorizontal="true"
         />
 
-</LinearLayout>
+</RelativeLayout>

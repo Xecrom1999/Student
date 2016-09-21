@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.user.student.R;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +42,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         this.listener = listener;
         this.ctx = ctx;
         this.position = position;
+        this.database = database;
+
+        datesList = getDatesList();
+        titlesList = getTitlesList();
+
         calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, position);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -53,9 +58,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        this.database = database;
-        datesList = getDatesList();
-        titlesList = getTitlesList();
+
+        //i//f (position == 0)
+       // for (int i = 0; i < titlesList.size(); i++) Log.d("MYLOG", titlesList.get(i));
     }
 
     @Override
@@ -86,14 +91,20 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 holder.root.setBackground(ctx.getResources().getDrawable(R.drawable.rectangle_drawable2));
             if (month != calendar.get(Calendar.MONTH))
                 holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
-            for (int i = 0; i < datesList.size(); i++) {
+            for (int i = 0; i < datesList.size(); i++) { 
                     if (datesList.get(i).equals(String.valueOf(calendar.getTime()))) {
-                        holder.title_text.setText(titlesList.get(i));
-                        datesList.remove(i);
-                        titlesList.remove(i);
+                        if (holder.num == 0) {
+                            holder.title_text.setText(titlesList.get(i));
+                        }
+                        holder.num++;
+                        if (holder.num > 1) {
+                            holder.number_text.setVisibility(View.VISIBLE);
+                            holder.number_text.setText((holder.num-1) + "+");
+                        }
                     }
             }
         }
+
         calendar.add(Calendar.DATE, 1);
     }
 
@@ -130,12 +141,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         return titlesList;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView day_text;
-        LinearLayout root;
-        int month;
         TextView title_text;
+        TextView number_text;
+
+        RelativeLayout root;
+        int month;
+
+        int num;
 
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -143,9 +158,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 day_text = (TextView) itemView.findViewById(R.id.calendar_item_text2);
             else {
                 day_text = (TextView) itemView.findViewById(R.id.calendar_item_text);
-                root = (LinearLayout) itemView.findViewById(R.id.item_root);
                 title_text = (TextView) itemView.findViewById(R.id.calendar_item_title);
+                number_text = (TextView) itemView.findViewById(R.id.calendar_item_number);
+                number_text.setVisibility(View.INVISIBLE);
+                root = (RelativeLayout) itemView.findViewById(R.id.item_root);
                 itemView.setOnClickListener(this);
+                itemView.setOnLongClickListener(this);
+
+                num = 0;
             }
         }
 
@@ -155,7 +175,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
+            listener.newEvent(Integer.valueOf(day_text.getText().toString()), month, calendar.get(Calendar.YEAR), !title_text.getText().toString().isEmpty());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
             listener.openDay(Integer.valueOf(day_text.getText().toString()), month, calendar.get(Calendar.YEAR));
+            return true;
         }
     }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.user.student.CalendarDayActivity;
+import com.example.user.student.NewEventActivity;
 import com.example.user.student.R;
 
 import java.text.SimpleDateFormat;
@@ -71,12 +72,44 @@ public class MonthFragment extends Fragment implements CalendarListener{
     }
 
     @Override
+    public void newEvent(int day, int month, int year, boolean hasEvent) {
+        Intent intent = new Intent(getActivity(), hasEvent ? CalendarDayActivity.class : NewEventActivity.class);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, month, day);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+       intent.putExtra("calendar", calendar);
+
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        adapter = new CalendarAdapter(getContext(), position, this, database);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
     public void openDay(int day, int month, int year) {
         Intent intent = new Intent(getActivity(), CalendarDayActivity.class);
-        
-        intent.putExtra("day", day);
-        intent.putExtra("month", month);
-        intent.putExtra("year", year);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(year, month, day);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        intent.putExtra("calendar", calendar);
+
         startActivityForResult(intent, 1);
     }
 

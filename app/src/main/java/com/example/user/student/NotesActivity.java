@@ -49,6 +49,19 @@ public class NotesActivity extends ActionBarActivity {
 
         notesPack = (ImageButton) findViewById(R.id.notes_img);
 
+        setToolbar();
+
+
+
+        width = (int) convertDpToPixel(105);
+        height = (int) convertDpToPixel(125);
+
+        showNotes();
+
+        addNote();
+    }
+
+    private void setToolbar() {
         toolbar = (Toolbar) findViewById(R.id.notes_bar);
         setSupportActionBar(toolbar);
 
@@ -60,13 +73,6 @@ public class NotesActivity extends ActionBarActivity {
         }
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(getString(R.string.my_notes_string));
-
-        width = (int) convertDpToPixel(105);
-        height = (int) convertDpToPixel(125);
-
-        showNotes();
-
-        addNote();
     }
 
     private String getTime(String dateString) {
@@ -334,7 +340,7 @@ public class NotesActivity extends ActionBarActivity {
                         noteClicked(v);
                     } else dataBase.updateData(id, String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
 
-                    notesPack.setImageResource(R.drawable.new_note);
+                    notesPack.setImageResource(R.drawable.pack_of_notes);
                     break;
 
                 case MotionEvent.ACTION_MOVE:

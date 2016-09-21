@@ -101,12 +101,21 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
 
     }
 
-    public void setEventTime(View view) {
-    }
-
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, NewEventActivity.class);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        intent.putExtra("calendar", calendar);
+
+
+
+
         startActivity(intent);
     }
 

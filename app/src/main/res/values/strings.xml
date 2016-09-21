@@ -31,13 +31,20 @@
     <string name="delete_string">Delete</string>
     <string name="cancel_string">Cancel</string>
     <string name="week_view_string">Week view</string>
-    <string name="days_view">Days view</string>
+    <string name="days_view_string">Days view</string>
     <string name="lesson_string">Lesson</string>
     <string name="add_time_string">Add time</string>
     <string name="enter_title_string">Please enter a title</string>
+    <string name="subject_string">Subject</string>
+    <string name="setDefaultLesson_string">Set as default for lesson</string>
+    <string name="enter_length_string">Enter the length</string>
+    <string name="enter_name_string">Enter a subject</string>
+    <string name="today_events_string">Today\'s events</string>
+    <string name="edit_string">Edit</string>
+    <string name="event_created_string">Event created!</string>
+    <string name="event_saved_string">Event saved!</string>
 
-    <string-array
-        name="days_names">
+    <string-array name="days_names">
         <item>Sunday</item>
         <item>Monday</item>
         <item>Tuesday</item>

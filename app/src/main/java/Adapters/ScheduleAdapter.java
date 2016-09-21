@@ -2,18 +2,13 @@ package Adapters;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.user.student.Lesson;
 import com.example.user.student.R;
@@ -73,11 +68,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         if (editMode) viewHolder.layout.setBackground(ctx.getDrawable(R.drawable.lesson_item));
         else viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.primary_600));
 
-        viewHolder.name_text.setText(list.get(position).getName());
-        viewHolder.time_text.setText(ctx.getString(R.string.starts_at_string) + " " + list.get(position).getTime());
-        viewHolder.length_text.setText(list.get(position).getLength() + " " + ctx.getString(R.string.minutes_string));
+        Lesson lesson = list.get(position);
+
+        viewHolder.name_text.setText(lesson.getName());
+        viewHolder.time_text.setText(ctx.getString(R.string.starts_at_string) + " " + lesson.getTime());
+        viewHolder.length_text.setText(lesson.getLength() + " " + ctx.getString(R.string.minutes_string));
         viewHolder.number_text.setText(position + 1 + "");
         viewHolder.delete_button.setVisibility(editMode ? View.VISIBLE : View.INVISIBLE);
+
+        viewHolder.lesson = lesson;
     }
 
     @Override
@@ -114,6 +113,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         TextView time_text, length_text, name_text, number_text;
         ImageView delete_button;
         RelativeLayout layout;
+        int position;
+        Lesson lesson;
 
         public ViewHolder(View itemLayoutView, int viewType) {
             super(itemLayoutView);
@@ -134,16 +135,16 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         @Override
         public void onClick(View v) {
 
-            Lesson lesson = new Lesson(name_text.getText().toString(), time_text.getText().toString(), length_text.getText().toString());
-
             if (getPosition() < 0) return;
+
+            if (delete_button.getVisibility() == View.INVISIBLE) return;
 
             switch (v.getId()) {
                 case R.id.lesson_delete:
                     listener.deleteLesson(getPosition(), lesson);
                     break;
                 case R.id.lesson_layout:
-                    listener.openLesson(lesson);
+                    listener.openLesson(getPosition(), lesson);
                     break;
             }
         }
