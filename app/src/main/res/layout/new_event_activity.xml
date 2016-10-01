@@ -10,6 +10,28 @@
        layout="@layout/toolbar_layout"
         android:id="@+id/event_toolbar"/>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/title_hint_string"
+        android:id="@+id/event_title_edit"
+        android:gravity="start|center_vertical"
+        android:inputType="textCapSentences"
+        android:paddingStart="16dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:imeOptions="actionNext"
+        android:background="@color/primary_second"
+        android:textCursorDrawable="@drawable/cursur_drawable"
+        android:lines="1"
+        android:layout_below="@id/event_toolbar"
+        android:focusableInTouchMode="true"
+        />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/event_title_edit">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,43 +44,29 @@
         android:weightSum="4">
 
 
-        <EditText
+
+
+        <LinearLayout
+            android:id="@+id/event_date_layout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="@string/title_hint_string"
-            android:id="@+id/event_title_edit"
-            android:gravity="start|center_vertical"
-            android:inputType="textCapSentences"
-            android:paddingStart="16dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:imeOptions="actionNext"
-            android:background="@color/primary_second"
-            android:textCursorDrawable="@drawable/cursur_drawable"
-            android:lines="1"
-            />
+            android:layout_height="115dp"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground">
 
-    <LinearLayout
-        android:id="@+id/event_date_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="16dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground">
-
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="15dp"
-            android:src="@drawable/ic_calendar"
-            android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="15dp"
+                android:src="@drawable/ic_calendar"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="יום רביעי, 14 ספטמבר 2016"
                 android:id="@+id/event_date_text"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="@color/primary_text"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
@@ -69,24 +77,23 @@
         <LinearLayout
             android:id="@+id/event_time_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="115dp"
             android:padding="16dp"
-            android:layout_weight="1"
             android:background="?attr/selectableItemBackground">
 
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="15dp"
-            android:src="@drawable/ic_clock"
-            android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="15dp"
+                android:src="@drawable/ic_clock"
+                android:layout_gravity="center_vertical"/>
 
-        <TextView
+            <TextView
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/add_time_string"
                 android:id="@+id/event_time_text"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/primary_text"
@@ -106,9 +113,8 @@
         <LinearLayout
             android:id="@+id/event_comment_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="115dp"
             android:padding="16dp"
-            android:layout_weight="1"
             android:background="?attr/selectableItemBackground">
 
             <ImageView
@@ -119,7 +125,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <EditText
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:id="@+id/comment_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,7 +134,10 @@
                 android:background="@android:color/transparent"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences"
-                android:layout_gravity="center_vertical"/>
+                android:paddingBottom="15dp"
+                android:layout_marginTop="29dp"
+                android:gravity="center_vertical"
+                />
 
         </LinearLayout>
 
@@ -136,23 +145,22 @@
         <LinearLayout
             android:id="@+id/event_reminder_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="115dp"
             android:padding="16dp"
-            android:layout_weight="1"
             android:background="?attr/selectableItemBackground">
 
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="15dp"
-            android:src="@drawable/ic_reminder"
-            android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="15dp"
+                android:src="@drawable/ic_reminder"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/reminder_string"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:gravity="center_vertical"
@@ -161,8 +169,21 @@
                 android:id="@+id/reminder_text"
                 />
 
+            <ImageView
+                android:id="@+id/remove_reminder"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="17dp"
+                android:src="@drawable/ic_x"
+                android:layout_gravity="center_vertical"
+                />
+
         </LinearLayout>
 
     </LinearLayout>
+
+</ScrollView>
+
+
 
 </RelativeLayout>

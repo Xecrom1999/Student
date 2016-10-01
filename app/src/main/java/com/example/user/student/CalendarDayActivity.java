@@ -48,7 +48,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
 
         pager = (ViewPager) findViewById(R.id.calendar_day_pager);
         adapter = new PagerAdapter(getSupportFragmentManager(), this);
-        calendar.add(Calendar.DATE, -adapter.getCount()/2);
+        calendar.add(Calendar.DATE, adapter.getCount()/2);
 
         pager.setAdapter(adapter);
         pager.setCurrentItem(adapter.getCount()/2);
@@ -62,7 +62,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(calendar.getTime());
-        cal.add(Calendar.DATE, pager.getCurrentItem());
+        cal.add(Calendar.DATE, -pager.getCurrentItem());
 
         adapter.notifyDataSetChanged();
 
@@ -133,7 +133,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         public Fragment getItem(int position) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(calendar.getTime());
-            cal.add(Calendar.DATE, position);
+            cal.add(Calendar.DATE, -position);
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);

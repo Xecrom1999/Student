@@ -11,13 +11,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,14 +50,16 @@ public class NotesActivity extends ActionBarActivity {
 
         setToolbar();
 
-
-
         width = (int) convertDpToPixel(105);
         height = (int) convertDpToPixel(125);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        removeAllNotes();
         showNotes();
-
-        addNote();
     }
 
     private void setToolbar() {
@@ -115,7 +116,7 @@ public class NotesActivity extends ActionBarActivity {
 
             else if (DateUtils.isToday(date.getTime())) timeToDate = getString(R.string.today_string);
 
-            else if (diff < 0)timeToDate = sdf.format(date);
+            else if (diff > 0) timeToDate = sdf.format(date);
 
             else timeToDate = getString(R.string.passed_string);
 
@@ -130,8 +131,7 @@ public class NotesActivity extends ActionBarActivity {
         Cursor res = dataBase.getAllData();
 
         while (res.moveToNext()) {
-            dataBase.updateData(res.getString(0), getTime(res.getString(5)));
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), getTime(res.getString(5)));
         }
         theLayout.invalidate();
     }
@@ -218,6 +218,7 @@ public class NotesActivity extends ActionBarActivity {
                     case DialogInterface.BUTTON_POSITIVE:
                         dataBase.deleteAll();
                         removeAllNotes();
+                        addNote();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
@@ -228,14 +229,6 @@ public class NotesActivity extends ActionBarActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.delete_all_string) + "?").setPositiveButton(getString(R.string.delete_string), dialogClickListener)
                 .setNegativeButton(getString(R.string.cancel_string), dialogClickListener).show();
-    }
-
-    private void removeNotes() {
-        for (int i = 0; i < theLayout.getChildCount(); i++) {
-            View v = theLayout.getChildAt(i);
-            if (v.getId() != toolbar.getId() && v.getId() != notesPack.getId())
-                theLayout.removeView(v);
-        }
     }
 
     private void removeAllNotes() {
@@ -255,6 +248,7 @@ public class NotesActivity extends ActionBarActivity {
                 doBreak = true;
             }
         }
+        addNote();
     }
 
     public void onBackPressed() {
@@ -264,16 +258,24 @@ public class NotesActivity extends ActionBarActivity {
     }
 
     public void noteClicked(View v) {
-        Intent intent = new Intent(this, NewNoteActivity.class);
+        Intent intent;
 
         String id = v.getTag().toString();
+        Note note = getNoteById(id);
 
-        if (!id.equals("")) {
-            Note note = getNoteById(id);
-            intent.putExtra("title", note.getTitle());
+        String title = note.getTitle();
+        if (title.isEmpty()) {
+            intent = new Intent(this, NewNoteActivity.class);
+            intent.putExtra("isNew", true);
+        }
+        else {
+            intent = new Intent(this, NoteActivity.class);
+            intent.putExtra("title", title);
             intent.putExtra("description", note.getDescription());
             intent.putExtra("date", note.getDate());
         }
+
+        intent.putExtra("id", v.getTag().toString());
 
         chosen = v;
         
@@ -311,7 +313,7 @@ public class NotesActivity extends ActionBarActivity {
 
                     notesPack.setImageResource(R.drawable.ic_can);
 
-                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta), "", "");
+                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta), "");
 
                     id = v.getTag().toString();
                     break;
@@ -348,11 +350,11 @@ public class NotesActivity extends ActionBarActivity {
                             .getLayoutParams();
                     layoutParams.leftMargin = x - _xDelta;
                     layoutParams.topMargin = y - _yDelta;
-                    layoutParams.rightMargin = -250;
-                    layoutParams.bottomMargin = -250;
+                    layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.note_margin);
+                    layoutParams.bottomMargin = (int) getResources().getDimension(R.dimen.note_margin);
                     v.setLayoutParams(layoutParams);
 
-                    if (inGarbageRange(x, y)) v.setAlpha((float) 0.75);
+                    if (inGarbageRange(x, y)) v.setAlpha((float) 0.5);
                     else  v.setAlpha((float) 1);
                     break;
                 default:
@@ -375,37 +377,14 @@ public class NotesActivity extends ActionBarActivity {
         return px;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null) {
-            String title = data.getStringExtra("title");
-            String description = data.getStringExtra("description");
-            String date = data.getStringExtra("date");
-            String time = data.getStringExtra("time");
-
-            date = (date.equals("none") ? "" : date);
-            time = (time.equals("none") ? "" : time);
-
-            TextView title_text = (TextView) chosen.findViewById(R.id.note_title);
-            TextView date_text = (TextView) chosen.findViewById(R.id.note_date);
-            TextView time_text = (TextView) chosen.findViewById(R.id.note_time);
-
-            dataBase.updateData(chosen.getTag().toString(),title, description, date, time);
-
-            title_text.setText(title);
-            date_text.setText(date);
-            time_text.setText(time);
-        }
-    }
 
     private Note getNoteById(String id) {
         Cursor res = dataBase.getAllData();
         Note note = null;
         while (res.moveToNext())
             if (res.getString(0).equals(id))  {
-               note = new Note(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
+                note = new Note(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5));
                 break;
             }
         return note;

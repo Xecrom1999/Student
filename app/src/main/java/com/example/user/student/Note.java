@@ -14,15 +14,13 @@ public class Note {
     private String xPos;
     private String yPos;
     private String date;
-    private String time;
 
-    public Note(String title, String description, String xPos, String yPos, String date, String time) {
+    public Note(String title, String description, String xPos, String yPos, String date) {
         this.title = title;
         this.description = description;
         this.xPos = xPos;
         this.yPos = yPos;
         this.date = date;
-        this.time = time;
     }
 
     public String getTitle() {
@@ -66,11 +64,4 @@ public class Note {
         this.yPos = yPos;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 }

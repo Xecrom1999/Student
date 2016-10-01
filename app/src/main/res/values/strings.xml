@@ -43,6 +43,7 @@
     <string name="edit_string">Edit</string>
     <string name="event_created_string">Event created!</string>
     <string name="event_saved_string">Event saved!</string>
+    <string name="lesson_added_string">Lesson added</string>
 
     <string-array name="days_names">
         <item>Sunday</item>

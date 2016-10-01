@@ -42,14 +42,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
             switch (v.getId()) {
                 case R.id.calendar_img:
-                    //startActivity(new Intent(this, CalendarActivity.class));
-                    //overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/html");
-                    intent.putExtra(Intent.EXTRA_EMAIL, "arielg1000@gmail.com");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Student");
-                    intent.putExtra(Intent.EXTRA_TEXT, "This is my email.");
-                    startActivity(Intent.createChooser(intent, "Send Email"));
+                    startActivity(new Intent(this, CalendarActivity.class));
+                    overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
                     break;
                 case R.id.schedule_img:
                     startActivity(new Intent(this, ScheduleActivity.class));

@@ -24,17 +24,16 @@ public class NotesDB extends SQLiteOpenHelper {
     public static final String COL_4 = "X_POS";
     public static final String COL_5 = "Y_POS";
     public static final String COL_6 = "DATE";
-    public static final String COL_7 = "TIME";
 
     Context ctx;
 
     public NotesDB(Context context) {
-        super(context, DATABASE_NAME, null, 20);
+        super(context, DATABASE_NAME, null, 21);
         this.ctx = context;
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DESCRIPTION TEXT,X_POS TEXT,Y_POS TEXT,DATE TEXT,TIME TEXT)");
+        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DESCRIPTION TEXT,X_POS TEXT,Y_POS TEXT,DATE TEXT)");
 
     }
 
@@ -55,7 +54,6 @@ public class NotesDB extends SQLiteOpenHelper {
         contentValues.put(COL_4, note.getxPos());
         contentValues.put(COL_5, note.getyPos());
         contentValues.put(COL_6, note.getDate());
-        contentValues.put(COL_7, note.getTime());
 
         return db.insert(TABLE_NAME, null, contentValues);
     }
@@ -91,7 +89,7 @@ public class NotesDB extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }
 
-    public void updateData(String id, String title, String description, String date, String time) {
+    public void updateData(String id, String title, String description, String date) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -100,17 +98,6 @@ public class NotesDB extends SQLiteOpenHelper {
         contentValues.put(COL_2, title);
         contentValues.put(COL_3, description);
         contentValues.put(COL_6, date);
-        contentValues.put(COL_7, time);
-
-        db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
-    }
-
-    public void updateData(String id, String time) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(COL_7, time);
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }

@@ -251,7 +251,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         super.onPause();
         View view = getCurrentFocus();
         if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            //imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

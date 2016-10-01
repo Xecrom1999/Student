@@ -31,6 +31,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import Database.NotesDB;
+
 public class NewNoteActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
 
     EditText title_edit;
@@ -46,7 +48,9 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     CheckBox checkBox;
     Configuration config;
 
-    boolean editMode;
+    NotesDB database;
+
+    boolean isNew;
 
     View note_item;
     DatePickerDialog datePicker;
@@ -57,10 +61,22 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     LinearLayout box_layout;
     LinearLayout layout;
 
+    Intent intent;
+
+    String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_note_activity);
+
+        database = new NotesDB(this);
+
+        intent = getIntent();
+
+        id = intent.getStringExtra("id");
+
+        isNew = intent.getBooleanExtra("isNew", false);
 
         initializeViews();
         setListeners();
@@ -72,8 +88,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
         title_edit.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        keyboardVisible(true);
-
     }
 
     private void setupToolbar() {
@@ -90,16 +104,16 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     }
 
     private void setTexts() {
-        String title = getIntent().getStringExtra("title");
-        String description = getIntent().getStringExtra("description");
-        String date = getIntent().getStringExtra("date");
+
+        String title = intent.getStringExtra("title");
+        String description = intent.getStringExtra("description");
+        String date = intent.getStringExtra("date");
 
         title_edit.setText(title);
         description_edit.setText(description);
 
-        if (title.isEmpty()) {
+        if (isNew) {
             setTomorrowDate();
-            editMode = true;
         }
 
         else if (date.isEmpty()) checkBox.setChecked(false);
@@ -110,8 +124,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
             setTime();
         }
 
-        if (!title.isEmpty()) cantEdit();
-
         String date2 = date_edit.getText().toString();
         Calendar cal = Calendar.getInstance();
 
@@ -119,26 +131,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
             cal.setTime(format.parse(date2));
             datePicker = new DatePickerDialog(this, new DatePickerListener(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         } catch (ParseException e) {}
-    }
-
-    private void cantEdit() {
-        editMode = false;
-
-        title_edit.setEnabled(false);
-        description_edit.setEnabled(false);
-        date_layout.setEnabled(false);
-        box_layout.setEnabled(false);
-        checkBox.setEnabled(false);
-    }
-
-    private void startEditing() {
-        editMode = true;
-
-        title_edit.setEnabled(true);
-        description_edit.setEnabled(true);
-        date_layout.setEnabled(true);
-        box_layout.setEnabled(true);
-        checkBox.setEnabled(true);
     }
 
     private void setListeners() {
@@ -172,7 +164,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_note_menu, menu);
-        if (!getIntent().getStringExtra("title").isEmpty()) menu.getItem(0).setIcon(R.drawable.ic_edit);
         return true;
     }
 
@@ -181,13 +172,8 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
         int id = item.getItemId();
 
-        if (id == R.id.done_id) {
-            if (!editMode) {
-                item.setIcon(R.mipmap.ic_done);
-                startEditing();
-            }
-            else finishNote();
-        }
+        if (id == R.id.done_id)
+            finishNote();
 
         if (id == android.R.id.home) onBackPressed();
         return true;
@@ -201,24 +187,24 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     }
 
     public void finishNote() {
-        
-        if (title_edit.getText().toString().trim().isEmpty()) {
+
+        String title = title_edit.getText().toString();
+
+        if (title.trim().isEmpty()) {
             Toast.makeText(getApplicationContext(), R.string.enter_title_string, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Intent intent = new Intent();
-        intent.putExtra("title", title_edit.getText().toString());
-        intent.putExtra("description", description_edit.getText().toString());
-        if (checkBox.isChecked()) {
-            intent.putExtra("date", date_edit.getText().toString());
-            intent.putExtra("time", time_edit.getText().toString());
-        } else {
-            intent.putExtra("date", "");
-            intent.putExtra("time", "");
-        }
+        String description = description_edit.getText().toString();
 
-        setResult(0, intent);
+        String date;
+
+        if (checkBox.isChecked())
+            date = date_edit.getText().toString();
+        else
+            date = "";
+
+        database.updateData(id, title, description, date);
 
         finish();
         overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
@@ -241,28 +227,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         }
-    }
-
-    private boolean isDateValid() {
-
-        String date = date_edit.getText().toString();
-
-        if (date.equals("")) return true;
-
-        Date d;
-
-        try {
-            d = format.parse(date);
-        } catch (ParseException e) {
-            return false;
-        }
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, - 1);
-
-        if (d.before(cal.getTime())) return false;
-
-        return true;
     }
 
     public void openCalendar(View view) {
@@ -344,11 +308,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
     public void setTime() {
 
-        if (!isDateValid()) {
-            time_edit.setText("-");
-            return;
-        }
-
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
 
         String dateString = date_edit.getText().toString();
@@ -385,11 +344,12 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
             else if (DateUtils.isToday(date.getTime())) timeToDate = getString(R.string.today_string);
 
-            else timeToDate = sdf.format(date);
+            else if (diff > 0) timeToDate = sdf.format(date);
+
+            else timeToDate = getString(R.string.passed_string);
+
             time_edit.setText(timeToDate);
             time_text.setText(timeToDate);
-        } catch (ParseException e) {
-            timeToDate = getString(R.string.passed_string);
-        }
+        } catch (ParseException e) {}
     }
 }

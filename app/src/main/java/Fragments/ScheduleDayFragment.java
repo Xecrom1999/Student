@@ -107,14 +107,8 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
 
         intent.putExtra("itemPosition", number);
 
-        InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
         startActivityForResult(intent, 1);
-        if (isNew)
-            getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
-        //else
-            //getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+        getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
     }
 
     public void onClick(View v) {
@@ -145,7 +139,7 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
             Lesson lesson = new Lesson(data.getStringExtra("name"), data.getStringExtra("time"), data.getStringExtra("length"));
             if (data.getBooleanExtra("isNew", true)) {
                 lessonDone(lesson);
-                Toast.makeText(ctx, "שיעור נוסף", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, getString(R.string.lesson_added_string), Toast.LENGTH_SHORT).show();
                 newLesson(false);
             }
             else updateLesson(data.getIntExtra("position", 0), lesson);

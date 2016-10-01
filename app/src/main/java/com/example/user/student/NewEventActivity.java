@@ -1,7 +1,9 @@
 package com.example.user.student;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +50,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     LinearLayout comment_layout;
     EditText comment_edit;
     ImageView remove_time;
+    ImageView remove_reminder;
     EditText title_edit;
     CalendarDB database;
     TextView reminder_text;
@@ -83,12 +86,13 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         remove_time = (ImageView) findViewById(R.id.remove_time);
         remove_time.setOnClickListener(this);
 
+        remove_reminder = (ImageView) findViewById(R.id.remove_reminder);
+        remove_reminder.setOnClickListener(this);
+
         time_text = (TextView) findViewById(R.id.event_time_text);
-        time_text.setOnClickListener(this);
         toolbar = (Toolbar) findViewById(R.id.event_toolbar);
 
         date_text = (TextView) findViewById(R.id.event_date_text);
-        date_text.setOnClickListener(this);
 
         reminder_text = (TextView) findViewById(R.id.reminder_text);
 
@@ -115,6 +119,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         }
 
         remove_time.setVisibility(time_text.getText().toString().isEmpty() ? View.INVISIBLE : View.VISIBLE);
+        remove_reminder.setVisibility(reminder_text.getText().toString().isEmpty() ? View.INVISIBLE : View.VISIBLE);
 
         setSupportActionBar(toolbar);
 
@@ -124,8 +129,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         toolbar.setBackgroundColor(getColor(R.color.primary_second));
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void setDate(Calendar calendar) {
@@ -158,31 +161,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         int id = item.getItemId();
 
         if (id == R.id.save_id) {
-
-            if (title_edit.getText().toString().trim().isEmpty()) {
-                Toast.makeText(getApplicationContext(), getString(R.string.enter_title_string), Toast.LENGTH_SHORT).show();
-                title_edit.requestFocus();
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                return true;
-            }
-
-            hideKeyboard();
-            String title = title_edit.getText().toString();
-            String date = String.valueOf(calendar.getTime());
-            String time = time_text.getText().toString();
-            String comment = comment_edit.getText().toString();
-            String reminder = reminder_text.getText().toString();
-
-            finish();
-
-            if (isOld) {
-                database.updateData(this.id, new Event(title, date, time, comment, reminder));
-                Toast.makeText(getApplicationContext(), getString(R.string.event_saved_string), Toast.LENGTH_SHORT).show();
-            }
-            else {
-                database.insertData(new Event(title, date, time, comment, reminder));
-                Toast.makeText(getApplicationContext(), getString(R.string.event_created_string), Toast.LENGTH_SHORT).show();
-            }
+            saveEvent();
         }
 
         if (id == android.R.id.home) {
@@ -193,22 +172,47 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
+    private void saveEvent() {
+
+        if (title_edit.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), getString(R.string.enter_title_string), Toast.LENGTH_SHORT).show();
+            title_edit.requestFocus();
+            imm.showSoftInput(title_edit, InputMethodManager.SHOW_FORCED);
+            return;
+        }
+
+        hideKeyboard();
+        String title = title_edit.getText().toString();
+        String date = String.valueOf(calendar.getTime());
+        String time = time_text.getText().toString();
+        String comment = comment_edit.getText().toString();
+        String reminder = reminder_text.getText().toString();
+
+        finish();
+
+        if (isOld) {
+            database.updateData(this.id, new Event(title, date, time, comment, reminder));
+            Toast.makeText(getApplicationContext(), getString(R.string.event_saved_string), Toast.LENGTH_SHORT).show();
+        }
+        else {
+            database.insertData(new Event(title, date, time, comment, reminder));
+            Toast.makeText(getApplicationContext(), getString(R.string.event_created_string), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
         int id = v.getId();
 
         switch (id) {
-
             case R.id.event_date_layout:
-            case R.id.event_date_text:
                 datePicker = new DatePickerDialog(this, R.style.PickersStyle, new DatePickerListener(), mYear, mMonth, mDay);
                 datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 showDialog(0);
                 break;
 
             case R.id.event_time_layout:
-            case R.id.event_time_text:
                 String str = time_text.getText().toString();
                 int hour;
                 int min;
@@ -235,8 +239,14 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.event_reminder_layout:
+                AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(this, AlarmReceiver.class);
+                PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+                alarmMgr.set(AlarmManager.RTC, Calendar.getInstance().getTimeInMillis() + 0, alarmIntent);
 
                 break;
+
         }
     }
 

@@ -128,5 +128,6 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
         super.onStart();
 
         adapter.update();
+        no_events_text.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.INVISIBLE);
     }
 }

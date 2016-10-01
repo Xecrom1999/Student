@@ -43,6 +43,7 @@
     <string name="edit_string">ערוך</string>
     <string name="event_created_string">אירוע נוצר!</string>
     <string name="event_saved_string">אירוע נשמר!</string>
+    <string name="lesson_added_string">שיעור נוסף</string>
 
     <string-array
         name="days_names">
