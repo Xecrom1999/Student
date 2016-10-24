@@ -5,20 +5,17 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,13 +24,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import Database.CalendarDB;
+import Fragments.ReminderFragment;
+import Interfaces.ReminderListener;
 
-public class NewEventActivity extends AppCompatActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener {
+public class NewEventActivity extends AppCompatActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, ReminderListener {
 
     TextView time_text;
     Toolbar toolbar;
@@ -43,7 +41,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     int mDay;
     int mMonth;
     int mYear;
-    InputMethodManager imm;
     LinearLayout date_layout;
     LinearLayout time_layout;
     LinearLayout reminder_layout;
@@ -64,10 +61,24 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     String comment;
     String reminder;
 
+    int reminder_hour;
+    int reminder_minute;
+    int reminder_count;
+    String reminder_units;
+
+    int hour;
+    int minute;
+
+    AlarmManager alarmManager;
+
+    int num;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_activity);
+        
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         database = new CalendarDB(this);
 
@@ -104,18 +115,34 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         isOld = intent.getBooleanExtra("isOld", false);
 
+        num = intent.getIntExtra("position", 0);
+
         if (isOld) {
-            id = intent.getStringExtra("id");
-            title = intent.getStringExtra("title");
-            time = intent.getStringExtra("time");
-            comment = intent.getStringExtra("comment");
-            reminder = intent.getStringExtra("reminder");
+            Cursor res = database.getRowByDate(String.valueOf(calendar.getTime()));
+            res.moveToNext();
+            int i = num;
+            while (i != 0 && res.moveToNext()) i--;
+
+            id = res.getString(0);
+            title = res.getString(1);
+            time = res.getString(3);
+            comment = res.getString(4);
+            reminder = res.getString(5);
 
             title_edit.setText(title);
             title_edit.setSelection(title_edit.length());
             time_text.setText(time);
             comment_edit.setText(comment);
-            reminder_text.setText(reminder);
+
+            if (!
+
+                    reminder.isEmpty()) {
+                int reminder_count = Integer.parseInt(reminder.substring(reminder.indexOf("count") + 5, reminder.indexOf("units")));
+                String reminder_units = reminder.substring(reminder.indexOf("units") + 5, reminder.indexOf("hour"));
+                int reminder_hour = Integer.parseInt(reminder.substring(reminder.indexOf("hour") + 4, reminder.indexOf("minute")));
+                int reminder_minute = Integer.parseInt(reminder.substring(reminder.indexOf("minute") + 6));
+                setReminderText(reminder_count, reminder_units, reminder_hour, reminder_minute);
+            }
         }
 
         remove_time.setVisibility(time_text.getText().toString().isEmpty() ? View.INVISIBLE : View.VISIBLE);
@@ -127,9 +154,8 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
         getSupportActionBar().setTitle("");
         toolbar.setBackgroundColor(getColor(R.color.primary_second));
-
-        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
+
 
     private void setDate(Calendar calendar) {
         String str = format.format(calendar.getTime());
@@ -148,6 +174,12 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         time_text.setText(hour + ":" + min);
 
         remove_time.setVisibility(View.VISIBLE);
+
+        reminder_text.setText("");
+        remove_reminder.setVisibility(View.INVISIBLE);
+
+        this.hour = hourOfDay;
+        this.minute = minute;
     }
 
     @Override
@@ -165,7 +197,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (id == android.R.id.home) {
-            hideKeyboard();
+            Helper.hideKeyboard(this);
             finish();
         }
 
@@ -176,28 +208,77 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         if (title_edit.getText().toString().trim().isEmpty()) {
             Toast.makeText(getApplicationContext(), getString(R.string.enter_title_string), Toast.LENGTH_SHORT).show();
-            title_edit.requestFocus();
-            imm.showSoftInput(title_edit, InputMethodManager.SHOW_FORCED);
+            Helper.showKeyboard(this, title_edit);
             return;
         }
 
-        hideKeyboard();
+        Helper.hideKeyboard(this);
+
         String title = title_edit.getText().toString();
         String date = String.valueOf(calendar.getTime());
         String time = time_text.getText().toString();
         String comment = comment_edit.getText().toString();
-        String reminder = reminder_text.getText().toString();
+
+        String reminder;
+
+        if (!time_text.getText().toString().isEmpty()) reminder_hour = -1;
+
+        if (reminder_text.getText().toString().isEmpty())
+            reminder = "";
+        else
+            reminder = "count" + reminder_count + "units" + reminder_units + "hour" + reminder_hour +  "minute" + reminder_minute;
+
+        Event event = new Event(title, date, time, comment, reminder);
 
         finish();
 
         if (isOld) {
-            database.updateData(this.id, new Event(title, date, time, comment, reminder));
+            database.updateData(this.id, event);
             Toast.makeText(getApplicationContext(), getString(R.string.event_saved_string), Toast.LENGTH_SHORT).show();
         }
         else {
-            database.insertData(new Event(title, date, time, comment, reminder));
+            this.id = String.valueOf(database.insertData(event));
             Toast.makeText(getApplicationContext(), getString(R.string.event_created_string), Toast.LENGTH_SHORT).show();
         }
+
+        if (reminder_text.getText().toString().isEmpty())
+            alarmManager.cancel(PendingIntent.getBroadcast(this, Integer.parseInt(this.id), new Intent(this, AlarmReceiver.class), 0));
+        else setReminder(event);
+    }
+
+    private void setReminder(Event event) {
+
+        String[] arr = getResources().getStringArray(R.array.reminder_spinner2);
+        int units;
+        if (reminder_units.equals(arr[0])) units = Calendar.MINUTE;
+        else if (reminder_units.equals(arr[1])) units = Calendar.HOUR;
+        else if (reminder_units.equals(arr[2])) units = Calendar.DATE;
+        else units = Calendar.WEEK_OF_YEAR;
+
+        boolean hasTime = !time_text.getText().toString().isEmpty();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(calendar.getTime());
+
+        if (!hasTime) {
+            cal.set(Calendar.HOUR_OF_DAY, reminder_hour);
+            cal.set(Calendar.MINUTE, reminder_minute);
+        } else {
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.MINUTE, minute);
+        }
+        cal.add(units, -reminder_count);
+
+        if (cal.getTime().getTime() < System.currentTimeMillis() - 60000) return;
+
+
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        alarmIntent.putExtra("title", event.getTitle());
+        alarmIntent.putExtra("calendar", calendar);
+        alarmIntent.putExtra("comment", event.getComment());
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, Integer.parseInt(id), alarmIntent, 0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
 
     @Override
@@ -230,29 +311,78 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
             case R.id.remove_time:
                 time_text.setText("");
                 remove_time.setVisibility(View.INVISIBLE);
+                reminder_text.setText("");
+                remove_reminder.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.event_comment_layout:
-                comment_edit.requestFocus();
-                comment_edit.setSelection(comment_edit.length());
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                Helper.showKeyboard(this, comment_edit);
                 break;
 
             case R.id.event_reminder_layout:
-                AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                Intent intent = new Intent(this, AlarmReceiver.class);
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-
-                alarmMgr.set(AlarmManager.RTC, Calendar.getInstance().getTimeInMillis() + 0, alarmIntent);
-
+                new ReminderFragment(this, this.reminder_count, this.reminder_units, this.reminder_hour, this.reminder_minute, this, time_text.getText().toString().isEmpty() ? false : true).show(getSupportFragmentManager(), "");
                 break;
 
+            case R.id.remove_reminder:
+                reminder_text.setText("");
+                remove_reminder.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
         return datePicker;
+    }
+
+    @Override
+    public void setReminderText(int count, String unitsBefore, int hour, int minute) {
+
+        boolean hasTime = !time_text.getText().toString().isEmpty();
+
+        String m = String.valueOf(minute);
+
+        if (minute < 10)
+            m = "0" + minute;
+
+        String str = count + " " + unitsBefore;
+        boolean f = unitsBefore.equals(getResources().getStringArray(R.array.reminder_spinner)[0]);
+
+        if (count < 3)
+        if (hasTime) {
+            String[] arr = getResources().getStringArray(R.array.reminder_spinner2);
+            if (count == 0) str = getString(R.string.on_event_time_string);
+
+            else if (count == 1) {
+                if (unitsBefore.equals(arr[0])) str = getString(R.string.minute_before_string);
+                else if (unitsBefore.equals(arr[1])) str = getString(R.string.hour_before_string);
+                else if (unitsBefore.equals(arr[2])) str = getString(R.string.day_before_string);
+                else if (unitsBefore.equals(arr[3])) str = getString(R.string.week_before_string);
+            }
+            else if (count == 2) {
+                if (unitsBefore.equals(arr[0])) str = getString(R.string.two_minutes_before_string);
+                else if (unitsBefore.equals(arr[1])) str = getString(R.string.two_hours_before_string);
+                else if (unitsBefore.equals(arr[2])) str = getString(R.string.two_days_before_string);
+                else if (unitsBefore.equals(arr[3])) str = getString(R.string.two_weeks_before_string);
+            }
+
+        } else {
+            if (count == 0) str = getString(R.string.on_the_day_string);
+            else if (count == 1) str = getString(f ? R.string.day_before_string : R.string.week_before_string);
+            else if (count == 2) str = getString(f ? R.string.two_days_before_string : R.string.two_weeks_before_string);
+        }
+
+        if (hasTime) reminder_text.setText(str);
+        else {
+            reminder_text.setText(str + " " +  getString(R.string.at_string) + " " + hour + ":" + m);
+            this.reminder_hour = hour;
+            this.reminder_minute = minute;
+        }
+
+        this.reminder_count = count;
+        this.reminder_units = unitsBefore;
+
+        remove_reminder.setVisibility(View.VISIBLE);
     }
 
     private class DatePickerListener implements DatePickerDialog.OnDateSetListener {
@@ -274,14 +404,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onPause() {
         super.onPause();
-        hideKeyboard();
-    }
-
-    private void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        Helper.hideKeyboard(this);
     }
 
     @Override

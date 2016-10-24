@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -72,6 +73,7 @@ public class NoteActivity extends AppCompatActivity {
         id = intent.getStringExtra("id");
 
         title_text.setText(title);
+
         description_text.setText(description);
         date_text.setText(date);
         setTime();

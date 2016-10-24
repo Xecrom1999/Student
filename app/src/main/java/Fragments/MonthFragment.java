@@ -50,6 +50,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
         calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, position);
         month = format.format(calendar.getTime());
+        Log.d("MYLOG", month);
 
         return view;
     }
@@ -85,7 +86,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
        intent.putExtra("calendar", calendar);
 
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
     @Override
@@ -110,7 +111,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
         intent.putExtra("calendar", calendar);
 
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
     public String getMonth() {

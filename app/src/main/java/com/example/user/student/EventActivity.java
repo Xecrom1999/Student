@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +40,10 @@ public class EventActivity extends AppCompatActivity {
     String comment;
     String reminder;
 
+    Intent intent;
+
+    int num;
+
     final SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
 
     @Override
@@ -64,17 +67,32 @@ public class EventActivity extends AppCompatActivity {
         date_text = (TextView) findViewById(R.id.event_date_text);
         reminder_text = (TextView) findViewById(R.id.reminder_text);
 
-
-        Intent intent = getIntent();
+        intent = getIntent();
 
         calendar = (Calendar) intent.getExtras().get("calendar");
 
+        setAll();
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
+        getSupportActionBar().setTitle("");
+        toolbar.setBackgroundColor(getColor(R.color.primary_second));
+    }
+
+    private void setAll() {
         setDate(calendar);
 
         Cursor res = database.getRowByDate(String.valueOf(calendar.getTime()));
+
+        num = intent.getIntExtra("position", 99);
+
+        int i = num;
+
         res.moveToNext();
-        int num = intent.getIntExtra("position", 0);
-        while (num != 0 && res.moveToNext()) num--;
+
+        while (i > 0 && res.moveToNext()) i--;
 
         id = res.getString(0);
         title = res.getString(1);
@@ -91,15 +109,14 @@ public class EventActivity extends AppCompatActivity {
         else comment_edit.setText(comment);
 
         if (reminder.isEmpty()) reminder_layout.setVisibility(View.GONE);
-        else reminder_text.setText(reminder);
 
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
-        getSupportActionBar().setTitle("");
-        toolbar.setBackgroundColor(getColor(R.color.primary_second));
-
+        else {
+            int reminder_count = Integer.parseInt(reminder.substring(reminder.indexOf("count") + 5, reminder.indexOf("units")));
+            String reminder_units = reminder.substring(reminder.indexOf("units") + 5, reminder.indexOf("hour"));
+            int reminder_hour = Integer.parseInt(reminder.substring(reminder.indexOf("hour") + 4, reminder.indexOf("minute")));
+            int reminder_minute = Integer.parseInt(reminder.substring(reminder.indexOf("minute") + 6));
+            setReminderText(reminder_count, reminder_units, reminder_hour, reminder_minute);
+        }
     }
 
     private void setDate(Calendar calendar) {
@@ -121,12 +138,8 @@ public class EventActivity extends AppCompatActivity {
         if (id == R.id.event_edit) {
             Intent intent = new Intent(this, NewEventActivity.class);
             intent.putExtra("isOld", true);
-            intent.putExtra("title", title);
-            intent.putExtra("time", time);
-            intent.putExtra("comment", comment);
-            intent.putExtra("reminder", reminder);
-            intent.putExtra("id", this.id);
             intent.putExtra("calendar", calendar);
+            intent.putExtra("position", num);
             startActivity(intent);
             finish();
         }
@@ -158,5 +171,46 @@ public class EventActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getColor(isStarted ? R.color.dark_second : R.color.primary_dark));
         }
+    }
+
+    public void setReminderText(int count, String unitsBefore, int hour, int minute) {
+        String m = String.valueOf(minute);
+
+        if (minute < 10)
+            m = "0" + minute;
+
+        String str = count + " " + unitsBefore;
+
+        boolean f = unitsBefore.equals(getResources().getStringArray(R.array.reminder_spinner)[0]);
+
+        boolean hasTime = !time_text.getText().toString().isEmpty();
+
+        if (count < 3)
+            if (hasTime) {
+                String[] arr = getResources().getStringArray(R.array.reminder_spinner2);
+                if (count == 0) str = getString(R.string.on_event_time_string);
+
+                else if (count == 1) {
+                    if (unitsBefore.equals(arr[0])) str = getString(R.string.minute_before_string);
+                    else if (unitsBefore.equals(arr[1])) str = getString(R.string.hour_before_string);
+                    else if (unitsBefore.equals(arr[2])) str = getString(R.string.day_before_string);
+                    else if (unitsBefore.equals(arr[3])) str = getString(R.string.week_before_string);
+                }
+                else if (count == 2) {
+                    if (unitsBefore.equals(arr[0])) str = getString(R.string.two_minutes_before_string);
+                    else if (unitsBefore.equals(arr[1])) str = getString(R.string.two_hours_before_string);
+                    else if (unitsBefore.equals(arr[2])) str = getString(R.string.two_days_before_string);
+                    else if (unitsBefore.equals(arr[3])) str = getString(R.string.two_weeks_before_string);
+                }
+
+            } else {
+                if (count == 0) str = getString(R.string.on_the_day_string);
+                else if (count == 1) str = getString(f ? R.string.day_before_string : R.string.week_before_string);
+                else if (count == 2) str = getString(f ? R.string.two_days_before_string : R.string.two_weeks_before_string);
+            }
+
+
+        if (hasTime) reminder_text.setText(str);
+        else reminder_text.setText(str + " " +  getString(R.string.at_string) + " " + hour + ":" + m);
     }
 }

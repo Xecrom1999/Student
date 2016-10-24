@@ -16,16 +16,12 @@
     <string name="no_events_string">No Events</string>
     <string name="save_string">save</string>
     <string name="reminder_string">Add a reminder</string>
-    <string name="new_event_string">New Event</string>
     <string name="calendar_string">Calendar</string>
     <string name="starts_at_string">starts at:</string>
-    <string name="class_length_string">class length (min)</string>
-    <string name="class_string">Class</string>
     <string name="minutes_string">minutes</string>
     <string name="schedule_string">Schedule</string>
     <string name="new_note_string">New note</string>
     <string name="my_notes_string">My notes</string>
-    <string name="menu_string">Main menu</string>
     <string name="delete_day_string">Delete day</string>
     <string name="delete_all_string">Delete all</string>
     <string name="delete_string">Delete</string>
@@ -44,6 +40,19 @@
     <string name="event_created_string">Event created!</string>
     <string name="event_saved_string">Event saved!</string>
     <string name="lesson_added_string">Lesson added</string>
+    <string name="at_string">at-</string>
+    <string name="before_string">before</string>
+    <string name="on_the_day_string">The same day</string>
+    <string name="day_before_string">The day before</string>
+    <string name="done_string">Done</string>
+    <string name="two_days_before_string">Two days before</string>
+    <string name="week_before_string">The week before</string>
+    <string name="two_weeks_before_string">2 weeks before</string>
+    <string name="on_event_time_string">At event\'s time</string>
+    <string name="minute_before_string">Minute before</string>
+    <string name="hour_before_string">Hour before</string>
+    <string name="two_minutes_before_string">2 minutes before</string>
+    <string name="two_hours_before_string">2 hours before</string>
 
     <string-array name="days_names">
         <item>Sunday</item>
@@ -52,5 +61,17 @@
         <item>Wednesday</item>
         <item>Thursday</item>
         <item>Friday</item>
+    </string-array>
+
+    <string-array name="reminder_spinner">
+        <item>days before</item>
+        <item>weeks before</item>
+    </string-array>
+
+    <string-array name="reminder_spinner2">
+        <item>minutes before</item>
+        <item>hours before</item>
+        <item>days before</item>
+        <item>weeks before</item>
     </string-array>
 </resources>

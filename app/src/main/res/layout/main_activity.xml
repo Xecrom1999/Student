@@ -23,7 +23,7 @@
             android:textSize="60dp"
             android:textColor="@color/primary_color"
             android:gravity="center"
-            android:id="@+id/title_text"
+            android:id="@+id/main_title"
             android:layout_above="@+id/schedule_img"
             android:layout_alignStart="@+id/calendar_img"
             />

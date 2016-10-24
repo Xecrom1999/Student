@@ -44,6 +44,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
 
         calendar = (Calendar) intent.getExtras().get("calendar");
+        if (calendar == null) return;
         mCalendar = (Calendar) intent.getExtras().get("calendar");
 
         pager = (ViewPager) findViewById(R.id.calendar_day_pager);
@@ -54,7 +55,6 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         pager.setCurrentItem(adapter.getCount()/2);
 
         setupToolbar();
-
     }
 
     @Override

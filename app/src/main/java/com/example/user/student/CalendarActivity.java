@@ -1,12 +1,10 @@
 package com.example.user.student;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +29,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     final static int NUM_OF_FRAGMENTS = 25;
     Toolbar toolbar;
     FloatingActionButton fab;
-    InputMethodManager imm;
 
     CalendarDB database;
 
@@ -43,19 +39,19 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
 
         database = new CalendarDB(this);
 
-        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-
         fragments = new MonthFragment[NUM_OF_FRAGMENTS];
         for (int i = 0; i < NUM_OF_FRAGMENTS; i++) {
             fragments[i] = new MonthFragment(i, database);
         }
 
         initializeViews();
+
+        if (getIntent().getBooleanExtra("fromNoti", false)) {
+            Intent intent = new Intent(this, CalendarDayActivity.class);
+            Calendar calendar = (Calendar) getIntent().getExtras().get("calendar");
+            intent.putExtra("calendar", calendar);
+            startActivity(intent);
+        }
     }
 
     private void initializeViews() {
@@ -113,14 +109,10 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
 
         intent.putExtra("calendar", calendar);
 
-
-
-
         startActivity(intent);
     }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
-
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -146,7 +138,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
             onBackPressed();
             return true;
         }
-
         return false;
     }
 

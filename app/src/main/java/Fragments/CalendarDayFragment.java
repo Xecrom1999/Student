@@ -1,5 +1,7 @@
 package Fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.user.student.AlarmReceiver;
 import com.example.user.student.EventActivity;
 import com.example.user.student.R;
 
@@ -33,17 +36,21 @@ import static android.R.attr.id;
  */
 public class CalendarDayFragment extends Fragment implements CalendarDayListener {
 
-    private final Calendar calendar;
-    private final Context ctx;
-    private final CalendarDB database;
-    private final EventDateListener listener;
+    private Calendar calendar;
+    private Context ctx;
+    private CalendarDB database;
+    private EventDateListener listener;
     RecyclerView recyclerView;
     CalendarDayAdapter adapter;
     TextView no_events_text;
     TextView date_text;
     String str;
     final SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+    AlarmManager alarmManager;
 
+    public CalendarDayFragment() {
+
+    }
 
     public CalendarDayFragment(Context ctx, CalendarDB database, Calendar calendar, EventDateListener listener) {
         this.calendar = calendar;
@@ -83,6 +90,7 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
 
         date_text.setText(str);
 
+        alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
     }
 
     @Override
@@ -93,7 +101,7 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
         intent.putExtra("calendar", listener.getCurrentDate());
         intent.putExtra("position", position);
 
-        startActivityForResult(intent, 2);
+        startActivity(intent);
     }
 
     @Override
@@ -113,6 +121,8 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
                 String id = res.getString(0);
 
                 database.deleteData(id);
+
+                alarmManager.cancel(PendingIntent.getBroadcast(ctx, Integer.valueOf(id), new Intent(ctx, AlarmReceiver.class), 0));
 
                 listener.update();
 

@@ -8,9 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import java.util.Calendar;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -24,20 +27,26 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        String title = intent.getStringExtra("title");
+        Calendar calendar = (Calendar) intent.getExtras().get("calendar");
+
+        Intent myIntent = new Intent(context, MainActivity.class);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        myIntent.putExtra("calendar", calendar);
+        myIntent.putExtra("fromNoti", true);
 
         Notification notification = new NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText("Random text")
+                .setContentTitle(intent.getStringExtra("title"))
+                .setContentText(intent.getStringExtra("comment"))
                 .setSmallIcon(R.drawable.ic_calendar)
-                .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, CalendarActivity.class), 0))
+                .setContentIntent(PendingIntent.getActivity(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setVibrate(new long[] {500, 500})
                 .setAutoCancel(true)
                 .setSound(alarmSound)
+                .setColor(context.getColor(R.color.primary_color))
+                .setLights(context.getColor(R.color.primary_color), 1000, 1000)
                 .build();
 
         StatusBarNotification [] not = notificationManager.getActiveNotifications();
-        Log.d("MYLOG", String.valueOf(not.length));
         notificationManager.notify(not.length, notification);
     }
 }

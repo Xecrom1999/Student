@@ -16,16 +16,12 @@
     <string name="no_events_string">אין אירועים</string>
     <string name="save_string">שמור</string>
     <string name="reminder_string">הוסף תזכורת</string>
-    <string name="new_event_string">אירוע חדש</string>
     <string name="calendar_string">לוח שנה</string>
     <string name="starts_at_string">מתחיל ב:</string>
-    <string name="class_length_string">אורך השיעור:</string>
-    <string name="class_string">שיעור</string>
     <string name="minutes_string">דקות</string>
     <string name="schedule_string">מערכת שעות</string>
     <string name="new_note_string">פתק חדש</string>
     <string name="my_notes_string">הפתקים שלי</string>
-    <string name="menu_string">תפריט ראשי</string>
     <string name="delete_day_string">מחק יום</string>
     <string name="delete_all_string">מחק הכל</string>
     <string name="delete_string">מחק</string>
@@ -44,6 +40,20 @@
     <string name="event_created_string">אירוע נוצר!</string>
     <string name="event_saved_string">אירוע נשמר!</string>
     <string name="lesson_added_string">שיעור נוסף</string>
+    <string name="at_string">ב-</string>
+    <string name="before_string">לפני</string>
+    <string name="on_the_day_string">באותו יום</string>
+    <string name="day_before_string">יום לפני</string>
+    <string name="done_string">בוצע</string>
+    <string name="two_days_before_string">יומיים לפני</string>
+    <string name="week_before_string">שבוע לפני</string>
+    <string name="two_weeks_before_string">שבועיים לפני</string>
+    <string name="on_event_time_string">בשעת האירוע</string>
+    <string name="minute_before_string">דקה לפני</string>
+    <string name="hour_before_string">שעה לפני</string>
+    <string name="two_minutes_before_string">2 דקות לפני</string>
+    <string name="two_hours_before_string">שעתיים לפני</string>
+
 
     <string-array
         name="days_names">
@@ -53,5 +63,17 @@
         <item>רביעי</item>
         <item>חמישי</item>
         <item>שישי</item>
+    </string-array>
+
+    <string-array name="reminder_spinner">
+        <item>ימים לפני</item>
+        <item>שבועות לפני</item>
+    </string-array>
+
+    <string-array name="reminder_spinner2">
+        <item>דקות לפני</item>
+        <item>שעות לפני</item>
+        <item>ימים לפני</item>
+        <item>שבועות לפני</item>
     </string-array>
 </resources>
