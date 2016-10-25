@@ -7,10 +7,8 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -102,7 +100,7 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
-        toolbar.setBackgroundColor(getColor(R.color.primary_second));
+        toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
     }
 
     public void onClick(View v) {
@@ -179,7 +177,7 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_second : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_item : R.color.primary_dark));
         }
     }
 

@@ -34,16 +34,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         myIntent.putExtra("calendar", calendar);
         myIntent.putExtra("fromNoti", true);
 
+        Log.d("MYLOG", calendar.getTime().toString());
+
         Notification notification = new NotificationCompat.Builder(context)
-                .setContentTitle(intent.getStringExtra("title"))
-                .setContentText(intent.getStringExtra("comment"))
+                .setContentTitle("תזכורת")
+                .setContentText(intent.getStringExtra("title"))
                 .setSmallIcon(R.drawable.ic_calendar)
                 .setContentIntent(PendingIntent.getActivity(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setVibrate(new long[] {500, 500})
                 .setAutoCancel(true)
                 .setSound(alarmSound)
-                .setColor(context.getColor(R.color.primary_color))
-                .setLights(context.getColor(R.color.primary_color), 1000, 1000)
+                .setColor(context.getColor(R.color.primary_calendar))
+                .setLights(context.getColor(R.color.primary_calendar), 1000, 1000)
                 .build();
 
         StatusBarNotification [] not = notificationManager.getActiveNotifications();

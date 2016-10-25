@@ -1,109 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity"
-    android:orientation="vertical"
-                >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context="Fragments.MainFragment"
-                    android:background="@color/background_color">
+    <TextView
+        android:padding="16dp"
+        android:layout_height="128dp"
+        android:layout_width="128dp"
+        android:text="@string/schedule_string"
+        android:textColor="@android:color/white"
+        android:background="@drawable/schedule_button"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:id="@+id/schedule_button"
+        />
 
-        <TextView
-            android:alpha="10"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Student"
-            android:textSize="60dp"
-            android:textColor="@color/primary_color"
-            android:gravity="center"
-            android:id="@+id/main_title"
-            android:layout_above="@+id/schedule_img"
-            android:layout_alignStart="@+id/calendar_img"
-            />
+    <TextView
+        android:padding="16dp"
+        android:layout_height="128dp"
+        android:layout_width="128dp"
+        android:text="@string/my_notes_string"
+        android:textColor="@android:color/white"
+        android:background="@drawable/notes_button"
+        android:gravity="start|center_vertical"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:id="@+id/notes_button"
+        android:layout_below="@+id/schedule_button"
+         />
 
+    <TextView
+        android:padding="16dp"
+        android:layout_height="128dp"
+        android:layout_width="128dp"
+        android:text="@string/calendar_string"
+        android:textColor="@android:color/white"
+        android:background="@drawable/calendar_button"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginEnd="32dp"
+        android:id="@+id/calendar_button"
+        android:layout_below="@id/notes_button"
+        />
 
-        <ImageView
-            android:id="@+id/calendar_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@mipmap/ic_calendar3"
-            android:layout_below="@+id/list_img"
-            android:layout_toStartOf="@+id/list_img"
-            android:background="@drawable/main_buttons"
-            />
-
-        <TextView
-            android:textStyle="italic"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calendar"
-            android:layout_below="@+id/calendar_img"
-            android:layout_alignStart="@+id/calendar_img"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/textView4"
-            android:textColor="@android:color/white"/>
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/schedule_img"
-            android:src="@mipmap/ic_schedule2"
-            android:layout_above="@+id/list_img"
-            android:layout_toEndOf="@+id/textView2"
-            android:background="@drawable/main_buttons"
-            />
-
-        <TextView
-            android:textStyle="italic"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Schedule"
-            android:id="@+id/textView"
-            android:layout_below="@+id/schedule_img"
-            android:layout_alignStart="@+id/schedule_img"
-            android:layout_marginLeft="10dp"
-            android:textColor="@android:color/white"/>
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@mipmap/ic_list3"
-            android:id="@+id/list_img"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/main_buttons"
-            />
-
-        <TextView
-            android:textStyle="italic"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="To Do List"
-            android:layout_below="@+id/list_img"
-            android:layout_alignStart="@+id/list_img"
-            android:id="@+id/textView2"
-            android:layout_marginLeft="10dp"
-            android:textColor="@android:color/white"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
-
-
-    </RelativeLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

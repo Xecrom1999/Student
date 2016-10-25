@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.Calendar;
@@ -104,6 +107,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.schedule_string);
+        toolbar.setBackgroundResource(R.color.primary_schedule);
     }
 
     private int getPosition() {
@@ -251,7 +255,29 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         super.onPause();
         View view = getCurrentFocus();
         if (view != null) {
-            //imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        changeColor(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        changeColor(true);
+    }
+
+    private void changeColor(boolean isStarted) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.primary_dark));
         }
     }
 }

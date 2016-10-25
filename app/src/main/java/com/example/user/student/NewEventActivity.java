@@ -134,9 +134,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
             time_text.setText(time);
             comment_edit.setText(comment);
 
-            if (!
-
-                    reminder.isEmpty()) {
+            if (!reminder.isEmpty()) {
                 int reminder_count = Integer.parseInt(reminder.substring(reminder.indexOf("count") + 5, reminder.indexOf("units")));
                 String reminder_units = reminder.substring(reminder.indexOf("units") + 5, reminder.indexOf("hour"));
                 int reminder_hour = Integer.parseInt(reminder.substring(reminder.indexOf("hour") + 4, reminder.indexOf("minute")));
@@ -152,8 +150,8 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
-        getSupportActionBar().setTitle("");
-        toolbar.setBackgroundColor(getColor(R.color.primary_second));
+        getSupportActionBar().setTitle(title_edit.getText().toString().isEmpty() ? R.string.new_event_string : R.string.edit_event_string);
+        toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
     }
 
 
@@ -171,12 +169,14 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (minute < 10)
             min = "0" + minute;
 
+        if (time_text.getText().toString().isEmpty()) {
+            reminder_text.setText("");
+            remove_reminder.setVisibility(View.INVISIBLE);
+        }
+
         time_text.setText(hour + ":" + min);
 
         remove_time.setVisibility(View.VISIBLE);
-
-        reminder_text.setText("");
-        remove_reminder.setVisibility(View.INVISIBLE);
 
         this.hour = hourOfDay;
         this.minute = minute;
@@ -425,7 +425,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_second : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_item : R.color.primary_dark));
         }
     }
 }

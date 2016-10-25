@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,6 +88,8 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
         date_text = (TextView) view.findViewById(R.id.day_date_text);
 
         str = format.format(calendar.getTime());
+
+        if (DateUtils.isToday(calendar.getTimeInMillis())) str += " (" + ctx.getString(R.string.today_string) + ")";
 
         date_text.setText(str);
 

@@ -53,6 +53,9 @@
     <string name="hour_before_string">Hour before</string>
     <string name="two_minutes_before_string">2 minutes before</string>
     <string name="two_hours_before_string">2 hours before</string>
+    <string name="edit_note_string">Edit note</string>
+    <string name="new_event_string">New event</string>
+    <string name="edit_event_string">Edit event</string>
 
     <string-array name="days_names">
         <item>Sunday</item>

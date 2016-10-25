@@ -1,15 +1,11 @@
 package com.example.user.student;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,32 +14,29 @@ import java.util.Calendar;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
     Toolbar toolbar;
-    ImageView calender_img;
-    ImageView schedule_img;
-    ImageView list_img;
-    TextView title_text;
+    TextView calender_button;
+    TextView schedule_button;
+    TextView notes_button;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        calender_img = (ImageView) findViewById(R.id.calendar_img);
-        calender_img.setOnClickListener(this);
+        calender_button = (TextView) findViewById(R.id.calendar_button);
+        calender_button.setOnClickListener(this);
 
-        schedule_img = (ImageView) findViewById(R.id.schedule_img);
-        schedule_img.setOnClickListener(this);
+        notes_button = (TextView) findViewById(R.id.notes_button);
+        notes_button.setOnClickListener(this);
 
-        list_img = (ImageView) findViewById(R.id.list_img);
-        list_img.setOnClickListener(this);
-
-        title_text = (TextView) findViewById(R.id.main_title);
+        schedule_button = (TextView) findViewById(R.id.schedule_button);
+        schedule_button.setOnClickListener(this);
 
         boolean fromNoti = getIntent().getBooleanExtra("fromNoti", false);
 
         if (fromNoti) {
             Intent intent = new Intent(this, CalendarActivity.class);
             intent.putExtra("fromNoti", true);
-            Calendar calendar = (Calendar) intent.getExtras().get("calendar");
+            Calendar calendar = (Calendar) getIntent().getExtras().get("calendar");
             intent.putExtra("calendar", calendar);
             startActivity(intent);
         }
@@ -75,15 +68,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         public void onClick(View v) {
 
             switch (v.getId()) {
-                case R.id.calendar_img:
+                case R.id.calendar_button:
                     startActivity(new Intent(this, CalendarActivity.class));
                     overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
                     break;
-                case R.id.schedule_img:
+                case R.id.schedule_button:
                     startActivity(new Intent(this, ScheduleActivity.class));
                     overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                     break;
-                case R.id.list_img:
+                case R.id.notes_button:
                     startActivity(new Intent(this, NotesActivity.class));
                     overridePendingTransition(R.anim.in_from_top, R.anim.out_to_bottom);
                     break;

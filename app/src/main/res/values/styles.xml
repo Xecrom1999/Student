@@ -17,7 +17,7 @@
     </style>
 
     <style name="PickersStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/primary_second</item>
+        <item name="colorAccent">@color/primary_new_item</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -35,9 +35,4 @@
         <item name="android:windowExitAnimation">@anim/dialog_exit</item>
     </style>
 
-    <style name="calendar_event_style" parent="@android:style/TextAppearance.Small">
-    <item name="android:textColor">#FF6600</item>
-    <item name="android:textStyle">bold</item>
-    <item name="android:textSize">8sp</item>
-    </style>
 </resources>

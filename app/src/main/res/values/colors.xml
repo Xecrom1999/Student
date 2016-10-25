@@ -2,11 +2,26 @@
 <resources>
     <color name="primary_color">#009688</color>
     <color name="primary_dark">#00796B</color>
-    <color name="primary_text">#212121</color>
+    <color name="primary_text">@android:color/primary_text_light</color>
     <color name="fab_color">#4CAF50</color>
     <color name="background_color">#FAFAFA</color>
-    <color name="primary_600">#00897B</color>
     <color name="event_text">#7F7F7F</color>
-    <color name="primary_second">#4CAF50</color>
-    <color name="dark_second">#388E3C</color>
+    <color name="primary_new_item">#4CAF50</color>
+    <color name="dark_new_item">#388E3C</color>
+    <color name="calender_header_bg">@android:color/transparent</color>
+    <color name="secondary_text">@android:color/secondary_text_light</color>
+    <color name="notes_primary">#FFC107</color>
+    <color name="note_status">#FFA000</color>
+    <color name="notes_background_color">#FFF8E1</color>
+    <color name="primary_calendar">#607D8B</color>
+    <color name="dark_calendar">#455A64</color>
+    <color name="calendar_400">#78909C</color>
+    <color name="calendar_background">#ECEFF1</color>
+    <color name="calendar_divider">#E0E0E0</color>
+    <color name="primary_schedule">#00BCD4</color>
+    <color name="dark_schedule">#0097A7</color>
+    <color name="schedule_600">#0097A7</color>
+    <color name="schedule_900">#006064</color>
+    <color name="schedule_800">#00838F</color>
+
 </resources>

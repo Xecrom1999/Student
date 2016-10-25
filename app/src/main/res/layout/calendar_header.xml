@@ -16,7 +16,7 @@
         android:textStyle="bold"
         android:textColor="@color/primary_text"
         android:id="@+id/calendar_item_text2"
-        android:background="#B2DFDB"
+        android:background="@color/calender_header_bg"
         />
 
 </LinearLayout>

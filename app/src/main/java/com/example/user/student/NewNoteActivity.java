@@ -1,51 +1,34 @@
 package com.example.user.student;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 import Database.NotesDB;
 
-public class NewNoteActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
+public class NewNoteActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
 
     EditText title_edit;
     EditText description_edit;
-    TextView date_edit;
-    TextView time_edit;
 
     TextView title_text;
-    TextView date_text;
-    TextView time_text;
 
-    LinearLayout date_layout;
-    CheckBox checkBox;
     Configuration config;
 
     NotesDB database;
@@ -53,12 +36,9 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     boolean isNew;
 
     View note_item;
-    DatePickerDialog datePicker;
-    final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
     InputMethodManager imm;
 
     Toolbar toolbar;
-    LinearLayout box_layout;
     LinearLayout layout;
 
     Intent intent;
@@ -84,8 +64,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
         setupToolbar();
 
-        format.setLenient(false);
-
         title_edit.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
@@ -100,65 +78,33 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         if (title_text.getText().toString().isEmpty())
             getSupportActionBar().setTitle(R.string.new_note_string);
-        else getSupportActionBar().setTitle("");
+        else getSupportActionBar().setTitle(R.string.edit_note_string);
+        toolbar.setBackgroundResource(R.color.notes_primary);
     }
 
     private void setTexts() {
 
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
-        String date = intent.getStringExtra("date");
 
         title_edit.setText(title);
         description_edit.setText(description);
-
-        if (isNew) {
-            setTomorrowDate();
-        }
-
-        else if (date.isEmpty()) checkBox.setChecked(false);
-
-        else {
-            date_edit.setText(date);
-            date_text.setText(date);
-            setTime();
-        }
-
-        String date2 = date_edit.getText().toString();
-        Calendar cal = Calendar.getInstance();
-
-        try {
-            cal.setTime(format.parse(date2));
-            datePicker = new DatePickerDialog(this, new DatePickerListener(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-        } catch (ParseException e) {}
     }
 
     private void setListeners() {
         title_edit.addTextChangedListener(this);
         description_edit.setOnFocusChangeListener(this);
-        checkBox.setOnCheckedChangeListener(this);
     }
 
     private void initializeViews() {
 
         layout = (LinearLayout) findViewById(R.id.linearLayout);
 
-        box_layout = (LinearLayout) findViewById(R.id.box_layout);
-
-        date_layout = (LinearLayout) findViewById(R.id.date_layout);
-
-        checkBox = (CheckBox) findViewById(R.id.date_check_box);
-
-        time_edit = (TextView) findViewById(R.id.time_text);
-
         note_item = findViewById(R.id.note_item);
         title_text = (TextView) note_item.findViewById(R.id.note_title);
-        date_text = (TextView) note_item.findViewById(R.id.note_date);
-        time_text = (TextView) note_item.findViewById(R.id.note_time);
 
         title_edit = (EditText) findViewById(R.id.title_edit);
         description_edit = (EditText) findViewById(R.id.description_edit);
-        date_edit = (TextView) findViewById(R.id.date_edit);
     }
 
     @Override
@@ -197,14 +143,7 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
         String description = description_edit.getText().toString();
 
-        String date;
-
-        if (checkBox.isChecked())
-            date = date_edit.getText().toString();
-        else
-            date = "";
-
-        database.updateData(id, title, description, date);
+        database.updateData2(id, title, description);
 
         finish();
         overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
@@ -229,19 +168,8 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
         }
     }
 
-    public void openCalendar(View view) {
-        showDialog(0);
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        return datePicker;
-    }
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
     }
 
     @Override
@@ -251,7 +179,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
     @Override
     public void afterTextChanged(Editable s) {
-
     }
 
     @Override
@@ -260,96 +187,13 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    protected void onResume() {
+        super.onResume();
 
-        date_layout.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
-
-        date_text.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
-        time_text.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
-
-        if (date_edit.getText().toString().trim().isEmpty()) setTomorrowDate();
-    }
-
-    public void toggleBox(View view) {
-        checkBox.toggle();
-    }
-
-    public class DatePickerListener implements DatePickerDialog.OnDateSetListener {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-            setDate(dayOfMonth, monthOfYear + 1, year - 2000);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(R.color.note_status));
         }
-    }
-
-    private void setTomorrowDate() {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 1);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-
-        setDate(day, month + 1, year - 2000);
-    }
-
-    private void setDate(int day, int month, int year) {
-
-        String str = month + "/" + year;
-        if (month < 10) str = "0" + str;
-        str = day + "/" + str;
-        if (day < 10) str = "0" + str;
-
-        date_edit.setText(str);
-        date_text.setText(str);
-
-        setTime();
-    }
-
-    public void setTime() {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-
-        String dateString = date_edit.getText().toString();
-
-        Date date;
-
-        String timeToDate;
-
-        Calendar cal = Calendar.getInstance();
-
-        try {
-            date = format.parse(dateString);
-
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -1);
-
-            int diff = (int)((date.getTime() - System.currentTimeMillis()) / (24 * 60 * 60 * 1000) + 1);
-
-            if (diff > 365) timeToDate = getString(R.string.year_string);
-
-            else if (diff > 29) {
-                diff /= 30;
-                if (diff == 1) timeToDate = getString(R.string.month_string);
-                else timeToDate =  "  " + diff + "  " + getString(R.string.months_string);
-            }
-
-            else if (diff > 6) {
-                diff /= 7;
-                if (diff == 1) timeToDate = getString(R.string.week_string);
-                else timeToDate = "  " + diff + "  " + getString(R.string.weeks_string);
-            }
-
-            else if (DateUtils.isToday(cal.getTime().getTime())) timeToDate = getString(R.string.tomorrow_string);
-
-            else if (DateUtils.isToday(date.getTime())) timeToDate = getString(R.string.today_string);
-
-            else if (diff > 0) timeToDate = sdf.format(date);
-
-            else timeToDate = getString(R.string.passed_string);
-
-            time_edit.setText(timeToDate);
-            time_text.setText(timeToDate);
-        } catch (ParseException e) {}
     }
 }

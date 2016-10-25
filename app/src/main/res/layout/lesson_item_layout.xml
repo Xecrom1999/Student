@@ -45,7 +45,6 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/lesson_text"
         android:layout_marginStart="25dp"
-        android:layout_marginBottom="5dp"
         />
 
     <TextView
@@ -57,7 +56,6 @@
         android:textSize="12dp"
         android:layout_below="@id/lesson_text"
         android:layout_toEndOf="@id/startsAt_text"
-        android:layout_marginBottom="5dp"
         />
 
     <ImageView

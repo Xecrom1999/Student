@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import Database.ScheduleDB;
 
@@ -53,6 +56,7 @@ public class WeekViewActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.schedule_string);
+        toolbar.setBackgroundResource(R.color.primary_schedule);
     }
 
     public ArrayList<Lesson> getList(int p) {
@@ -95,7 +99,21 @@ public class WeekViewActivity extends AppCompatActivity {
             finish();
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
-
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        changeColor(true);
+    }
+
+    private void changeColor(boolean isStarted) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.primary_dark));
+        }
     }
 }

@@ -21,10 +21,11 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:imeOptions="actionNext"
-        android:background="@color/primary_second"
+        android:background="@color/primary_new_item"
         android:textCursorDrawable="@drawable/cursur_drawable"
         android:lines="1"
         android:layout_below="@id/event_toolbar"
+        android:textSize="20dp"
         />
 
 <ScrollView
@@ -41,9 +42,6 @@
         android:showDividers="middle"
         tools:context=".CalendarDayActivity"
         android:weightSum="4">
-
-
-
 
         <LinearLayout
             android:id="@+id/event_date_layout"
@@ -152,9 +150,10 @@
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:padding="15dp"
+                android:padding="13dp"
                 android:src="@drawable/ic_reminder"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:id="@+id/imageView2" />
 
             <TextView
                 android:layout_width="240dp"

@@ -3,6 +3,7 @@ package Adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +37,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     CalendarDB database;
     ArrayList<String> datesList;
     ArrayList<String> titlesList;
-    final static SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
 
     public CalendarAdapter(Context ctx, int position, CalendarListener listener, CalendarDB database) {
         this.listener = listener;
@@ -58,9 +58,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-
-        //i//f (position == 0)
-       // for (int i = 0; i < titlesList.size(); i++) Log.d("MYLOG", titlesList.get(i));
     }
 
     @Override
@@ -87,8 +84,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             holder.day_text.setText(day + "");
             Calendar cal = Calendar.getInstance();
-            if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month)
-                holder.root.setBackground(ctx.getResources().getDrawable(R.drawable.rectangle_drawable2));
+            if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month) {
+                holder.day_text.setTextColor(ctx.getColor(R.color.primary_new_item));
+                holder.day_text.setTypeface(null, Typeface.BOLD);
+            }
             if (month != calendar.get(Calendar.MONTH))
                 holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
             for (int i = 0; i < datesList.size(); i++) { 

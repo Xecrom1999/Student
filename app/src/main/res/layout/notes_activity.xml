@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".NotesActivity"
     android:orientation="vertical"
-    android:background="@color/background_color"
+    android:background="#ECEFF1"
     android:layoutDirection="ltr"
     android:id="@+id/theLayout">
 

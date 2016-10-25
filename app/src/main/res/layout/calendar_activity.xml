@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".CalendarActivity">
+    tools:context=".CalendarActivity"
+    android:background="#ECEFF1">
 
    <include
       layout="@layout/toolbar_layout"

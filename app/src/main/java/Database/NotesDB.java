@@ -17,23 +17,21 @@ public class NotesDB extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME = "notes_table";
 
-
     public static final String COL_1 = "ID";
     public static final String COL_2 = "TITLE";
     public static final String COL_3 = "DESCRIPTION";
     public static final String COL_4 = "X_POS";
     public static final String COL_5 = "Y_POS";
-    public static final String COL_6 = "DATE";
 
     Context ctx;
 
     public NotesDB(Context context) {
-        super(context, DATABASE_NAME, null, 21);
+        super(context, DATABASE_NAME, null, 22);
         this.ctx = context;
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DESCRIPTION TEXT,X_POS TEXT,Y_POS TEXT,DATE TEXT)");
+        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DESCRIPTION TEXT,X_POS TEXT,Y_POS TEXT)");
 
     }
 
@@ -53,7 +51,6 @@ public class NotesDB extends SQLiteOpenHelper {
         contentValues.put(COL_3, note.getDescription());
         contentValues.put(COL_4, note.getxPos());
         contentValues.put(COL_5, note.getyPos());
-        contentValues.put(COL_6, note.getDate());
 
         return db.insert(TABLE_NAME, null, contentValues);
     }
@@ -89,7 +86,7 @@ public class NotesDB extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }
 
-    public void updateData(String id, String title, String description, String date) {
+    public void updateData2(String id, String title, String description) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -97,7 +94,6 @@ public class NotesDB extends SQLiteOpenHelper {
 
         contentValues.put(COL_2, title);
         contentValues.put(COL_3, description);
-        contentValues.put(COL_6, date);
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }

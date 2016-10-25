@@ -37,6 +37,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
     public MonthFragment(int position, CalendarDB database) {
         this.position = position;
+        this.position--;
         this.database = database;
     }
 
@@ -50,7 +51,6 @@ public class MonthFragment extends Fragment implements CalendarListener{
         calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, position);
         month = format.format(calendar.getTime());
-        Log.d("MYLOG", month);
 
         return view;
     }

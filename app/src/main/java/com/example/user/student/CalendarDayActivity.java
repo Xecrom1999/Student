@@ -2,6 +2,7 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,7 +47,10 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
 
         calendar = (Calendar) intent.getExtras().get("calendar");
-        if (calendar == null) return;
+        if (calendar == null) {
+            Log.d("MYLOG", "Null");
+            return;
+        }
         mCalendar = (Calendar) intent.getExtras().get("calendar");
 
         pager = (ViewPager) findViewById(R.id.calendar_day_pager);
@@ -86,8 +92,8 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-
         getSupportActionBar().setTitle(getString(R.string.today_events_string));
+        toolbar.setBackgroundResource(R.color.primary_calendar);
     }
 
     @Override
@@ -119,6 +125,21 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         addEvent();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        changeColor(true);
+    }
+
+    private void changeColor(boolean isStarted) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_calendar : R.color.primary_dark));
+        }
+    }
+
     public class PagerAdapter extends FragmentStatePagerAdapter {
 
         EventDateListener listener;
@@ -145,7 +166,5 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         public int getCount() {
             return 365;
         }
-
-
     }
 }

@@ -53,6 +53,9 @@
     <string name="hour_before_string">שעה לפני</string>
     <string name="two_minutes_before_string">2 דקות לפני</string>
     <string name="two_hours_before_string">שעתיים לפני</string>
+    <string name="edit_note_string">ערוך פתק</string>
+    <string name="new_event_string">אירוע חדש</string>
+    <string name="edit_event_string">ערוך אירוע</string>
 
 
     <string-array

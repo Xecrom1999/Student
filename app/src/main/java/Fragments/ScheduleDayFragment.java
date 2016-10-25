@@ -44,6 +44,9 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
     boolean editMode;
     EditModeListener listener;
 
+    public ScheduleDayFragment() {
+    }
+
     public ScheduleDayFragment(int position, ScheduleDB database, Context ctx, EditModeListener listener, ScheduleListener scheduleListener) {
         this.position = position;
         this.database = database;

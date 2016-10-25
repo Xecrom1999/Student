@@ -2,6 +2,7 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,7 +29,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     MyPagerAdapter adapter;
     FragmentManager fm;
     MonthFragment[] fragments;
-    final static int NUM_OF_FRAGMENTS = 25;
+    final static int NUM_OF_FRAGMENTS = 26;
     Toolbar toolbar;
     FloatingActionButton fab;
 
@@ -41,7 +44,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
 
         fragments = new MonthFragment[NUM_OF_FRAGMENTS];
         for (int i = 0; i < NUM_OF_FRAGMENTS; i++) {
-            fragments[i] = new MonthFragment(i, database);
+            fragments[i] = new MonthFragment(NUM_OF_FRAGMENTS - i - 1, database);
         }
 
         initializeViews();
@@ -64,14 +67,16 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-
         getSupportActionBar().setTitle("Calendar");
+        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setElevation(72);
 
         pager = (ViewPager) findViewById(R.id.calendar_pager);
         fm = getSupportFragmentManager();
         adapter = new MyPagerAdapter(fm);
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
+        pager.setCurrentItem(NUM_OF_FRAGMENTS - 2);
 
         fab = (FloatingActionButton) findViewById(R.id.calendar_fab);
         fab.setOnClickListener(this);
@@ -146,5 +151,27 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        changeColor(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        changeColor(true);
+    }
+
+    private void changeColor(boolean isStarted) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_calendar : R.color.primary_dark));
+        }
     }
 }

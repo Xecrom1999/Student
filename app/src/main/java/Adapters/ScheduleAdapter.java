@@ -66,7 +66,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         if (position == list.size() && editMode) return;
 
         if (editMode) viewHolder.layout.setBackground(ctx.getDrawable(R.drawable.lesson_item));
-        else viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.primary_600));
+        else viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.schedule_600));
 
         Lesson lesson = list.get(position);
 

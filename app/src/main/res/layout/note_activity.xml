@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/new_note"
-
+    android:orientation="vertical"
     android:id="@+id/rootLayout"
     tools:context=".NewNoteActivity">
 
@@ -12,82 +12,32 @@
         layout="@layout/toolbar_layout"
         android:id="@+id/note_bar"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/note_linearLayout"
-        android:layout_below="@+id/note_bar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="14dp">
-
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:id="@+id/note_title"
             android:gravity="top"
-            android:inputType="textCapSentences"
             android:background="@android:color/transparent"
-            android:paddingStart="16dp"
-            android:textColor="@drawable/new_note_color"
+            android:padding="16dp"
+            android:textColor="@color/primary_text"
             android:imeOptions="actionNext"
-            android:textStyle="bold"
-            android:textSize="23dp"
-            android:layout_marginTop="75dp"
+            android:textSize="20dp"
+            android:layout_marginTop="48dp"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:id="@+id/note_description"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="55dp"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
             android:gravity="top"
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
-            android:textColor="@drawable/new_note_color"
+            android:textColor="@color/secondary_text"
             android:paddingStart="16dp"
             android:textSize="18dp"
             />
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/ripple_effect"
-        android:id="@+id/note_date_layout"
-        android:gravity="end"
-        android:layout_marginBottom="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:id="@+id/note_date"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_marginEnd="15dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/note_time"
-            android:gravity="center"
-            android:textColor="?android:colorPrimary"
-            android:textStyle="italic|bold"
-            android:textSize="20dp"
-            android:layout_marginEnd="16dp"
-            />
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</LinearLayout>
