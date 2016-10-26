@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -154,11 +155,14 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
     }
 
-
     private void setDate(Calendar calendar) {
         String str = format.format(calendar.getTime());
 
         date_text.setText(str);
+
+        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        mMonth = calendar.get(Calendar.MONTH);
+        mYear = calendar.get(Calendar.YEAR);
     }
 
     @Override

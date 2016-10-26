@@ -57,7 +57,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -70,18 +69,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             switch (v.getId()) {
                 case R.id.calendar_button:
                     startActivity(new Intent(this, CalendarActivity.class));
-                    overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
                     break;
                 case R.id.schedule_button:
                     startActivity(new Intent(this, ScheduleActivity.class));
-                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                     break;
                 case R.id.notes_button:
                     startActivity(new Intent(this, NotesActivity.class));
-                    overridePendingTransition(R.anim.in_from_top, R.anim.out_to_bottom);
-                    break;
-                default:
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                     break;
             }
     }

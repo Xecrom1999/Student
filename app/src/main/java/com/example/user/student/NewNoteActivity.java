@@ -129,7 +129,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
     }
 
     public void finishNote() {
@@ -146,7 +145,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
         database.updateData2(id, title, description);
 
         finish();
-        overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
     }
 
     @Override

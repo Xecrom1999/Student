@@ -87,6 +87,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month) {
                 holder.day_text.setTextColor(ctx.getColor(R.color.primary_new_item));
                 holder.day_text.setTypeface(null, Typeface.BOLD);
+                holder.day_text.setTextSize(11);
+
             }
             if (month != calendar.get(Calendar.MONTH))
                 holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));

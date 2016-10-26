@@ -7,7 +7,6 @@
     android:background="#FAFAFA"
     >
 
-
     <include
         layout="@layout/toolbar_layout"
         android:id="@+id/week_view_bar"

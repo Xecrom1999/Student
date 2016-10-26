@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_lesson_text">לא הוספו שיעורים,\nגע בכדי להוסיף</string>
-    <string name="month_string">בעוד חודש</string>
-    <string name="months_string">חודשים</string>
     <string name="today_string">היום</string>
-    <string name="week_string">בעוד שבוע</string>
-    <string name="weeks_string">שבועות</string>
-    <string name="year_string">בעוד שנה</string>
     <string name="title_hint_string">כותרת</string>
     <string name="description_hint_string">תיאור</string>
-    <string name="date_hint_string">תאריך</string>
     <string name="comments_string">הוסף הערה</string>
-    <string name="passed_string">עבר</string>
-    <string name="tomorrow_string">מחר</string>
     <string name="no_events_string">אין אירועים</string>
     <string name="save_string">שמור</string>
     <string name="reminder_string">הוסף תזכורת</string>
@@ -41,7 +33,6 @@
     <string name="event_saved_string">אירוע נשמר!</string>
     <string name="lesson_added_string">שיעור נוסף</string>
     <string name="at_string">ב-</string>
-    <string name="before_string">לפני</string>
     <string name="on_the_day_string">באותו יום</string>
     <string name="day_before_string">יום לפני</string>
     <string name="done_string">בוצע</string>
@@ -56,7 +47,6 @@
     <string name="edit_note_string">ערוך פתק</string>
     <string name="new_event_string">אירוע חדש</string>
     <string name="edit_event_string">ערוך אירוע</string>
-
 
     <string-array
         name="days_names">

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/addEvent"
+        android:id="@+id/backToMonth"
         android:orderInCategory="100"
-        android:title="addEvent"
-        android:icon="@mipmap/ic_add"
+        android:title="changeView"
+        android:icon="@drawable/calendar_item"
         app:showAsAction="always"/>
 
 </menu>

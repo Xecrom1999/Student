@@ -87,6 +87,8 @@ public class MonthFragment extends Fragment implements CalendarListener{
        intent.putExtra("calendar", calendar);
 
         startActivity(intent);
+        if (hasEvent)
+            getActivity().overridePendingTransition(R.anim.stay_in_place, R.anim.stay_in_place);
     }
 
     @Override
@@ -112,6 +114,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
         intent.putExtra("calendar", calendar);
 
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.stay_in_place, R.anim.stay_in_place);
     }
 
     public String getMonth() {

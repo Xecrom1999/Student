@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -111,7 +112,6 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
         intent.putExtra("itemPosition", number);
 
         startActivityForResult(intent, 1);
-        getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
     }
 
     public void onClick(View v) {
@@ -174,6 +174,5 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
             intent.putExtra("itemPosition", position);
 
             startActivityForResult(intent, 1);
-            getActivity().overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
     }
 }

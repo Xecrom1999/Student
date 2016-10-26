@@ -3,6 +3,7 @@ package Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.example.user.student.Lesson;
 import com.example.user.student.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Interfaces.ScheduleListener;
 
@@ -28,11 +30,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     static ScheduleListener listener;
 
     public ScheduleAdapter(Context ctx, ArrayList<Lesson> list, ScheduleListener listener) {
+
         if (list == null)
             this.list = new ArrayList<>();
-        else
-            this.list = list;
-
+        else {
+            sortList(list);
+        }
         this.ctx = ctx;
         editMode = false;
         this.listener = listener;
@@ -41,6 +44,39 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     public void addLesson(Lesson lesson) {
         list.add(lesson);
         notifyItemInserted(list.size() - 1);
+        sortList(list);
+    }
+
+    private void sortList(ArrayList<Lesson> list2) {
+
+        ArrayList<Lesson> list = new ArrayList<>();
+
+        for (int i = 0; i < list2.size(); i++) list.add(list2.get(i));
+
+        ArrayList<Lesson> newList = new ArrayList<>();
+
+        if (list == null) {
+            this.list = newList;
+            Log.d("MYLOG", "TRUE");
+            return;
+        }
+
+        int[] arr = new int[list.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = Integer.parseInt(list.get(i).getTime().replace(":", ""));
+        }
+        Arrays.sort(arr);
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < list.size(); j++) {
+                if (arr[i] == Integer.parseInt(list.get(j).getTime().replace(":", ""))) {
+                    newList.add(list.get(j));
+                    list.remove(j);
+                }
+            }
+        }
+        this.list = newList;
+        notifyDataSetChanged();
     }
 
     public void toggleEditMode() {
@@ -88,6 +124,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     public void deleteLesson(int position) {
         list.remove(position);
         notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     public void updateLesson(int position, Lesson lesson) {

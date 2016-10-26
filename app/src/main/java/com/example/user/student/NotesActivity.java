@@ -195,7 +195,6 @@ public class NotesActivity extends ActionBarActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.in_from_bottom, R.anim.out_to_top);
     }
 
     public void noteClicked(View v) {
@@ -220,7 +219,6 @@ public class NotesActivity extends ActionBarActivity {
         chosen = v;
         
         startActivityForResult(intent, 0);
-        overridePendingTransition(R.anim.in_from_bottom, R.anim.stay_in_place);
     }
 
     public class NoteListener implements View.OnTouchListener {

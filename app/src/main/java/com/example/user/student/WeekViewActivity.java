@@ -78,6 +78,7 @@ public class WeekViewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
@@ -96,8 +97,7 @@ public class WeekViewActivity extends AppCompatActivity {
         }
 
         else if (id == R.id.view_id2) {
-            finish();
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            onBackPressed();
         }
         return true;
     }

@@ -1,14 +1,20 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/primary_color</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorPrimary">@color/primary_calendar</item>
+        <item name="colorPrimaryDark">@color/dark_calendar</item>
         <item name="windowActionBar">false</item>
         <item name="android:actionMenuTextColor">@android:color/primary_text_dark</item>
     </style>
 
+    <style name="OverSwipeCalendar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/primary_new_item</item>
+        <item name="colorPrimaryDark">@color/dark_new_item</item>
+    </style>
+
     <style name="TextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:colorPrimary">@color/primary_new_item</item>
         <item name="colorAccent">#4CAF50</item>
         <item name="colorControlNormal">#4CAF50</item>
         <item name="colorControlActivated">#4CAF50</item>
@@ -18,21 +24,6 @@
 
     <style name="PickersStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/primary_new_item</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-    </style>
-
-    <style name="MyCustomTheme" parent="@android:style/Theme.Panel">
-        <item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
-    </style>
-
-    <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
-        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
     </style>
 
 </resources>

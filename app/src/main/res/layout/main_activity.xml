@@ -3,12 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background">
 
     <TextView
-        android:padding="16dp"
-        android:layout_height="128dp"
-        android:layout_width="128dp"
+        android:layout_height="100dp"
+        android:layout_width="152dp"
+        android:text="@string/my_notes_string"
+        android:textColor="@android:color/white"
+        android:background="@drawable/notes_button"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:id="@+id/notes_button"
+        android:layout_above="@id/center"
+        android:layout_marginBottom="12dp"
+        android:layout_toEndOf="@id/center"
+        android:layout_marginStart="12dp"
+        android:elevation="24dp"
+        />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/center"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:layout_height="100dp"
+        android:layout_width="152dp"
         android:text="@string/schedule_string"
         android:textColor="@android:color/white"
         android:background="@drawable/schedule_button"
@@ -16,35 +40,39 @@
         android:textSize="20dp"
         android:gravity="center"
         android:id="@+id/schedule_button"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_above="@id/center"
+        android:layout_toStartOf="@id/center"
+        android:elevation="24dp"
         />
 
     <TextView
-        android:padding="16dp"
-        android:layout_height="128dp"
-        android:layout_width="128dp"
-        android:text="@string/my_notes_string"
-        android:textColor="@android:color/white"
-        android:background="@drawable/notes_button"
-        android:gravity="start|center_vertical"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:id="@+id/notes_button"
-        android:layout_below="@+id/schedule_button"
-         />
-
-    <TextView
-        android:padding="16dp"
-        android:layout_height="128dp"
-        android:layout_width="128dp"
+        android:layout_height="100dp"
+        android:layout_width="152dp"
         android:text="@string/calendar_string"
         android:textColor="@android:color/white"
         android:background="@drawable/calendar_button"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginEnd="32dp"
         android:id="@+id/calendar_button"
-        android:layout_below="@id/notes_button"
-        />
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@id/center"
+        android:layout_centerHorizontal="true"
+        android:elevation="24dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="לתלמיד"
+        android:textSize="40dp"
+        android:id="@+id/text"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/primary_new_item"
+        android:textStyle="bold"
+        />
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -81,25 +82,26 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         fab = (FloatingActionButton) findViewById(R.id.calendar_fab);
         fab.setOnClickListener(this);
 
-        SimpleDateFormat format = new SimpleDateFormat("MMMM    MM/yy");
+        SimpleDateFormat format = new SimpleDateFormat("MMMM   MM/yy");
         Calendar calendar = Calendar.getInstance();
         String month = format.format(calendar.getTime());
-        toolbar.setTitle(getString(R.string.calendar_string) + "            " + month);
+        toolbar.setSubtitleTextColor(getColor(R.color.background_color));
+        toolbar.setTitle(month);
+      //  toolbar.setSubtitle(month);
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
     public void onPageSelected(int position) {
-        toolbar.setTitle(getString(R.string.calendar_string) + "            " + fragments[position].getMonth());
+        toolbar.setTitle(fragments[position].getMonth());
+        //toolbar.setSubtitle(fragments[position].getMonth());
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
 
     @Override
@@ -143,14 +145,24 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
             onBackPressed();
             return true;
         }
+
+        if (id == R.id.backToMonth) {
+            pager.setCurrentItem(adapter.getCount() - 2);
+        }
+
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.calendar_menu, menu);
+        return true;
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
     }
 
     @Override

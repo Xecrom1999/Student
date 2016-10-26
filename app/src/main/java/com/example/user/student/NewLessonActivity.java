@@ -214,7 +214,6 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         super.onBackPressed();
 
         finish();
-        overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
     }
 
     @Override

@@ -101,7 +101,6 @@ public class NoteActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.stay_in_place, R.anim.out_to_bottom);
     }
 
     @Override

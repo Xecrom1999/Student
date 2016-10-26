@@ -191,9 +191,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
-
     @Override
     public void startEditMode() {
         if (editMode) return;

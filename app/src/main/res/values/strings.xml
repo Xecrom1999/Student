@@ -2,17 +2,9 @@
 
     <string name="add_lesson_text">No lessons added yet,\nTouch to add.</string>
     <string name="today_string">Today</string>
-    <string name="year_string">In a year</string>
-    <string name="month_string">In a month</string>
-    <string name="months_string">months</string>
-    <string name="week_string">In a week</string>
-    <string name="weeks_string">weeks</string>
     <string name="title_hint_string">Title</string>
     <string name="description_hint_string">Description</string>
-    <string name="date_hint_string">Date</string>
     <string name="comments_string">Add a comment</string>
-    <string name="passed_string">Passed</string>
-    <string name="tomorrow_string">Tomorrow</string>
     <string name="no_events_string">No Events</string>
     <string name="save_string">save</string>
     <string name="reminder_string">Add a reminder</string>
@@ -41,7 +33,6 @@
     <string name="event_saved_string">Event saved!</string>
     <string name="lesson_added_string">Lesson added</string>
     <string name="at_string">at-</string>
-    <string name="before_string">before</string>
     <string name="on_the_day_string">The same day</string>
     <string name="day_before_string">The day before</string>
     <string name="done_string">Done</string>
@@ -77,4 +68,13 @@
         <item>days before</item>
         <item>weeks before</item>
     </string-array>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <!-- Example settings for Data & Sync -->
+
+    <!-- Example settings for Notifications -->
+
 </resources>

@@ -94,6 +94,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(getString(R.string.today_events_string));
         toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setElevation(72);
     }
 
     @Override
@@ -107,7 +108,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
 
         if (item.getItemId() == R.id.addEvent) addEvent();
 
-        if (item.getItemId() == android.R.id.home) finish();
+        if (item.getItemId() == android.R.id.home) onBackPressed();
 
         return false;
     }
@@ -166,5 +167,12 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         public int getCount() {
             return 365;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.stay_in_place, R.anim.stay_in_place);
     }
 }
