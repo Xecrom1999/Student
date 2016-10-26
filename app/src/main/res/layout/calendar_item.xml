@@ -26,20 +26,20 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="8sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/secondary_text_light"
             android:id="@+id/calendar_item_title"
             android:scrollHorizontally="true"
             android:layout_margin="3dp"
             android:maxLines="3"
-            android:ellipsize="end"/>
-
+            android:ellipsize="end"
+            />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="7sp"
+        android:textSize="8sp"
         android:textColor="@color/primary_new_item"
         android:id="@+id/calendar_item_number"
         android:padding="2dp"

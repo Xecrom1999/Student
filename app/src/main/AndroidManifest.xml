@@ -7,8 +7,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_list3"
         android:supportsRtl="true"
+        android:icon="@drawable/icon"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"

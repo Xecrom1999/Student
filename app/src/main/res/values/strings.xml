@@ -47,6 +47,7 @@
     <string name="edit_note_string">Edit note</string>
     <string name="new_event_string">New event</string>
     <string name="edit_event_string">Edit event</string>
+    <string name="delete_event_string">Delete event</string>
 
     <string-array name="days_names">
         <item>Sunday</item>

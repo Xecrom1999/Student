@@ -47,6 +47,7 @@
     <string name="edit_note_string">ערוך פתק</string>
     <string name="new_event_string">אירוע חדש</string>
     <string name="edit_event_string">ערוך אירוע</string>
+    <string name="delete_event_string">מחק אירוע</string>
 
     <string-array
         name="days_names">

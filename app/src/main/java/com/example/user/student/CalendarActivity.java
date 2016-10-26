@@ -87,7 +87,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         String month = format.format(calendar.getTime());
         toolbar.setSubtitleTextColor(getColor(R.color.background_color));
         toolbar.setTitle(month);
-      //  toolbar.setSubtitle(month);
     }
 
     @Override
@@ -97,7 +96,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     @Override
     public void onPageSelected(int position) {
         toolbar.setTitle(fragments[position].getMonth());
-        //toolbar.setSubtitle(fragments[position].getMonth());
     }
 
     @Override
@@ -149,7 +147,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         if (id == R.id.backToMonth) {
             pager.setCurrentItem(adapter.getCount() - 2);
         }
-
         return false;
     }
 
