@@ -25,7 +25,7 @@
         android:id="@+id/lesson_text"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="16sp"
         android:text="שיעור"
         android:textColor="@android:color/white"
         android:gravity="center"
@@ -34,14 +34,13 @@
         android:layout_centerHorizontal="true"
         />
 
-
     <TextView
         android:id="@+id/startsAt_text"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="מתחיל ב: --:--"
         android:textColor="@android:color/white"
-        android:textSize="12dp"
+        android:textSize="13dp"
         android:layout_alignParentStart="true"
         android:layout_below="@id/lesson_text"
         android:layout_marginStart="25dp"
@@ -53,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="אורך שיעור: 45 דקות"
         android:textColor="@android:color/white"
-        android:textSize="12dp"
+        android:textSize="13dp"
         android:layout_below="@id/lesson_text"
         android:layout_toEndOf="@id/startsAt_text"
         />

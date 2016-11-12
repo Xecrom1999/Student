@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,12 +28,12 @@ public class NotesActivity extends ActionBarActivity {
 
     Toolbar toolbar;
     RelativeLayout theLayout;
-    ImageButton notesPack;
     boolean isNew;
     NotesDB dataBase;
     int width;
     int height;
     View chosen;
+    ImageView garbage_img;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +43,13 @@ public class NotesActivity extends ActionBarActivity {
 
         theLayout = (RelativeLayout) findViewById(R.id.theLayout);
 
-        notesPack = (ImageButton) findViewById(R.id.notes_img);
+        garbage_img = (ImageView) findViewById(R.id.garbage_img);
+        garbage_img.setVisibility(View.INVISIBLE);
 
         setToolbar();
 
-        width = (int) convertDpToPixel(105);
-        height = (int) convertDpToPixel(125);
+        width = (int) convertDpToPixel(85);
+        height = (int) convertDpToPixel(95);
     }
 
     @Override
@@ -78,12 +80,12 @@ public class NotesActivity extends ActionBarActivity {
         Cursor res = dataBase.getAllData();
 
         while (res.moveToNext()) {
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3));
         }
         theLayout.invalidate();
     }
 
-    private void addNote(String id, String title, String description, String xPos, String yPos) {
+    private void addNote(String id, String title, String xPos, String yPos) {
 
         final View note = getLayoutInflater().inflate(R.layout.note_item_layout, null, false);
 
@@ -127,7 +129,7 @@ public class NotesActivity extends ActionBarActivity {
     private void addNote(String id) {
         Cursor res = dataBase.getRowById(id);
         while (res.moveToNext())
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3));
     }
 
     @Override
@@ -179,7 +181,7 @@ public class NotesActivity extends ActionBarActivity {
             int i;
             for(i=0; i<childCount; i++) {
                 View currentChild = theLayout.getChildAt(i);
-                if (currentChild.getId() != toolbar.getId() && currentChild.getId() != notesPack.getId()) {
+                if (currentChild.getId() != toolbar.getId() && currentChild.getId() != R.id.notes_img && currentChild.getId() != garbage_img.getId()) {
                     theLayout.removeView(currentChild);
                     break;
                 }
@@ -211,7 +213,6 @@ public class NotesActivity extends ActionBarActivity {
         else {
             intent = new Intent(this, NoteActivity.class);
             intent.putExtra("title", title);
-            intent.putExtra("description", note.getDescription());
         }
 
         intent.putExtra("id", v.getTag().toString());
@@ -249,14 +250,17 @@ public class NotesActivity extends ActionBarActivity {
 
                     v.setAlpha(1);
 
-                    notesPack.setImageResource(R.drawable.ic_can);
-
-                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
+                    note = new Note("", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
 
                     id = v.getTag().toString();
+
+                    garbage_img.setVisibility(View.VISIBLE);
+
                     break;
 
                 case MotionEvent.ACTION_UP:
+
+                    garbage_img.setVisibility(View.INVISIBLE);
 
                     if (isNew) {
                         addNote();
@@ -280,7 +284,6 @@ public class NotesActivity extends ActionBarActivity {
                         noteClicked(v);
                     } else dataBase.updateData(id, String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
 
-                    notesPack.setImageResource(R.drawable.pack_of_notes);
                     break;
 
                 case MotionEvent.ACTION_MOVE:
@@ -304,7 +307,7 @@ public class NotesActivity extends ActionBarActivity {
         }
 
         private boolean inGarbageRange(int x, int y) {
-            return (x < 430 && y > 1360);
+            return (x > 800 && y > 1370);
         }
     }
 
@@ -322,7 +325,7 @@ public class NotesActivity extends ActionBarActivity {
         Note note = null;
         while (res.moveToNext())
             if (res.getString(0).equals(id))  {
-                note = new Note(res.getString(1), res.getString(2), res.getString(3), res.getString(4));
+                note = new Note(res.getString(1), res.getString(2), res.getString(3));
                 break;
             }
         return note;

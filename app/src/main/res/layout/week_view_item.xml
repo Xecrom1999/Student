@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="40dp"
     android:gravity="center"
     android:id="@+id/week_layout"
-    android:layout_margin="1dp"
-    android:background="@android:color/white"
-    android:elevation="1dp">
+    android:background="@drawable/week_view_item_bg">
 
     <TextView
         android:id="@+id/gridName_text"

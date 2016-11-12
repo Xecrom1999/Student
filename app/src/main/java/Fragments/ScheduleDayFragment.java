@@ -145,9 +145,8 @@ public class ScheduleDayFragment extends Fragment implements View.OnClickListene
                 Toast.makeText(ctx, getString(R.string.lesson_added_string), Toast.LENGTH_SHORT).show();
                 newLesson(false);
             }
-            else updateLesson(data.getIntExtra("position", 0), lesson);
-
-
+            else
+                updateLesson(data.getIntExtra("position", 99), lesson);
         }
     }
 

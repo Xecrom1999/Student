@@ -24,7 +24,7 @@
     <string name="add_time_string">הוסף שעה</string>
     <string name="enter_title_string">הכנס כותרת</string>
     <string name="subject_string">מקצוע</string>
-    <string name="setDefaultLesson_string">קבע ברירת מחדל לשיעור</string>
+    <string name="setDefaultLesson_string">קבע זמנים כברירת מחדל לשיעור</string>
     <string name="enter_length_string">הכנס אורך שיעור</string>
     <string name="enter_name_string">הכנס מקצוע</string>
     <string name="today_events_string">אירועי היום</string>

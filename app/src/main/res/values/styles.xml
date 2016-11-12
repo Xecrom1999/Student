@@ -2,7 +2,7 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorPrimary">@color/primary_calendar</item>
-        <item name="colorPrimaryDark">@color/dark_calendar</item>
+        <item name="colorPrimaryDark">@color/dark_new_item</item>
         <item name="windowActionBar">false</item>
         <item name="android:actionMenuTextColor">@android:color/primary_text_dark</item>
     </style>

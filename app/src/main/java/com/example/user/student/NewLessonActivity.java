@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -81,12 +82,15 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
             subject_edit.setSelection(name.length());
         }
 
-        else if (lessonPosition < 12){
+        int pos = lessonPosition;
+
+        if (pos < 12){
             Cursor res = database.getAllData();
             res.moveToNext();
-            while (lessonPosition > 0 && res.moveToNext()) lessonPosition--;
+            while (pos > 0 && res.moveToNext()) pos--;
 
             time_text.setText(res.getString(1));
+            length_edit.setText(res.getString(2));
             id = res.getString(0);
         }
     }
@@ -137,33 +141,10 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         intent.putExtra("position", lessonPosition);
         setResult(1, intent);
 
-        if (checkBox.isChecked()) {
+        if (checkBox.isChecked())
             database.updateData(id, time, length);
-        }
 
         finish();
-    }
-
-    TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            String hour = String.valueOf(hourOfDay);
-            String min = String.valueOf(minute);
-
-            if (hourOfDay < 10)
-                hour = "0" + hourOfDay;
-
-            if (minute < 10)
-                min = "0" + minute;
-
-            time_text.setText(hour + ":" + min);
-        }
-    };
-
-    public void deleteInput(View view) {
-        subject_edit.setText("");
     }
 
     @Override

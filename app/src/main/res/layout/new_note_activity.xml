@@ -21,48 +21,22 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="95dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:id="@+id/linearLayout"
-        android:layout_below="@+id/note_item"
-        android:layout_alignParentEnd="true">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_hint_string"
+            android:id="@+id/title_edit"
+            android:gravity="top"
+            android:background="@android:color/transparent"
+            android:padding="16dp"
+            android:textColor="@color/primary_text"
+            android:imeOptions="actionDone"
+            android:textSize="23dp"
+            android:layout_marginTop="32dp"
+            android:textColorHint="#757575"
+            android:layout_below="@id/note_item"
+            />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/title_hint_string"
-                android:id="@+id/title_edit"
-                android:gravity="top"
-                android:background="@android:color/transparent"
-                android:padding="16dp"
-                android:textColor="@color/primary_text"
-                android:imeOptions="actionNext"
-                android:textSize="23dp"
-                android:layout_marginTop="32dp"
-                android:textColorHint="#757575"
-                android:inputType="textCapSentences"
-                />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/description_edit"
-                android:hint="@string/description_hint_string"
-                android:layout_marginTop="64dp"
-                android:layout_alignParentStart="true"
-                android:background="@android:color/transparent"
-                android:gravity="top"
-                android:imeOptions="actionDone"
-                android:inputType="textCapSentences"
-                android:textColor="@color/secondary_text"
-                android:layout_below="@+id/title_edit"
-                android:padding="16dp"
-                android:textColorHint="#757575"
-                />
-
-    </LinearLayout>
 
 </RelativeLayout>

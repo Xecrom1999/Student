@@ -23,7 +23,7 @@ public class DefaultLessonsDB extends SQLiteOpenHelper {
     public static final String COL_3 = "LENGTH";
 
     public DefaultLessonsDB(Context context) {
-        super(context, DATABASE_NAME, null, 11);
+        super(context, DATABASE_NAME, null, 12);
     }
 
     public void onCreate(SQLiteDatabase db) {
@@ -46,15 +46,6 @@ public class DefaultLessonsDB extends SQLiteOpenHelper {
         contentValues.put(COL_3, length);
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
-    }
-
-        public Cursor getRowById(int id1) {
-
-            String id = String.valueOf(id1);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + "='" + id + "'" , null);
-        return res;
     }
 
     public long insertData(String time, String length) {

@@ -10,13 +10,11 @@ import java.util.ArrayList;
 public class Note {
 
     private String title;
-    private String description;
     private String xPos;
     private String yPos;
 
-    public Note(String title, String description, String xPos, String yPos) {
+    public Note(String title, String xPos, String yPos) {
         this.title = title;
-        this.description = description;
         this.xPos = xPos;
         this.yPos = yPos;
     }
@@ -27,14 +25,6 @@ public class Note {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getxPos() {

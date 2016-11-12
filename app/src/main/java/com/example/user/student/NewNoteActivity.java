@@ -22,10 +22,9 @@ import android.widget.Toast;
 
 import Database.NotesDB;
 
-public class NewNoteActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
+public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
 
     EditText title_edit;
-    EditText description_edit;
 
     TextView title_text;
 
@@ -85,26 +84,19 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
     private void setTexts() {
 
         String title = intent.getStringExtra("title");
-        String description = intent.getStringExtra("description");
 
         title_edit.setText(title);
-        description_edit.setText(description);
     }
 
     private void setListeners() {
         title_edit.addTextChangedListener(this);
-        description_edit.setOnFocusChangeListener(this);
     }
 
     private void initializeViews() {
 
-        layout = (LinearLayout) findViewById(R.id.linearLayout);
-
         note_item = findViewById(R.id.note_item);
         title_text = (TextView) note_item.findViewById(R.id.note_title);
-
         title_edit = (EditText) findViewById(R.id.title_edit);
-        description_edit = (EditText) findViewById(R.id.description_edit);
     }
 
     @Override
@@ -135,14 +127,7 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
         String title = title_edit.getText().toString();
 
-        if (title.trim().isEmpty()) {
-            Toast.makeText(getApplicationContext(), R.string.enter_title_string, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String description = description_edit.getText().toString();
-
-        database.updateData2(id, title, description);
+        database.updateData2(id, title);
 
         finish();
     }
@@ -177,11 +162,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher, V
 
     @Override
     public void afterTextChanged(Editable s) {
-    }
-
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        description_edit.setSelection(description_edit.length());
     }
 
     @Override
