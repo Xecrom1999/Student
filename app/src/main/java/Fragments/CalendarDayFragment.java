@@ -50,7 +50,6 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
     AlarmManager alarmManager;
 
     public CalendarDayFragment() {
-
     }
 
     public CalendarDayFragment(Context ctx, CalendarDB database, Calendar calendar, EventDateListener listener) {

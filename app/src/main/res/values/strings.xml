@@ -1,5 +1,6 @@
 <resources>
 
+    <string name="banner_ad_unit_id">ca-app-pub-6617091054237983/2023963555</string>
     <string name="add_lesson_text">No lessons added yet,\nTouch to add.</string>
     <string name="today_string">Today</string>
     <string name="title_hint_string">Title</string>

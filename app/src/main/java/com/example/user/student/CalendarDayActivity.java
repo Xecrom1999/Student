@@ -64,6 +64,13 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        Helper.setupAd(this);
+    }
+
+    @Override
     public Calendar getCurrentDate() {
 
         Calendar cal = Calendar.getInstance();

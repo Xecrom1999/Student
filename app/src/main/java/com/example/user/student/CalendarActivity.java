@@ -58,6 +58,12 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.setupAd(this);
+    }
+
     private void initializeViews() {
 
         toolbar = (Toolbar) findViewById(R.id.calendar_bar);

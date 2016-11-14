@@ -47,6 +47,12 @@ public class WeekViewActivity extends AppCompatActivity {
         weekGrid.setHasFixedSize(true);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.setupAd(this);
+    }
+
     private void setupToolbar() {
         config = getResources().getConfiguration();
         toolbar = (Toolbar) findViewById(R.id.week_view_bar);

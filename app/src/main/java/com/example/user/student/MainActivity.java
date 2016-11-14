@@ -1,13 +1,21 @@
 package com.example.user.student;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Calendar;
 
@@ -40,7 +48,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             intent.putExtra("calendar", calendar);
             startActivity(intent);
         }
-}
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-6617091054237983/2023963555");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.setupAd(this);
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -81,12 +100,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public void onBackPressed() {
         finish();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Helper.hideKeyboard(this);
     }
 }

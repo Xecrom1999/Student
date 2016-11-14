@@ -81,6 +81,13 @@ public class EventActivity extends AppCompatActivity {
         toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Helper.setupAd(this);
+    }
+
     private void setAll() {
         setDate(calendar);
 

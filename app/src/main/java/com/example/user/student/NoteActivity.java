@@ -52,6 +52,12 @@ public class NoteActivity extends AppCompatActivity {
         description_text.setText(description);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.setupAd(this);
+    }
+
     private void setupToolbar() {
         config = getResources().getConfiguration();
         toolbar = (Toolbar) findViewById(R.id.note_bar);

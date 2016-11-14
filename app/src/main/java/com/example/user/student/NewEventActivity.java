@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,11 +79,14 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
     int num;
 
+    InterstitialAd mInterstitialAd;
+    boolean hasLoaded;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_activity);
-        
+
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         database = new CalendarDB(this);
@@ -153,6 +161,12 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
         getSupportActionBar().setTitle(title_edit.getText().toString().isEmpty() ? R.string.new_event_string : R.string.edit_event_string);
         toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.setupAd(this);
     }
 
     private void setDate(Calendar calendar) {

@@ -67,6 +67,12 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.setupAd(this);
+    }
+
     private void setupToolbar() {
         config = getResources().getConfiguration();
         toolbar = (Toolbar) findViewById(R.id.new_note_bar);

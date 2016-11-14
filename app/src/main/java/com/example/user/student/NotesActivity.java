@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -34,6 +35,8 @@ public class NotesActivity extends ActionBarActivity {
     int height;
     View chosen;
     ImageView garbage_img;
+    ImageView notes_img;
+    View line;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +46,13 @@ public class NotesActivity extends ActionBarActivity {
 
         theLayout = (RelativeLayout) findViewById(R.id.theLayout);
 
+        notes_img = (ImageView) findViewById(R.id.notes_img);
+
         garbage_img = (ImageView) findViewById(R.id.garbage_img);
         garbage_img.setVisibility(View.INVISIBLE);
+
+        line = findViewById(R.id.garbage_line);
+        line.setVisibility(View.INVISIBLE);
 
         setToolbar();
 
@@ -56,6 +64,7 @@ public class NotesActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
+        Helper.setupAd(this);
         removeAllNotes();
         showNotes();
     }
@@ -181,7 +190,7 @@ public class NotesActivity extends ActionBarActivity {
             int i;
             for(i=0; i<childCount; i++) {
                 View currentChild = theLayout.getChildAt(i);
-                if (currentChild.getId() != toolbar.getId() && currentChild.getId() != R.id.notes_img && currentChild.getId() != garbage_img.getId()) {
+                if (currentChild.getId() != toolbar.getId() && currentChild.getId() != R.id.notes_img && currentChild.getId() != garbage_img.getId() && currentChild.getId() != line.getId()) {
                     theLayout.removeView(currentChild);
                     break;
                 }
@@ -255,17 +264,21 @@ public class NotesActivity extends ActionBarActivity {
                     id = v.getTag().toString();
 
                     garbage_img.setVisibility(View.VISIBLE);
+                    line.setVisibility(View.VISIBLE);
+                    notes_img.setVisibility(View.INVISIBLE);
 
                     break;
 
                 case MotionEvent.ACTION_UP:
 
                     garbage_img.setVisibility(View.INVISIBLE);
+                    line.setVisibility(View.INVISIBLE);
+                    notes_img.setVisibility(View.VISIBLE);
 
                     if (isNew) {
                         addNote();
 
-                        if (inGarbageRange(x, y))
+                        if (inGarbageRange(v))
                             theLayout.removeView(v);
                         else {
                             note.setxPos(String.valueOf(x - _xDelta));
@@ -276,7 +289,7 @@ public class NotesActivity extends ActionBarActivity {
                             noteClicked(v);
                         }
                     }
-                    else if (inGarbageRange(x, y)) {
+                    else if (inGarbageRange(v)) {
                         dataBase.deleteData(id);
                         theLayout.removeView(v);
                         addNote(id);
@@ -295,8 +308,14 @@ public class NotesActivity extends ActionBarActivity {
                     layoutParams.bottomMargin = (int) getResources().getDimension(R.dimen.note_margin);
                     v.setLayoutParams(layoutParams);
 
-                    if (inGarbageRange(x, y)) v.setAlpha((float) 0.5);
-                    else  v.setAlpha((float) 1);
+                    if (inGarbageRange(v)) {
+                        v.setAlpha((float) 0.4);
+                        garbage_img.setAlpha((float) 1);
+                    }
+                    else  {
+                        v.setAlpha((float) 1);
+                        garbage_img.setAlpha((float) 0.5);
+                    }
                     break;
                 default:
                     break;
@@ -306,8 +325,8 @@ public class NotesActivity extends ActionBarActivity {
             return true;
         }
 
-        private boolean inGarbageRange(int x, int y) {
-            return (x > 800 && y > 1370);
+        private boolean inGarbageRange(View v) {
+            return (v.getBottom() > 1550);
         }
     }
 
@@ -317,8 +336,6 @@ public class NotesActivity extends ActionBarActivity {
         float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return px;
     }
-
-
 
     private Note getNoteById(String id) {
         Cursor res = dataBase.getAllData();

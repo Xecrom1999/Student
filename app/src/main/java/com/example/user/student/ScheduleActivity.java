@@ -98,6 +98,12 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.setupAd(this);
+    }
+
     private void setupToolbar() {
         config = getResources().getConfiguration();
         toolbar = (Toolbar) findViewById(R.id.schedule_bar);
@@ -251,23 +257,18 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     @Override
     public void onPause() {
         super.onPause();
-        View view = getCurrentFocus();
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        Helper.hideKeyboard(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         changeColor(false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         changeColor(true);
     }
 

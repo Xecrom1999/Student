@@ -43,6 +43,9 @@ public class ReminderFragment extends DialogFragment implements View.OnClickList
     EditText count_edit;
     int count;
 
+    public ReminderFragment(){
+    }
+
     public ReminderFragment(Context ctx, int reminder_count, String reminder_units, int reminder_hour, int reminder_minute, ReminderListener listener, boolean hasTime){
         this.ctx = ctx;
         this.listener = listener;
