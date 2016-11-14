@@ -293,7 +293,7 @@ public class NotesActivity extends ActionBarActivity {
                         dataBase.deleteData(id);
                         theLayout.removeView(v);
                         addNote(id);
-                    } else if (Math.abs((int) event.getRawX() - fx)  < 4 && Math.abs((int) event.getRawY() - fy)  < 4) {
+                    } else if (Math.abs((int) event.getRawX() - fx)  < 3 && Math.abs((int) event.getRawY() - fy)  < 3) {
                         noteClicked(v);
                     } else dataBase.updateData(id, String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
 
