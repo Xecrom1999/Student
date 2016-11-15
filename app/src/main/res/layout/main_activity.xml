@@ -1,74 +1,137 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@color/background_color"
     android:gravity="center_horizontal">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/image"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/primary_new_item"
-        android:layout_gravity="center_horizontal"
-        android:scaleType="centerCrop"
-        android:src="@drawable/title"
-        android:scaleX="1.4"
-        android:scaleY="1.4"
-        />
-
-    <TextView
-        android:layout_height="80dp"
-        android:layout_width="300dp"
-        android:text="@string/schedule_string"
-        android:textColor="@android:color/secondary_text_light"
-        android:background="@drawable/schedule_button"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:id="@+id/schedule_button"
-        android:layout_marginTop="40dp"
-        />
-
-    <TextView
-        android:layout_height="80dp"
-        android:layout_width="300dp"
-        android:text="@string/my_notes_string"
-        android:textColor="@android:color/white"
-        android:background="@drawable/notes_button"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:id="@+id/notes_button"
-        android:layout_marginTop="25dp"
-        android:elevation="12dp"
-        />
-
-    <TextView
-        android:layout_height="80dp"
-        android:layout_width="300dp"
-        android:text="@string/calendar_string"
-        android:textColor="@android:color/white"
-        android:background="@drawable/calendar_button"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:id="@+id/calendar_button"
-        android:layout_centerHorizontal="true"
-        android:elevation="12dp"
-        android:layout_marginTop="25dp" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="90dp"
-        ads:adUnitId="@string/banner_ad_unit_id" />
+        ads:adUnitId="@string/banner_ad_unit_id"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+         />
 
-</LinearLayout>
+    <TextView
+        android:layout_height="135dp"
+        android:layout_width="135dp"
+        android:text="@string/my_notes_string"
+        android:textColor="@color/dark_notes"
+        android:background="@drawable/notes_button"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:gravity="bottom|center_horizontal"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:id="@+id/notes_button"
+        android:layout_above="@id/center"
+        android:layout_toEndOf="@+id/center"/>
+
+    <ImageView
+        android:layout_width="135dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/ic_schedule"
+        android:layout_alignTop="@+id/schedule_button"
+        android:layout_alignStart="@id/schedule_button"
+        android:elevation="5dp"
+        android:id="@+id/imageView3" />
+
+    <TextView
+        android:layout_height="135dp"
+        android:layout_width="135dp"
+        android:text="@string/schedule_string"
+        android:textColor="@color/dark_schedule"
+        android:background="@drawable/schedule_button"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:gravity="bottom|center_horizontal"
+        android:id="@+id/schedule_button"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:layout_above="@id/center" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/center"/>
+
+    <ImageView
+        android:layout_width="135dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_notes"
+        android:layout_alignTop="@+id/notes_button"
+        android:layout_alignStart="@id/notes_button"
+        android:layout_marginTop="5dp"
+        android:elevation="10dp" />
+
+    <TextView
+        android:layout_height="135dp"
+        android:layout_width="135dp"
+        android:text="@string/calendar_string"
+        android:textColor="@color/dark_calendar"
+        android:background="@drawable/calendar_button"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:gravity="bottom|center_horizontal"
+        android:id="@+id/calendar_button"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:layout_below="@id/center"
+        android:layout_marginTop="40dp"/>
+
+    <ImageView
+        android:layout_width="135dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_calendar5"
+        android:layout_alignTop="@+id/calendar_button"
+        android:layout_alignStart="@id/calendar_button"
+        android:layout_marginTop="5dp"
+        android:elevation="10dp" />
+
+    <TextView
+        android:layout_height="135dp"
+        android:layout_width="135dp"
+        android:text="@string/options_string"
+        android:textColor="@color/dark_new_item"
+        android:background="@drawable/options_drawable"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:gravity="bottom|center_horizontal"
+        android:id="@+id/options_string"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:layout_below="@id/center"
+        android:layout_toEndOf="@id/center"
+        android:layout_marginTop="40dp"/>
+
+    <ImageView
+        android:layout_width="135dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_options"
+        android:layout_alignTop="@+id/options_string"
+        android:layout_alignStart="@id/options_string"
+        android:layout_marginTop="5dp"
+        android:elevation="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_img"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/primary_new_item"
+        android:scaleType="centerCrop"
+        android:src="@drawable/title"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_marginStart="82dp" />
+
+</RelativeLayout>

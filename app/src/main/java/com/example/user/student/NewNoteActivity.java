@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import Database.NotesDB;
 
@@ -177,7 +176,7 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(R.color.note_status));
+            window.setStatusBarColor(getColor(R.color.dark_notes));
         }
     }
 }

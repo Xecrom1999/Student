@@ -9,13 +9,13 @@
     <color name="dark_new_item">#388E3C</color>
     <color name="secondary_text">@android:color/secondary_text_light</color>
     <color name="notes_primary">#FFC107</color>
-    <color name="note_status">#FFA000</color>
+    <color name="dark_notes">#FFA000</color>
     <color name="primary_calendar">#607D8B</color>
     <color name="dark_calendar">#455A64</color>
     <color name="calendar_background">#ECEFF1</color>
-    <color name="primary_schedule">#03A9F4</color>
-    <color name="dark_schedule">#0288D1</color>
-    <color name="schedule_600">#039BE5</color>
-    <color name="schedule_900">#01579B</color>
+    <color name="primary_schedule">#2196F3</color>
+    <color name="dark_schedule">#1976D2</color>
+    <color name="schedule_600">#1E88E5</color>
+    <color name="schedule_900">#0D47A1</color>
 
 </resources>
