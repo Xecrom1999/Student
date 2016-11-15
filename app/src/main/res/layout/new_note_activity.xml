@@ -32,11 +32,9 @@
             android:textColor="@color/primary_text"
             android:imeOptions="actionDone"
             android:textSize="23dp"
-            android:layout_marginTop="32dp"
-            android:textColorHint="#757575"
+            android:layout_marginTop="2dp"
+            android:textColorHint="@android:color/tertiary_text_light"
             android:layout_below="@id/note_item"
             />
-
-
 
 </RelativeLayout>
