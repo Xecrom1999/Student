@@ -65,7 +65,7 @@
         android:layout_centerVertical="true"
         android:padding="14dp"
         android:src="@drawable/ic_delete"
-        android:background="@drawable/lesson_item"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
 />
 </RelativeLayout>
 

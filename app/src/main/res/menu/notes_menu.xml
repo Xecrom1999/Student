@@ -6,4 +6,10 @@
         android:id="@+id/notes_delete_id"
         android:title="@string/delete_all_string" />
 
+    <item
+        android:id="@+id/arragne_all"
+        android:title=""
+        android:icon="@drawable/ic_arrange2"
+        app:showAsAction="always"/>
+
 </menu>

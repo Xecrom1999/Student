@@ -30,7 +30,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     MyPagerAdapter adapter;
     FragmentManager fm;
     MonthFragment[] fragments;
-    final static int NUM_OF_FRAGMENTS = 26;
+    final static int NUM_OF_FRAGMENTS = 14;
     Toolbar toolbar;
     FloatingActionButton fab;
 

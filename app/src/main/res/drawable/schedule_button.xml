@@ -6,7 +6,7 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
 
-            <solid android:color="@color/primary_schedule"/>
+            <stroke android:color="@color/primary_schedule" android:width="2dp"/>
             <corners android:radius="5dp"/>
         </shape>
     </item>

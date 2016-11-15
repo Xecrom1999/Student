@@ -5,7 +5,7 @@
     android:layout_width="95dp"
     android:layout_height="105dp"
     android:orientation="vertical"
-    android:background="@drawable/note_item_drawable"
+    android:background="@drawable/note_img"
     android:padding="5dp"
     android:id="@+id/note_layout"
     android:layoutDirection="ltr"

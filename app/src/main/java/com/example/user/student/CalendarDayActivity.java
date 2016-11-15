@@ -180,6 +180,6 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
     public void onBackPressed() {
         super.onBackPressed();
 
-        overridePendingTransition(R.anim.stay_in_place, R.anim.stay_in_place);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

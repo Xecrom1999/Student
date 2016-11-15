@@ -12,13 +12,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,9 +38,13 @@ public class NotesActivity extends ActionBarActivity {
     ImageView notes_img;
     View line;
 
+    boolean rtl;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_activity);
+
+        rtl = false;
 
         dataBase = new NotesDB(this);
 
@@ -76,6 +80,7 @@ public class NotesActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Configuration config = getResources().getConfiguration();
         if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            rtl = true;
             toolbar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         }
@@ -156,10 +161,57 @@ public class NotesActivity extends ActionBarActivity {
             return true;
         }
 
-        if (id == R.id.notes_delete_id)
+        else if (id == R.id.notes_delete_id)
             userDialog();
 
+        else if (id == R.id.arragne_all)
+            arrangeAll();
+
         return true;
+    }
+
+    private void arrangeAll() {
+        
+        int firstX = (int) convertDpToPixel(8);
+        int y = (int) convertDpToPixel(60);
+
+        int spaceX = (int) convertDpToPixel(89);
+        int spaceY = (int) convertDpToPixel(110);
+
+        if (rtl) {
+
+            Display display = getWindowManager().getDefaultDisplay();
+            DisplayMetrics outMetrics = new DisplayMetrics ();
+            display.getMetrics(outMetrics);
+
+            float density  = getResources().getDisplayMetrics().density;
+            float dpWidth  = outMetrics.widthPixels / density;
+
+            firstX = (int) ((convertDpToPixel(dpWidth) - firstX) - convertDpToPixel(81));
+            spaceX *= -1;
+        }
+
+        int count = 1;
+
+        int x = firstX;
+
+        for (int i = 0; i < theLayout.getChildCount(); i++) {
+            View v = theLayout.getChildAt(i);
+            if (v.getTag() != null && !v.getTag().toString().isEmpty()) {
+                v.setX(x);
+                v.setY(y);
+                dataBase.updateData(v.getTag().toString(), String.valueOf(x), String.valueOf(y));
+
+                x += spaceX;
+
+                if (count % 4 == 0) {
+                    x = firstX;
+                    y += spaceY;
+                }
+                count++;
+                if (count > 16) break;
+            }
+        }
     }
 
     private void userDialog() {
