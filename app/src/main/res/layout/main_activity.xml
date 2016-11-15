@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@color/background_color"
-    android:gravity="center_horizontal">
+    android:background="@color/background_color">
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -16,6 +15,7 @@
         ads:adUnitId="@string/banner_ad_unit_id"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp"
+        android:layout_centerHorizontal="true"
          />
 
     <TextView
@@ -54,13 +54,15 @@
         android:id="@+id/schedule_button"
         android:padding="8dp"
         android:elevation="4dp"
-        android:layout_above="@id/center" />
+        android:layout_above="@id/center"
+        android:layout_toStartOf="@+id/center"/>
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
-        android:id="@+id/center"/>
+        android:id="@+id/center"
+        android:layout_margin="15dp"/>
 
     <ImageView
         android:layout_width="135dp"
@@ -84,7 +86,7 @@
         android:padding="8dp"
         android:elevation="4dp"
         android:layout_below="@id/center"
-        android:layout_marginTop="40dp"/>
+        android:layout_toStartOf="@+id/center"/>
 
     <ImageView
         android:layout_width="135dp"
@@ -108,8 +110,7 @@
         android:padding="8dp"
         android:elevation="4dp"
         android:layout_below="@id/center"
-        android:layout_toEndOf="@id/center"
-        android:layout_marginTop="40dp"/>
+        android:layout_toEndOf="@id/center"/>
 
     <ImageView
         android:layout_width="135dp"
@@ -128,10 +129,8 @@
         android:textColor="@color/primary_new_item"
         android:scaleType="centerCrop"
         android:src="@drawable/title"
-        android:scaleX="1.4"
-        android:scaleY="1.4"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/imageView3"
-        android:layout_marginStart="82dp" />
+        android:scaleX="1"
+        android:scaleY="1"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

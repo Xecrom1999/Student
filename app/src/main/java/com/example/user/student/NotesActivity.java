@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -362,10 +363,12 @@ public class NotesActivity extends ActionBarActivity {
                     if (inGarbageRange(v)) {
                         v.setAlpha((float) 0.4);
                         garbage_img.setAlpha((float) 1);
+                        line.setBackgroundColor(Color.parseColor("#9E9E9E"));
                     }
                     else  {
                         v.setAlpha((float) 1);
                         garbage_img.setAlpha((float) 0.5);
+                        line.setBackgroundColor(Color.parseColor("#E0E0E0"));
                     }
                     break;
                 default:
