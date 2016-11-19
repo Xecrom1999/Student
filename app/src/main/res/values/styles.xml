@@ -23,7 +23,16 @@
     </style>
 
     <style name="PickersStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/primary_new_item</item>
+        <item name="colorAccent">@color/primary_calendar</item>
+    </style>
+
+    <style name="MyDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowMinWidthMajor">300dp</item>
+        <item name="android:windowMinWidthMinor">300dp</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:colorAccent">@color/primary_calendar</item>
     </style>
 
 </resources>

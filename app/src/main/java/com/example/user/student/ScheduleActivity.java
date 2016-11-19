@@ -175,8 +175,8 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(choice ? R.string.delete_all_string : R.string.delete_day_string) + "?").setPositiveButton(getString(R.string.delete_string), dialogClickListener)
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialogStyle);
+        builder.setMessage(getString(choice ? R.string.are_you_sure_string : R.string.are_you_sure_string)).setPositiveButton(getString(R.string.delete_string), dialogClickListener)
                 .setNegativeButton(getString(R.string.cancel_string), dialogClickListener).show();
     }
 

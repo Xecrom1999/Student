@@ -85,7 +85,7 @@ public class NotesActivity extends ActionBarActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         }
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        getSupportActionBar().setTitle(getString(R.string.my_notes_string));
+        getSupportActionBar().setTitle(getString(R.string.notes_string));
         toolbar.setBackgroundResource(R.color.notes_primary);
     }
 
@@ -179,7 +179,6 @@ public class NotesActivity extends ActionBarActivity {
         int spaceY = (int) convertDpToPixel(110);
 
         if (rtl) {
-
             Display display = getWindowManager().getDefaultDisplay();
             DisplayMetrics outMetrics = new DisplayMetrics ();
             display.getMetrics(outMetrics);
@@ -198,8 +197,16 @@ public class NotesActivity extends ActionBarActivity {
         for (int i = 0; i < theLayout.getChildCount(); i++) {
             View v = theLayout.getChildAt(i);
             if (v.getTag() != null && !v.getTag().toString().isEmpty()) {
-                v.setX(x);
-                v.setY(y);
+
+
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) v
+                        .getLayoutParams();
+                layoutParams.leftMargin = x;
+                layoutParams.topMargin = y;
+                layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.note_margin);
+                layoutParams.bottomMargin = (int) getResources().getDimension(R.dimen.note_margin);
+                v.setLayoutParams(layoutParams);
+
                 dataBase.updateData(v.getTag().toString(), String.valueOf(x), String.valueOf(y));
 
                 x += spaceX;
@@ -230,8 +237,8 @@ public class NotesActivity extends ActionBarActivity {
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.delete_all_string) + "?").setPositiveButton(getString(R.string.delete_string), dialogClickListener)
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialogStyle);
+        builder.setMessage(getString(R.string.are_you_sure_string)).setPositiveButton(getString(R.string.delete_string), dialogClickListener)
                 .setNegativeButton(getString(R.string.cancel_string), dialogClickListener).show();
     }
 
@@ -363,12 +370,10 @@ public class NotesActivity extends ActionBarActivity {
                     if (inGarbageRange(v)) {
                         v.setAlpha((float) 0.4);
                         garbage_img.setAlpha((float) 1);
-                        line.setBackgroundColor(Color.parseColor("#9E9E9E"));
                     }
                     else  {
                         v.setAlpha((float) 1);
                         garbage_img.setAlpha((float) 0.5);
-                        line.setBackgroundColor(Color.parseColor("#E0E0E0"));
                     }
                     break;
                 default:

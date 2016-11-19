@@ -66,5 +66,8 @@ public class DefaultLessonsDB extends SQLiteOpenHelper {
         return res;
     }
 
-
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+    }
 }

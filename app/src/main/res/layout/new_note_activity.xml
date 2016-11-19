@@ -24,7 +24,6 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/title_hint_string"
             android:id="@+id/title_edit"
             android:gravity="top"
             android:background="@android:color/transparent"

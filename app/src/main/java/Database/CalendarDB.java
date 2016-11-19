@@ -98,4 +98,9 @@ public class CalendarDB extends SQLiteOpenHelper {
         Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + String.valueOf(calendar.getTime()) + "'" , null);
         return res;
     }
+
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+    }
 }

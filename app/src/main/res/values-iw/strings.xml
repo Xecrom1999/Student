@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_string">תלמיד</string>
     <string name="add_lesson_text">לא הוספו שיעורים,\nגע בכדי להוסיף</string>
     <string name="today_string">היום</string>
     <string name="title_hint_string">כותרת</string>
@@ -13,7 +14,7 @@
     <string name="minutes_string">דקות</string>
     <string name="schedule_string">מערכת שעות</string>
     <string name="new_note_string">פתק חדש</string>
-    <string name="my_notes_string">הפתקים שלי</string>
+    <string name="notes_string">פתקים</string>
     <string name="delete_day_string">מחק יום</string>
     <string name="delete_all_string">מחק הכל</string>
     <string name="delete_string">מחק</string>
@@ -49,6 +50,11 @@
     <string name="edit_event_string">ערוך אירוע</string>
     <string name="delete_event_string">מחק אירוע</string>
     <string name="options_string">אפשרויות</string>
+    <string name="clear_data_string">איפוס נתונים</string>
+    <string name="rate_app_string">דרג את האפליקציה</string>
+    <string name="contact_us_string">דווח על באגים/הצעות לשיפור</string>
+    <string name="are_you_sure_string">האם אתה בטוח?</string>
+    <string name="clear_string">אפס</string>
 
     <string-array
         name="days_names">

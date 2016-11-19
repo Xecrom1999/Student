@@ -8,11 +8,11 @@
     android:background="@color/background_color">
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+        android:id="@+id/main_adBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
+        ads:adUnitId="ca-app-pub-6617091054237983/2023963555"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp"
         android:layout_centerHorizontal="true"
@@ -21,7 +21,7 @@
     <TextView
         android:layout_height="135dp"
         android:layout_width="135dp"
-        android:text="@string/my_notes_string"
+        android:text="@string/notes_string"
         android:textColor="@color/dark_notes"
         android:background="@drawable/notes_button"
         android:textStyle="bold"
@@ -35,8 +35,8 @@
 
     <ImageView
         android:layout_width="135dp"
-        android:layout_height="120dp"
-        android:src="@mipmap/ic_schedule"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_schedule3"
         android:layout_alignTop="@+id/schedule_button"
         android:layout_alignStart="@id/schedule_button"
         android:elevation="5dp"
@@ -64,15 +64,6 @@
         android:id="@+id/center"
         android:layout_margin="15dp"/>
 
-    <ImageView
-        android:layout_width="135dp"
-        android:layout_height="100dp"
-        android:src="@mipmap/ic_notes"
-        android:layout_alignTop="@+id/notes_button"
-        android:layout_alignStart="@id/notes_button"
-        android:layout_marginTop="5dp"
-        android:elevation="10dp" />
-
     <TextView
         android:layout_height="135dp"
         android:layout_width="135dp"
@@ -90,7 +81,7 @@
 
     <ImageView
         android:layout_width="135dp"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:src="@mipmap/ic_calendar5"
         android:layout_alignTop="@+id/calendar_button"
         android:layout_alignStart="@id/calendar_button"
@@ -106,7 +97,7 @@
         android:textStyle="bold"
         android:textSize="16dp"
         android:gravity="bottom|center_horizontal"
-        android:id="@+id/options_string"
+        android:id="@+id/options_button"
         android:padding="8dp"
         android:elevation="4dp"
         android:layout_below="@id/center"
@@ -114,10 +105,10 @@
 
     <ImageView
         android:layout_width="135dp"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:src="@mipmap/ic_options"
-        android:layout_alignTop="@+id/options_string"
-        android:layout_alignStart="@id/options_string"
+        android:layout_alignTop="@+id/options_button"
+        android:layout_alignStart="@id/options_button"
         android:layout_marginTop="5dp"
         android:elevation="10dp" />
 
@@ -132,5 +123,14 @@
         android:scaleX="1"
         android:scaleY="1"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="135dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_notes"
+        android:elevation="10dp"
+        android:layout_alignTop="@+id/notes_button"
+        android:layout_alignEnd="@+id/notes_button"
+        android:id="@+id/imageView4" />
 
 </RelativeLayout>

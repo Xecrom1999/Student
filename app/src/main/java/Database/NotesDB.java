@@ -100,4 +100,6 @@ public class NotesDB extends SQLiteOpenHelper {
 
         db.delete(TABLE_NAME, null, null);
     }
+
+
 }

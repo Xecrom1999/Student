@@ -19,7 +19,5 @@ public class MyApplication extends Application {
 
         if (count % 7 == 0)
             preferences.edit().putInt("count", count - 2).commit();
-
-
     }
 }
