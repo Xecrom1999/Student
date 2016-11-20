@@ -25,12 +25,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="8sp"
+            android:textSize="7sp"
             android:textColor="@android:color/secondary_text_light"
             android:id="@+id/calendar_item_title"
             android:scrollHorizontally="true"
             android:layout_margin="3dp"
             android:maxLines="3"
+            android:textStyle="bold"
             android:ellipsize="end"
             />
     </LinearLayout>
@@ -40,7 +41,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textSize="8sp"
-        android:textColor="@color/primary_new_item"
+        android:textColor="@color/primary_new_event"
         android:id="@+id/calendar_item_number"
         android:padding="2dp"
         android:layout_alignParentBottom="true"

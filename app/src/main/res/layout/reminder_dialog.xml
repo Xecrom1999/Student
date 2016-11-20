@@ -77,7 +77,7 @@
             android:id="@+id/reminder_done"
             android:textSize="16dp"
             android:gravity="end"
-            android:textColor="@color/primary_new_item"
+            android:textColor="@color/primary_new_event"
             android:text="@string/done_string"
             android:layout_gravity="end"
             android:background="?attr/selectableItemBackground"

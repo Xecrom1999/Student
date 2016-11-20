@@ -23,7 +23,7 @@
         android:layout_below="@id/schedule_bar"
         android:background="@color/primary_schedule"
         app:tabTextColor="@color/schedule_900"
-        app:tabIndicatorColor="#FFD740"
+        app:tabIndicatorColor="@color/schedule_accent"
         app:tabSelectedTextColor="@android:color/white"
         app:tabIndicatorHeight="3dp"
         app:tabMode="scrollable"

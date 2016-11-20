@@ -6,13 +6,11 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,8 +24,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.SimpleDateFormat;
@@ -159,8 +155,9 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
-        getSupportActionBar().setTitle(title_edit.getText().toString().isEmpty() ? R.string.new_event_string : R.string.edit_event_string);
-        toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
+        getSupportActionBar().setTitle("");
+        //getSupportActionBar().setTitle(title_edit.getText().toString().isEmpty() ? R.string.new_event_string : R.string.edit_event_string);
+        toolbar.setBackgroundColor(getColor(R.color.primary_new_event));
     }
 
     @Override
@@ -306,7 +303,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         switch (id) {
             case R.id.event_date_layout:
-                datePicker = new DatePickerDialog(this, R.style.PickersStyle, new DatePickerListener(), mYear, mMonth, mDay);
+                datePicker = new DatePickerDialog(this, R.style.NewEventDialog, new DatePickerListener(), mYear, mMonth, mDay);
                 datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 showDialog(0);
                 break;
@@ -323,7 +320,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
                     hour = Integer.parseInt(str.substring(0, str.indexOf(':')));
                     min = Integer.parseInt(str.substring(str.indexOf(':') + 1));
                 }
-                new TimePickerDialog(this, R.style.PickersStyle, this, hour, min, true).show();
+                new TimePickerDialog(this, R.style.NewEventDialog, this, hour, min, true).show();
                 break;
 
             case R.id.remove_time:
@@ -443,7 +440,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_item : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.primary_dark));
         }
     }
 }

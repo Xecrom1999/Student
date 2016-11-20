@@ -91,9 +91,13 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         Calendar calendar = Calendar.getInstance();
-        if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+        boolean rtl = (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL);
+        if (rtl)
             viewPager.setCurrentItem(DAYS_NUM - (calendar.get(Calendar.DAY_OF_WEEK)));
         else viewPager.setCurrentItem(calendar.get(Calendar.DAY_OF_WEEK) - 1);
+
+        if (viewPager.getCurrentItem() == 0 && rtl) viewPager.setCurrentItem(7);
+        else if (viewPager.getCurrentItem() == 7 && !rtl) viewPager.setCurrentItem(0);
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }

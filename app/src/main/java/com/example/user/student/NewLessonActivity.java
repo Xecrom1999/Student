@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -104,7 +103,7 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
-        toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
+        toolbar.setBackgroundColor(getColor(R.color.new_lesson_primary));
     }
 
     public void onClick(View v) {
@@ -158,7 +157,7 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_item : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.new_lesson_dark : R.color.dark_schedule));
         }
     }
 
@@ -169,7 +168,7 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         int hour = Integer.parseInt(time.substring(0, time.indexOf(':')));
         int minute = Integer.parseInt(time.substring(time.indexOf(':') + 1));
 
-        new TimePickerDialog(this, R.style.PickersStyle, this, hour, minute, true).show();
+        new TimePickerDialog(this, R.style.NewLessonDialog, this, hour, minute, true).show();
     }
 
     public void lengthClicked(View view) {

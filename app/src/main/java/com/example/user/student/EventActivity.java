@@ -78,7 +78,7 @@ public class EventActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
         getSupportActionBar().setTitle("");
-        toolbar.setBackgroundColor(getColor(R.color.primary_new_item));
+        toolbar.setBackgroundColor(getColor(R.color.primary_new_event));
     }
 
     @Override
@@ -176,7 +176,7 @@ public class EventActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_item : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.primary_dark));
         }
     }
 

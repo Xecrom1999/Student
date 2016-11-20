@@ -8,7 +8,7 @@
 
             <solid android:color="@color/background_color"/>
 
-            <stroke android:color="@color/primary_new_item" android:width="2dp"/>
+            <stroke android:color="@color/primary_new_event" android:width="2dp"/>
             <corners android:radius="5dp"/>
         </shape>
     </item>

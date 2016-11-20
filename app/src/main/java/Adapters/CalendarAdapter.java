@@ -83,14 +83,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         if (holder.getItemViewType() == HEADER_TYPE) {
             holder.day_text.setText(new SimpleDateFormat("EE").format(calendar.getTime()));
             if (position + 1 == cal.get(Calendar.DAY_OF_WEEK) && calendar.get(Calendar.MONTH) == cal.get(Calendar.MONTH)-1)
-                holder.day_text.setTextColor(ctx.getColor(R.color.primary_new_item));
+                holder.day_text.setTextColor(ctx.getColor(R.color.calendar_accent));
         }
 
         else {
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             holder.day_text.setText(day + "");
             if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month) {
-                holder.day_text.setTextColor(ctx.getColor(R.color.primary_new_item));
+                holder.day_text.setTextColor(ctx.getColor(R.color.calendar_accent));
                 holder.day_text.setTypeface(null, Typeface.BOLD);
                 holder.day_text.setTextSize(11);
 

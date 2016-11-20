@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/setDefaultLesson_string"
-        android:buttonTint="@color/dark_new_item"
+        android:buttonTint="@color/new_lesson_dark"
         android:checked="true"
         android:layout_below="@+id/linearLayout2"
         android:layout_marginTop="8dp"
@@ -150,7 +150,7 @@
             android:id="@+id/cancel_button"
             android:layout_weight="1"
             android:textColor="@android:color/white"
-            android:background="@drawable/lesson_drawable" />
+            android:background="@drawable/lesson_button_drawable" />
 
         <Button
             android:text="שמור"
@@ -160,7 +160,7 @@
             android:id="@+id/done_button"
             android:layout_weight="1"
             android:textColor="@android:color/white"
-            android:background="@drawable/lesson_drawable" />
+            android:background="@drawable/lesson_button_drawable" />
 
     </LinearLayout>
 

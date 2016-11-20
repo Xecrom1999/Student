@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.support.v4.app.DialogFragment;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -49,7 +50,7 @@ public class OptionsActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.options_string);
-        toolbar.setBackgroundResource(R.color.primary_new_item);
+        toolbar.setBackgroundResource(R.color.primary_new_event);
     }
 
     public void clearDataRequest(View view) {
@@ -85,7 +86,7 @@ public class OptionsActivity extends AppCompatActivity {
         ScheduleDB db4 = new ScheduleDB(this);
         db4.deleteAll();
 
-        SharedPreferences sp = getSharedPreferences("", MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
         sp.edit().clear().commit();
     }
 
@@ -121,5 +122,25 @@ public class OptionsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        changeColor(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        changeColor(true);
+    }
+
+    private void changeColor(boolean isStarted) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(isStarted ? R.color.primary_new_event : R.color.primary_dark));
+        }
     }
 }

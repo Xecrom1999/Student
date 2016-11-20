@@ -4,16 +4,17 @@
     android:layout_height="72dp"
     android:background="@drawable/calendar_day_item_background">
 
-        <TextView
-            android:id="@+id/day_item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="71dp"
-            android:text="הכותרת שלי"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:ellipsize="end"
-            android:textColor="@android:color/secondary_text_light"
-            android:layout_marginStart="48dp"/>
+    <TextView
+        android:id="@+id/day_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="71dp"
+        android:text="הכותרת שלי"
+        android:textSize="14sp"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:textColor="@android:color/secondary_text_light"
+        android:textStyle="bold"
+        android:layout_marginStart="32dp" />
 
     <View
         android:layout_width="match_parent"
@@ -24,5 +25,18 @@
         android:layout_below="@id/day_item_title"
         android:layout_centerHorizontal="true"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="08:00"
+        android:textSize="14dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="#FF6E40"
+        android:id="@+id/day_item_time"
+        android:layout_alignBaseline="@+id/day_item_title"
+        android:layout_alignBottom="@+id/day_item_title"
+        android:layout_alignParentEnd="true"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

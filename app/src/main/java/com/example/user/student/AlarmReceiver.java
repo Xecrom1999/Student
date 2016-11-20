@@ -34,12 +34,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         myIntent.putExtra("calendar", calendar);
         myIntent.putExtra("fromNoti", true);
 
-        Log.d("MYLOG", calendar.getTime().toString());
-
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentTitle("תזכורת")
                 .setContentText(intent.getStringExtra("title"))
-                .setSmallIcon(R.drawable.ic_calendar)
+                .setSmallIcon(R.mipmap.ic_calendar5)
                 .setContentIntent(PendingIntent.getActivity(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setVibrate(new long[] {500, 500})
                 .setAutoCancel(true)

@@ -25,7 +25,7 @@
        android:layout_width="64dp"
        android:layout_height="64dp"
        android:src="@mipmap/ic_add"
-       app:backgroundTint="@color/fab_color"
+       app:backgroundTint="@color/calendar_accent"
        app:borderWidth="0dp"
        app:rippleColor="@android:color/white"
        android:layout_margin="@dimen/fab_margin"

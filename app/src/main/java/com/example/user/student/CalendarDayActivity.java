@@ -17,6 +17,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -47,10 +50,8 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
 
         calendar = (Calendar) intent.getExtras().get("calendar");
-        if (calendar == null) {
-            Log.d("MYLOG", "Null");
-            return;
-        }
+        if (calendar == null) return;
+
         mCalendar = (Calendar) intent.getExtras().get("calendar");
 
         pager = (ViewPager) findViewById(R.id.calendar_day_pager);
@@ -61,6 +62,10 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         pager.setCurrentItem(adapter.getCount()/2);
 
         setupToolbar();
+
+        AdView mAdView = (AdView) findViewById(R.id.day_activity_adBanner);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

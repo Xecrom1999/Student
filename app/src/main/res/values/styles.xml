@@ -2,28 +2,32 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorPrimary">@color/primary_calendar</item>
-        <item name="colorPrimaryDark">@color/dark_new_item</item>
+        <item name="colorPrimaryDark">@color/primary_calendar</item>
         <item name="windowActionBar">false</item>
         <item name="android:actionMenuTextColor">@android:color/primary_text_dark</item>
     </style>
 
     <style name="OverSwipeCalendar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/primary_new_item</item>
-        <item name="colorPrimaryDark">@color/dark_new_item</item>
+        <item name="android:colorPrimary">@color/primary_new_event</item>
+        <item name="colorPrimaryDark">@color/dark_new_event</item>
     </style>
 
     <style name="TextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="android:colorPrimary">@color/primary_new_item</item>
-        <item name="colorAccent">#4CAF50</item>
-        <item name="colorControlNormal">#4CAF50</item>
-        <item name="colorControlActivated">#4CAF50</item>
-        <item name="android:textColorLink">#4CAF50</item>
-        <item name="android:textColorHighlight">#4CAF50</item>
+        <item name="android:colorPrimary">#FFC107</item>
+        <item name="colorAccent">#FFC107</item>
+        <item name="colorControlNormal">#FFC107</item>
+        <item name="colorControlActivated">#FFC107</item>
+        <item name="android:textColorLink">#FFC107</item>
+        <item name="android:textColorHighlight">#FFC107</item>
     </style>
 
-    <style name="PickersStyle" parent="Theme.AppCompat.Light.Dialog">
+    <style name="NewEventDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/primary_calendar</item>
+    </style>
+
+    <style name="NewLessonDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/new_lesson_accent</item>
     </style>
 
     <style name="MyDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">

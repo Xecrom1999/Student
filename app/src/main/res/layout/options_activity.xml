@@ -18,14 +18,14 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:textColor="@android:color/secondary_text_light"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
         android:textSize="18dp"
         android:text="@string/clear_data_string"
         android:background="?attr/selectableItemBackground"
-        android:onClick="clearDataRequest"/>
+        android:onClick="clearDataRequest"
+        android:padding="16dp"/>
 
     <View
         android:layout_width="match_parent"
@@ -35,10 +35,10 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:textColor="@android:color/secondary_text_light"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
+        android:padding="16dp"
         android:textSize="18dp"
         android:text="@string/contact_us_string"
         android:background="?attr/selectableItemBackground"
@@ -52,10 +52,10 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:textColor="@android:color/secondary_text_light"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
+        android:padding="16dp"
         android:textSize="18dp"
         android:text="@string/rate_app_string"
         android:background="?attr/selectableItemBackground"
@@ -75,7 +75,7 @@
         ads:adUnitId="ca-app-pub-6617091054237983/9637310756"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="258dp"
+        android:layout_marginTop="290dp"
         />
 
 </LinearLayout>

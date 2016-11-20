@@ -7,13 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -123,7 +121,7 @@ public class ReminderFragment extends DialogFragment implements View.OnClickList
             int hour = Integer.parseInt(str.substring(0, str.indexOf(':')));
             int min = Integer.parseInt(str.substring(str.indexOf(':') + 1));
 
-            new TimePickerDialog(ctx, R.style.PickersStyle, this, hour, min, true).show();
+            new TimePickerDialog(ctx, R.style.NewEventDialog, this, hour, min, true).show();
         }
 
         else if (id == R.id.reminder_done) {

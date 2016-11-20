@@ -2,21 +2,26 @@
 <resources>
     <color name="primary_dark">#00796B</color>
     <color name="primary_text">@android:color/primary_text_light</color>
-    <color name="fab_color">#4CAF50</color>
     <color name="background_color">#FAFAFA</color>
     <color name="event_text">#7F7F7F</color>
-    <color name="primary_new_item">#4CAF50</color>
-    <color name="new_item_600">#43A047</color>
-    <color name="dark_new_item">#388E3C</color>
+    <color name="primary_new_event">#FF5722</color>
+    <color name="dark_new_event">#E64A19</color>
     <color name="secondary_text">@android:color/secondary_text_light</color>
     <color name="notes_primary">#FFC107</color>
     <color name="dark_notes">#FFA000</color>
     <color name="primary_calendar">#607D8B</color>
     <color name="dark_calendar">#455A64</color>
     <color name="calendar_background">#ECEFF1</color>
+    <color name="calendar_accent">#FF6E40</color>
     <color name="primary_schedule">#2196F3</color>
     <color name="dark_schedule">#1976D2</color>
     <color name="schedule_600">#1E88E5</color>
     <color name="schedule_900">#0D47A1</color>
+    <color name="schedule_accent">#FFD740</color>
+    <color name="new_lesson_primary">#FFC107</color>
+    <color name="new_lesson_600">#FFB300</color>
+    <color name="new_lesson_dark">#FFA000</color>
+    <color name="new_lesson_accent">#448AFF</color>
+
 
 </resources>
