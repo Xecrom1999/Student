@@ -1,6 +1,7 @@
 package com.example.user.student;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +21,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     TextView notes_button;
     TextView calender_button;
     TextView options_button;
+    TextView title_text;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,17 +29,26 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-6617091054237983/2023963555");
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+
+        title_text = (TextView) findViewById(R.id.main_title_text);
+        title_text.setTypeface(font);
+
         schedule_button = (TextView) findViewById(R.id.schedule_button);
         schedule_button.setOnClickListener(this);
+        schedule_button.setTypeface(font);
 
         notes_button = (TextView) findViewById(R.id.notes_button);
         notes_button.setOnClickListener(this);
+        notes_button.setTypeface(font);
 
         calender_button = (TextView) findViewById(R.id.calendar_button);
         calender_button.setOnClickListener(this);
+        calender_button.setTypeface(font);
 
         options_button = (TextView) findViewById(R.id.options_button);
         options_button.setOnClickListener(this);
+        options_button.setTypeface(font);
 
 
         boolean fromNoti = getIntent().getBooleanExtra("fromNoti", false);
@@ -50,9 +61,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-        AdView mAdView = (AdView) findViewById(R.id.main_adBanner);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+       // AdView mAdView = (AdView) findViewById(R.id.main_adBanner);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        //mAdView.loadAd(adRequest);
     }
 
     @Override

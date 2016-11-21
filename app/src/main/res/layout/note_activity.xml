@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/new_note"
     android:orientation="vertical"
     android:id="@+id/rootLayout"
@@ -39,5 +40,16 @@
             android:paddingStart="16dp"
             android:textSize="18dp"
             />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/main_adBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6617091054237983/2023963555"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:layout_centerHorizontal="true"
+        />
 
 </LinearLayout>
