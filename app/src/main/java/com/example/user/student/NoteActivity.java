@@ -14,6 +14,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class NoteActivity extends AppCompatActivity {
 
     TextView title_text;
@@ -50,6 +53,10 @@ public class NoteActivity extends AppCompatActivity {
         title_text.setText(title);
 
         description_text.setText(description);
+
+        AdView mAdView = (AdView) findViewById(R.id.note_adBanner);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

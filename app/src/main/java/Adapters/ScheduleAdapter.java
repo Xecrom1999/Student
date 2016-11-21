@@ -2,6 +2,7 @@ package Adapters;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,7 +58,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         if (list == null) {
             this.list = newList;
-            Log.d("MYLOG", "TRUE");
             return;
         }
 
@@ -101,8 +101,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         if (position == list.size() && editMode) return;
 
-        if (editMode) viewHolder.layout.setBackground(ctx.getDrawable(R.drawable.lesson_item));
-        else viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.dark_schedule));
+        if (editMode) {
+            viewHolder.layout.setBackground(ctx.getDrawable(R.drawable.lesson_item));
+            viewHolder.layout.setAlpha(0.6f);
+        }
+        else {
+            viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.dark_calendar));
+            viewHolder.layout.setAlpha(1f);
+        }
 
         Lesson lesson = list.get(position);
 
@@ -130,6 +136,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     public void updateLesson(int position, Lesson lesson) {
         list.get(position).setLesson(lesson);
         notifyItemChanged(position);
+        sortList(list);
     }
 
     public Lesson getItemAtPosition(int itemPosition) {

@@ -2,10 +2,13 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -61,9 +64,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-       // AdView mAdView = (AdView) findViewById(R.id.main_adBanner);
-        //AdRequest adRequest = new AdRequest.Builder().build();
-        //mAdView.loadAd(adRequest);
+        changeColor();
     }
 
     @Override
@@ -107,5 +108,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public void onBackPressed() {
         finish();
+    }
+
+    private void changeColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(R.color.dark_calendar));
+        }
     }
 }

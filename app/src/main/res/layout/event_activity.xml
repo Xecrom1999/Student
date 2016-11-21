@@ -29,6 +29,7 @@
             android:background="@color/primary_new_event"
             android:lines="1"
             android:textSize="18sp"
+            android:textStyle="bold"
             />
 
         <LinearLayout

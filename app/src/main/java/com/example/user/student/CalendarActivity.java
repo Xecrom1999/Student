@@ -77,6 +77,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         getSupportActionBar().setTitle("Calendar");
         toolbar.setBackgroundResource(R.color.primary_calendar);
         toolbar.setElevation(72);
+        toolbar.setAlpha(0.6f);
 
         pager = (ViewPager) findViewById(R.id.calendar_pager);
         fm = getSupportFragmentManager();

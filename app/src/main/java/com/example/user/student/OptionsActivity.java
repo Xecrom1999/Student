@@ -50,7 +50,8 @@ public class OptionsActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.options_string);
-        toolbar.setBackgroundResource(R.color.primary_new_event);
+        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setAlpha(0.6f);
     }
 
     public void clearDataRequest(View view) {
@@ -140,7 +141,7 @@ public class OptionsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.primary_new_event : R.color.primary_dark));
+            window.setStatusBarColor(getColor(R.color.dark_calendar));
         }
     }
 }

@@ -16,7 +16,7 @@
         android:textSize="45sp"
         android:id="@+id/main_title_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="116dp"
         />
 
     <ImageView
@@ -27,20 +27,73 @@
         android:id="@+id/imageView7"
         android:layout_centerHorizontal="true"
         android:tint="@color/dark_calendar"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:elevation="2dp"
+        android:alpha="0.8"
+        android:src="@mipmap/scheulde_img"
+        android:layout_marginTop="360dp"
+        android:layout_marginStart="64dp"
+        android:id="@+id/imageView5" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:elevation="2dp"
+        android:alpha="0.9"
+        android:src="@mipmap/ic_pencil"
+        android:id="@+id/imageView3"
+        android:layout_marginTop="470dp"
+        android:layout_marginStart="55dp" />
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:elevation="2dp"
+        android:alpha="0.8"
+        android:src="@mipmap/notes_img2"
+        android:layout_marginTop="470dp"
+        android:layout_marginStart="64dp"
+        />
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:elevation="2dp"
+        android:alpha="0.8"
+        android:src="@mipmap/options_img"
+        android:layout_marginTop="470dp"
+        android:layout_marginEnd="58dp"
+        android:layout_alignParentEnd="true"
+        />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:elevation="2dp"
+        android:alpha="0.8"
+        android:src="@mipmap/calendar_img4"
+        android:id="@+id/imageView4"
+        android:layout_marginTop="360dp"
+        android:layout_marginEnd="66dp"
+        android:layout_alignParentEnd="true"/>
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:layout_alignParentBottom="true"
       android:background="@color/main_button_color"
       android:elevation="1dp"
       android:alpha="0.6"
       android:id="@+id/linearLayout"
       android:showDividers="middle"
-      android:divider="@drawable/horizontal_divider">
+      android:divider="@drawable/horizontal_divider"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true">
 
       <LinearLayout
           android:layout_width="match_parent"
@@ -68,11 +121,11 @@
               android:layout_width="0dp"
               android:layout_height="@dimen/main_button_height"
               android:layout_weight="1"
-              android:text="@string/notes_string"
+              android:text="@string/calendar_string"
               android:textColor="@android:color/white"
               android:gravity="center_horizontal|bottom"
               android:textSize="16dp"
-              android:id="@+id/notes_button"
+              android:id="@+id/calendar_button"
               android:textStyle="bold"
               android:paddingBottom="12dp"
               android:background="?attr/selectableItemBackground"/>
@@ -91,11 +144,11 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/main_button_height"
                 android:layout_weight="1"
-                android:text="@string/calendar_string"
+                android:text="@string/notes_string"
                 android:textColor="@android:color/white"
                 android:gravity="center_horizontal|bottom"
                 android:textSize="16dp"
-                android:id="@+id/calendar_button"
+                android:id="@+id/notes_button"
                 android:textStyle="bold"
                 android:paddingBottom="12dp"
                 android:background="?attr/selectableItemBackground"/>
@@ -116,58 +169,5 @@
         </LinearLayout>
 
   </LinearLayout>
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:elevation="1dp"
-        android:alpha="0.8"
-        android:src="@mipmap/scheulde_img"
-        android:layout_marginTop="334dp"
-        android:layout_marginStart="64dp"
-        android:id="@+id/imageView5" />
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:elevation="2dp"
-        android:alpha="0.8"
-        android:src="@mipmap/ic_pencil"
-        android:id="@+id/imageView3"
-        android:layout_marginTop="331dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="88dp" />
-
-    <ImageView
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:elevation="1dp"
-        android:alpha="0.8"
-        android:src="@mipmap/calendar_img4"
-        android:layout_marginTop="460dp"
-        android:layout_marginStart="64dp"
-        />
-
-    <ImageView
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:elevation="1dp"
-        android:alpha="0.8"
-        android:src="@mipmap/options_img"
-        android:layout_marginTop="460dp"
-        android:layout_marginEnd="66dp"
-        android:layout_alignParentEnd="true"
-        />
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:elevation="1dp"
-        android:alpha="0.8"
-        android:src="@mipmap/notes_img2"
-        android:id="@+id/imageView4"
-        android:layout_marginTop="338dp"
-        android:layout_marginEnd="66dp"
-        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

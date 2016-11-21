@@ -1,5 +1,6 @@
 package com.example.user.student;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -113,11 +114,12 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         toolbar = (Toolbar) findViewById(R.id.schedule_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+        if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.schedule_string);
         toolbar.setBackgroundResource(R.color.primary_schedule);
+        toolbar.setAlpha(0.6f);
     }
 
     private int getPosition() {

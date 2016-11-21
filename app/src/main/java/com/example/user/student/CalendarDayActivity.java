@@ -107,6 +107,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setTitle(getString(R.string.today_events_string));
         toolbar.setBackgroundResource(R.color.primary_calendar);
         toolbar.setElevation(72);
+        toolbar.setAlpha(0.6f);
     }
 
     @Override

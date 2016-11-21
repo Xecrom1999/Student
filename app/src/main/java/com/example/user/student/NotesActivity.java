@@ -86,7 +86,8 @@ public class NotesActivity extends ActionBarActivity {
         }
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(getString(R.string.notes_string));
-        toolbar.setBackgroundResource(R.color.notes_primary);
+        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setAlpha(0.6f);
     }
 
     private void showNotes() {
@@ -425,7 +426,7 @@ public class NotesActivity extends ActionBarActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_notes : R.color.primary_dark));
+            window.setStatusBarColor(getColor(R.color.dark_calendar));
         }
     }
 }
