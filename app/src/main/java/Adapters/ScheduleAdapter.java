@@ -3,6 +3,7 @@ package Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,7 +104,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         if (editMode) {
             viewHolder.layout.setBackground(ctx.getDrawable(R.drawable.lesson_item));
-            viewHolder.layout.setAlpha(0.6f);
+            viewHolder.layout.setAlpha(0.5f);
         }
         else {
             viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.dark_calendar));

@@ -39,8 +39,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
     }
 
     public MonthFragment(int position, CalendarDB database) {
-        this.position = position;
-        this.position--;
+        this.position = position - 1;
         this.database = database;
     }
 

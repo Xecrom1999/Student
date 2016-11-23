@@ -55,6 +55,9 @@
     <string name="contact_us_string">דווח על באגים/הצעות לשיפור</string>
     <string name="are_you_sure_string">האם אתה בטוח?</string>
     <string name="clear_string">אפס</string>
+    <string name="add_event_string">הוסף אירוע</string>
+    <string name="back_to_month_string">חזור להיום</string>
+    <string name="arrange_notes_string">סדר פתקים</string>
 
     <string-array
         name="days_names">

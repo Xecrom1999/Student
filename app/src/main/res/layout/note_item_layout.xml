@@ -5,7 +5,7 @@
     android:layout_width="90dp"
     android:layout_height="100dp"
     android:orientation="vertical"
-    android:background="@drawable/note_img"
+    android:background="@drawable/note_drawable"
     android:padding="5dp"
     android:id="@+id/note_layout"
     android:layoutDirection="ltr"
@@ -13,6 +13,14 @@
     android:elevation="4dp"
     >
 
+    <TextView
+        android:text="Wed, 4 Jul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="6sp"
+        android:textColor="@android:color/secondary_text_light"
+        android:id="@+id/note_date"
+        />
     <TextView
         android:text=""
         android:layout_width="match_parent"

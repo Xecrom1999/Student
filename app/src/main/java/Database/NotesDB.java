@@ -19,19 +19,19 @@ public class NotesDB extends SQLiteOpenHelper {
 
     public static final String COL_1 = "ID";
     public static final String COL_2 = "TITLE";
-    public static final String COL_3 = "X_POS";
-    public static final String COL_4 = "Y_POS";
+    public static final String COL_3 = "DATE";
+    public static final String COL_4 = "X_POS";
+    public static final String COL_5 = "Y_POS";
 
     Context ctx;
 
     public NotesDB(Context context) {
-        super(context, DATABASE_NAME, null, 23);
+        super(context, DATABASE_NAME, null, 24);
         this.ctx = context;
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,X_POS TEXT,Y_POS TEXT)");
-
+        db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,DATE TEXT,X_POS TEXT,Y_POS TEXT)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -47,8 +47,9 @@ public class NotesDB extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_2, note.getTitle());
-        contentValues.put(COL_3, note.getxPos());
-        contentValues.put(COL_4, note.getyPos());
+        contentValues.put(COL_3, note.getDate());
+        contentValues.put(COL_4, note.getxPos());
+        contentValues.put(COL_5, note.getyPos());
 
         return db.insert(TABLE_NAME, null, contentValues);
     }
@@ -78,19 +79,20 @@ public class NotesDB extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_3, xPos);
-        contentValues.put(COL_4, yPos);
+        contentValues.put(COL_4, xPos);
+        contentValues.put(COL_5, yPos);
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }
 
-    public void updateData2(String id, String title) {
+    public void updateData2(String id, String title, String date) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_2, title);
+        contentValues.put(COL_3, date);
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
     }

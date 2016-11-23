@@ -5,7 +5,7 @@
     <item
         android:id="@+id/addEvent"
         android:orderInCategory="100"
-        android:title="addEvent"
+        android:title="@string/add_event_string"
         android:icon="@mipmap/ic_add"
         app:showAsAction="always"/>
 

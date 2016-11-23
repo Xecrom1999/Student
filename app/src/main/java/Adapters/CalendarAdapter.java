@@ -33,6 +33,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     final int ITEM_TYPE = 1;
     int position;
     int month;
+    int year;
     CalendarListener listener;
     CalendarDB database;
     ArrayList<String> datesList;
@@ -52,6 +53,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.getTime();
         month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
         calendar.set(Calendar.DAY_OF_WEEK, 1);
         calendar.add(Calendar.DATE, -7);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -76,6 +78,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font1.ttf");
+        holder.day_text.setTypeface(font);
+
         Calendar cal = Calendar.getInstance();
 
         holder.setMonth(calendar.get(Calendar.MONTH));
@@ -91,9 +96,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             holder.day_text.setText(day + "");
             if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month) {
                 holder.day_text.setTextColor(ctx.getColor(R.color.calendar_accent));
-                holder.day_text.setTypeface(null, Typeface.BOLD);
-                holder.day_text.setTextSize(11);
-
             }
             if (month != calendar.get(Calendar.MONTH))
                 holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
@@ -181,12 +183,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            listener.newEvent(Integer.valueOf(day_text.getText().toString()), month, calendar.get(Calendar.YEAR), !title_text.getText().toString().isEmpty());
+            listener.newEvent(Integer.valueOf(day_text.getText().toString()), month, year, !title_text.getText().toString().isEmpty());
         }
 
         @Override
         public boolean onLongClick(View v) {
-            listener.openDay(Integer.valueOf(day_text.getText().toString()), month, calendar.get(Calendar.YEAR));
+            listener.openDay(Integer.valueOf(day_text.getText().toString()), month, year);
             return true;
         }
     }

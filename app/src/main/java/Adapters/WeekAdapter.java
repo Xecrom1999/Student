@@ -2,6 +2,7 @@ package Adapters;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,8 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.ViewHolder> {
 
         if (position < DAYS_NUM) {
             viewHolder.name_text.setText(format.format(calendar.getTime()));
+            Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font1.ttf");
+            viewHolder.name_text.setTypeface(font);
             calendar.add(Calendar.DATE, 1);
         }
 

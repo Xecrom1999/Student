@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/setDefaultLesson_string"
-        android:buttonTint="@color/new_lesson_dark"
+        android:buttonTint="@color/dark_calendar"
         android:checked="true"
         android:layout_below="@+id/linearLayout2"
         android:layout_marginTop="8dp"
@@ -143,7 +143,7 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:text="ביטול"
+            android:text="@string/cancel_string"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
@@ -153,7 +153,7 @@
             android:background="@drawable/lesson_button_drawable" />
 
         <Button
-            android:text="שמור"
+            android:text="@string/save_string"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"

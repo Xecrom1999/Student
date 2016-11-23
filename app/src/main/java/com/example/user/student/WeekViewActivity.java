@@ -62,7 +62,8 @@ public class WeekViewActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.schedule_string);
-        toolbar.setBackgroundResource(R.color.primary_schedule);
+        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setAlpha(0.6f);
     }
 
     public ArrayList<Lesson> getList(int p) {

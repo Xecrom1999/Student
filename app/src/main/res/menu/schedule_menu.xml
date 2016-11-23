@@ -6,7 +6,7 @@
     <item
 
         android:id="@+id/edit_id"
-        android:title="@string/week_view_string"
+        android:title="@string/edit_string"
         app:showAsAction="always"
         android:icon="@drawable/ic_edit" />
 
@@ -20,7 +20,5 @@
 
     <item android:title="@string/delete_all_string"
         android:id="@+id/delete_all_id"/>
-
-
 
 </menu>

@@ -10,11 +10,13 @@ import java.util.ArrayList;
 public class Note {
 
     private String title;
+    private String date;
     private String xPos;
     private String yPos;
 
-    public Note(String title, String xPos, String yPos) {
+    public Note(String title, String date, String xPos, String yPos) {
         this.title = title;
+        this.date = date;
         this.xPos = xPos;
         this.yPos = yPos;
     }
@@ -43,4 +45,11 @@ public class Note {
         this.yPos = yPos;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

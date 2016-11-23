@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.Type;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -95,16 +96,17 @@ public class NotesActivity extends ActionBarActivity {
         Cursor res = dataBase.getAllData();
 
         while (res.moveToNext()) {
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4));
         }
         theLayout.invalidate();
     }
 
-    private void addNote(String id, String title, String xPos, String yPos) {
+    private void addNote(String id, String title, String date, String xPos, String yPos) {
 
         final View note = getLayoutInflater().inflate(R.layout.note_item_layout, null, false);
 
         TextView title_text = (TextView) note.findViewById(R.id.note_title);
+        TextView date_text = (TextView) note.findViewById(R.id.note_date);
 
         note.setOnTouchListener(new NoteListener());
 
@@ -114,6 +116,13 @@ public class NotesActivity extends ActionBarActivity {
         params.topMargin = Integer.parseInt(yPos);
 
         title_text.setText(title);
+        date_text.setText(date);
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        date_text.setTypeface(typeface);
+
+        Typeface typeface2 = Typeface.createFromAsset(getAssets(), "fonts/my_font.ttf");
+        title_text.setTypeface(typeface2);
 
         note.setTag(id);
 
@@ -144,7 +153,7 @@ public class NotesActivity extends ActionBarActivity {
     private void addNote(String id) {
         Cursor res = dataBase.getRowById(id);
         while (res.moveToNext())
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4));
     }
 
     @Override
@@ -165,16 +174,16 @@ public class NotesActivity extends ActionBarActivity {
         else if (id == R.id.notes_delete_id)
             userDialog();
 
-        else if (id == R.id.arragne_all)
-            arrangeAll();
+        else if (id == R.id.arrange_notes)
+            arrangeNotes();
 
         return true;
     }
 
-    private void arrangeAll() {
+    private void arrangeNotes() {
         
         int firstX = (int) convertDpToPixel(8);
-        int y = (int) convertDpToPixel(60);
+        int y = (int) convertDpToPixel(70);
 
         int spaceX = (int) convertDpToPixel(89);
         int spaceY = (int) convertDpToPixel(110);
@@ -319,7 +328,7 @@ public class NotesActivity extends ActionBarActivity {
 
                     v.setAlpha(1);
 
-                    note = new Note("", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
+                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
 
                     id = v.getTag().toString();
 
@@ -402,7 +411,7 @@ public class NotesActivity extends ActionBarActivity {
         Note note = null;
         while (res.moveToNext())
             if (res.getString(0).equals(id))  {
-                note = new Note(res.getString(1), res.getString(2), res.getString(3));
+                note = new Note(res.getString(1), res.getString(2), res.getString(3), res.getString(4));
                 break;
             }
         return note;
@@ -412,17 +421,17 @@ public class NotesActivity extends ActionBarActivity {
     protected void onStop() {
         super.onStop();
 
-        changeColor(false);
+        changeColor();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        changeColor(true);
+        changeColor();
     }
 
-    private void changeColor(boolean isStarted) {
+    private void changeColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -430,4 +439,3 @@ public class NotesActivity extends ActionBarActivity {
         }
     }
 }
-

@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+
 import Database.NotesDB;
 
 public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
@@ -42,6 +44,8 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
     Intent intent;
 
     String id;
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +136,9 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
 
         String title = title_edit.getText().toString();
 
-        database.updateData2(id, title);
+        String date = simpleDateFormat.format(System.currentTimeMillis());
+
+        database.updateData2(id, title, date);
 
         finish();
     }

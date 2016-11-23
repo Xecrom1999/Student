@@ -7,8 +7,8 @@
         android:title="@string/delete_all_string" />
 
     <item
-        android:id="@+id/arragne_all"
-        android:title=""
+        android:id="@+id/arrange_notes"
+        android:title="@string/arrange_notes_string"
         android:icon="@drawable/arrange_notes_icon"
         app:showAsAction="always"/>
 

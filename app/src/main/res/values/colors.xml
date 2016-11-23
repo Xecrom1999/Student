@@ -19,10 +19,11 @@
     <color name="schedule_600">#417299</color>
     <color name="schedule_900">#417299</color>
     <color name="schedule_accent">#FFD740</color>
-    <color name="new_lesson_primary">#FFC107</color>
-    <color name="new_lesson_600">#FFB300</color>
-    <color name="new_lesson_dark">#FFA000</color>
+    <color name="new_lesson_primary">@color/primary_calendar</color>
+    <color name="new_lesson_600">@color/dark_calendar</color>
+    <color name="new_lesson_dark">@color/dark_calendar</color>
     <color name="new_lesson_accent">#448AFF</color>
     <color name="main_button_color">#0165B5</color>
+    <color name="primary_color">#68A4D3</color>
 
 </resources>

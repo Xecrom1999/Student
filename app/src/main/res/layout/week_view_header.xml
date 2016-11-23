@@ -3,9 +3,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:background="@color/primary_schedule"
+    android:background="@color/primary_calendar"
     android:gravity="center"
-    android:id="@+id/week_layout">
+    android:id="@+id/week_layout"
+    android:alpha="0.6">
 
     <TextView
         android:textStyle="bold"

@@ -5,7 +5,7 @@
     <item
         android:id="@+id/backToMonth"
         android:orderInCategory="100"
-        android:title="back to today's month"
+        android:title="@string/back_to_month_string"
         android:icon="@drawable/ic_calendar_action2"
         app:showAsAction="always"/>
 

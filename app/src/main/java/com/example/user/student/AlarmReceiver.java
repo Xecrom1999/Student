@@ -42,8 +42,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setVibrate(new long[] {500, 500})
                 .setAutoCancel(true)
                 .setSound(alarmSound)
-                .setColor(context.getColor(R.color.primary_calendar))
-                .setLights(context.getColor(R.color.primary_calendar), 1000, 1000)
+                .setColor(context.getColor(R.color.primary_color))
+                .setLights(context.getColor(R.color.primary_color), 1000, 1000)
                 .build();
 
         StatusBarNotification [] not = notificationManager.getActiveNotifications();
