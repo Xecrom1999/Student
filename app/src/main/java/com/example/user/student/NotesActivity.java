@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.Type;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -87,7 +87,7 @@ public class NotesActivity extends ActionBarActivity {
         }
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(getString(R.string.notes_string));
-        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setBackgroundResource(R.color.primary_color);
         toolbar.setAlpha(0.6f);
     }
 
@@ -121,8 +121,8 @@ public class NotesActivity extends ActionBarActivity {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
         date_text.setTypeface(typeface);
 
-        Typeface typeface2 = Typeface.createFromAsset(getAssets(), "fonts/my_font.ttf");
-        title_text.setTypeface(typeface2);
+        Typeface typeface2 = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        //title_text.setTypeface(typeface2);
 
         note.setTag(id);
 
@@ -209,13 +209,17 @@ public class NotesActivity extends ActionBarActivity {
             if (v.getTag() != null && !v.getTag().toString().isEmpty()) {
 
 
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) v
-                        .getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
+
                 layoutParams.leftMargin = x;
                 layoutParams.topMargin = y;
                 layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.note_margin);
                 layoutParams.bottomMargin = (int) getResources().getDimension(R.dimen.note_margin);
                 v.setLayoutParams(layoutParams);
+
+                TranslateAnimation animation = new TranslateAnimation(v.getX(), x, v.getY(), y);
+                animation.setDuration(1000);
+                //v.startAnimation(animation);
 
                 dataBase.updateData(v.getTag().toString(), String.valueOf(x), String.valueOf(y));
 
@@ -284,6 +288,7 @@ public class NotesActivity extends ActionBarActivity {
         Note note = getNoteById(id);
 
         String title = note.getTitle();
+        String date = note.getDate();
         if (title.isEmpty()) {
             intent = new Intent(this, NewNoteActivity.class);
             intent.putExtra("isNew", true);
@@ -291,6 +296,7 @@ public class NotesActivity extends ActionBarActivity {
         else {
             intent = new Intent(this, NoteActivity.class);
             intent.putExtra("title", title);
+            intent.putExtra("date", date);
         }
 
         intent.putExtra("id", v.getTag().toString());
@@ -435,7 +441,7 @@ public class NotesActivity extends ActionBarActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(R.color.dark_calendar));
+            window.setStatusBarColor(getColor(R.color.status_bar_color));
         }
     }
 }

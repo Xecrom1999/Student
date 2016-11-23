@@ -2,7 +2,6 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,12 +9,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -25,7 +21,6 @@ import java.util.Calendar;
 
 import Database.CalendarDB;
 import Fragments.CalendarDayFragment;
-import Interfaces.CalendarDayListener;
 import Interfaces.EventDateListener;
 
 public class CalendarDayActivity extends AppCompatActivity implements View.OnClickListener, EventDateListener {
@@ -105,7 +100,7 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(getString(R.string.today_events_string));
-        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setBackgroundResource(R.color.primary_color);
         toolbar.setElevation(72);
         toolbar.setAlpha(0.6f);
     }
@@ -137,21 +132,6 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         addEvent();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        changeColor(true);
-    }
-
-    private void changeColor(boolean isStarted) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_calendar : R.color.primary_dark));
-        }
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {

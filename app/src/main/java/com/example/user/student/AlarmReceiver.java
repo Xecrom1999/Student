@@ -8,10 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import java.util.Calendar;
 
@@ -35,14 +33,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         myIntent.putExtra("fromNoti", true);
 
         Notification notification = new NotificationCompat.Builder(context)
-                .setContentTitle("תזכורת")
+                .setContentTitle(context.getString(R.string.reminder_string))
                 .setContentText(intent.getStringExtra("title"))
                 .setSmallIcon(R.mipmap.ic_calendar5)
                 .setContentIntent(PendingIntent.getActivity(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setVibrate(new long[] {500, 500})
                 .setAutoCancel(true)
                 .setSound(alarmSound)
-                .setColor(context.getColor(R.color.primary_color))
+                .setColor(context.getColor(R.color.notification_color))
                 .setLights(context.getColor(R.color.primary_color), 1000, 1000)
                 .build();
 

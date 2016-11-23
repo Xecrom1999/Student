@@ -2,6 +2,7 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import com.google.android.gms.ads.AdView;
 public class NoteActivity extends AppCompatActivity {
 
     TextView title_text;
-    TextView description_text;
+    TextView date_text;
 
     Configuration config;
 
@@ -30,7 +31,7 @@ public class NoteActivity extends AppCompatActivity {
     LinearLayout layout;
 
     String title;
-    String description;
+    String date;
 
     Intent intent;
 
@@ -45,14 +46,12 @@ public class NoteActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        title = intent.getStringExtra("title");
-        description = intent.getStringExtra("description");
-
         id = intent.getStringExtra("id");
+        title = intent.getStringExtra("title");
+        date = intent.getStringExtra("date");
 
         title_text.setText(title);
-
-        description_text.setText(description);
+        date_text.setText(date);
 
         AdView mAdView = (AdView) findViewById(R.id.note_adBanner);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -80,7 +79,10 @@ public class NoteActivity extends AppCompatActivity {
 
     private void initializeViews() {
         title_text = (TextView) findViewById(R.id.note_title);
-        description_text = (TextView) findViewById(R.id.note_description);
+        date_text = (TextView) findViewById(R.id.note_date);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        date_text.setTypeface(font);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class NoteActivity extends AppCompatActivity {
 
             intent = new Intent(this, NewNoteActivity.class);
             intent.putExtra("title", title);
-            intent.putExtra("description", description);
+            intent.putExtra("date", date);
             intent.putExtra("id", this.id);
 
             startActivity(intent);

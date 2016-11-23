@@ -4,7 +4,6 @@
     <string name="add_lesson_text">לא הוספו שיעורים,\nגע בכדי להוסיף</string>
     <string name="today_string">היום</string>
     <string name="title_hint_string">כותרת</string>
-    <string name="description_hint_string">תיאור</string>
     <string name="comments_string">הוסף הערה</string>
     <string name="no_events_string">אין אירועים</string>
     <string name="save_string">שמור</string>
@@ -46,8 +45,6 @@
     <string name="two_minutes_before_string">2 דקות לפני</string>
     <string name="two_hours_before_string">שעתיים לפני</string>
     <string name="edit_note_string">ערוך פתק</string>
-    <string name="new_event_string">אירוע חדש</string>
-    <string name="edit_event_string">ערוך אירוע</string>
     <string name="delete_event_string">מחק אירוע</string>
     <string name="options_string">אפשרויות</string>
     <string name="clear_data_string">איפוס נתונים</string>

@@ -183,7 +183,7 @@ public class EventActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.status_bar_color));
         }
     }
 

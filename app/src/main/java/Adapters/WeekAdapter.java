@@ -61,6 +61,9 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.ViewHolder> {
 
         else {
 
+            Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font2.ttf");
+            viewHolder.name_text.setTypeface(font);
+
             position -= DAYS_NUM;
 
             int day = 5 - (position % DAYS_NUM);

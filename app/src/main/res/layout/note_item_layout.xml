@@ -14,21 +14,23 @@
     >
 
     <TextView
-        android:text="Wed, 4 Jul"
+        android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="6sp"
         android:textColor="@android:color/secondary_text_light"
         android:id="@+id/note_date"
+        android:gravity="end"
         />
     <TextView
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="12sp"
-        android:textColor="@android:color/primary_text_light"
+        android:textSize="11sp"
+        android:textColor="@android:color/secondary_text_light"
         android:id="@+id/note_title"
         android:gravity="center"
+        android:ellipsize="marquee"
         />
 
     </LinearLayout>

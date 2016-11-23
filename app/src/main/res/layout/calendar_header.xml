@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:textColor="@color/primary_text"
+        android:textColor="@android:color/primary_text_light"
         android:id="@+id/calendar_item_text2"
         android:background="@android:color/transparent"
         />

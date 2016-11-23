@@ -14,25 +14,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         android:text="1"
         android:layout_margin="5dp"
         android:id="@+id/lesson_number"/>
-
-    <TextView
-        android:textStyle="bold"
-        android:id="@+id/lesson_text"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="שיעור"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:lines="1"
-        android:layout_centerHorizontal="true"
-        />
 
     <TextView
         android:id="@+id/startsAt_text"
@@ -42,7 +28,7 @@
         android:textColor="@android:color/white"
         android:textSize="13dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/lesson_text"
+        android:layout_below="@+id/lesson_text"
         android:layout_marginStart="25dp"
         />
 
@@ -53,7 +39,7 @@
         android:text="אורך שיעור: 45 דקות"
         android:textColor="@android:color/white"
         android:textSize="13dp"
-        android:layout_below="@id/lesson_text"
+        android:layout_below="@+id/lesson_text"
         android:layout_toEndOf="@id/startsAt_text"
         />
 
@@ -67,5 +53,19 @@
         android:src="@drawable/ic_delete"
         android:background="?android:attr/selectableItemBackgroundBorderless"
 />
+
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/lesson_text"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="שיעור"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:lines="1"
+        android:layout_alignBaseline="@+id/lesson_number"
+        android:layout_alignBottom="@+id/lesson_number"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
 

@@ -1,12 +1,9 @@
 package com.example.user.student;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,7 +59,7 @@ public class WeekViewActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.schedule_string);
-        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setBackgroundResource(R.color.primary_color);
         toolbar.setAlpha(0.6f);
     }
 
@@ -120,7 +117,7 @@ public class WeekViewActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.status_bar_color));
         }
     }
 }

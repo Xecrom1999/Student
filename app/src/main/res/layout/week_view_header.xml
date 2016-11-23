@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:background="@color/primary_calendar"
+    android:background="@color/primary_color"
     android:gravity="center"
     android:id="@+id/week_layout"
     android:alpha="0.6">

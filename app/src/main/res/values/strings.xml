@@ -4,7 +4,6 @@
     <string name="add_lesson_text">No lessons added yet,\nTouch to add.</string>
     <string name="today_string">Today</string>
     <string name="title_hint_string">Title</string>
-    <string name="description_hint_string">Description</string>
     <string name="comments_string">Add a comment</string>
     <string name="no_events_string">No Events</string>
     <string name="save_string">save</string>
@@ -46,8 +45,6 @@
     <string name="two_minutes_before_string">2 minutes before</string>
     <string name="two_hours_before_string">2 hours before</string>
     <string name="edit_note_string">Edit note</string>
-    <string name="new_event_string">New event</string>
-    <string name="edit_event_string">Edit event</string>
     <string name="delete_event_string">Delete event</string>
     <string name="options_string">Options</string>
     <string name="clear_data_string">Clear data</string>

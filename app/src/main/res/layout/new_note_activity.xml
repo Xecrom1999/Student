@@ -13,13 +13,13 @@
         android:id="@+id/new_note_bar"/>
 
     <include
-        android:layout_width="105dp"
-        android:layout_height="125dp"
+        android:layout_width="85dp"
+        android:layout_height="95dp"
         layout="@layout/note_item_layout"
         android:id="@+id/note_item"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="95dp"/>
+        android:layout_marginTop="80dp"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -28,12 +28,11 @@
             android:gravity="top"
             android:background="@android:color/transparent"
             android:padding="16dp"
-            android:textColor="@color/primary_text"
-            android:imeOptions="actionDone"
-            android:textSize="23dp"
-            android:layout_marginTop="2dp"
-            android:textColorHint="@android:color/tertiary_text_light"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="20dp"
+            android:layout_marginTop="4dp"
             android:layout_below="@id/note_item"
+            android:text="להתקשר לצבא"
             />
 
 </RelativeLayout>

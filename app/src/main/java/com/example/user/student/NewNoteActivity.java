@@ -3,6 +3,7 @@ package com.example.user.student;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
     EditText title_edit;
 
     TextView title_text;
+    TextView date_text;
 
     Configuration config;
 
@@ -44,6 +46,7 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
     Intent intent;
 
     String id;
+    String date;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM");
 
@@ -93,8 +96,16 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
     private void setTexts() {
 
         String title = intent.getStringExtra("title");
+        date = intent.getStringExtra("date");
+
+        if (date == null)
+             date = simpleDateFormat.format(System.currentTimeMillis());
 
         title_edit.setText(title);
+        date_text.setText(date);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        date_text.setTypeface(font);
     }
 
     private void setListeners() {
@@ -106,6 +117,7 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
         note_item = findViewById(R.id.note_item);
         title_text = (TextView) note_item.findViewById(R.id.note_title);
         title_edit = (EditText) findViewById(R.id.title_edit);
+        date_text = (TextView) note_item.findViewById(R.id.note_date);
     }
 
     @Override
@@ -136,7 +148,6 @@ public class NewNoteActivity extends AppCompatActivity implements TextWatcher {
 
         String title = title_edit.getText().toString();
 
-        String date = simpleDateFormat.format(System.currentTimeMillis());
 
         database.updateData2(id, title, date);
 

@@ -2,7 +2,6 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,12 +10,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -75,7 +71,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle("Calendar");
-        toolbar.setBackgroundResource(R.color.primary_calendar);
+        toolbar.setBackgroundResource(R.color.primary_color);
         toolbar.setElevation(72);
         toolbar.setAlpha(0.6f);
 
@@ -89,11 +85,12 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         fab = (FloatingActionButton) findViewById(R.id.calendar_fab);
         fab.setOnClickListener(this);
 
-        SimpleDateFormat format = new SimpleDateFormat("MMMM   MM/yy");
+        SimpleDateFormat format = new SimpleDateFormat("MMMM");
+        SimpleDateFormat format2 = new SimpleDateFormat("MM/yy");
         Calendar calendar = Calendar.getInstance();
         String month = format.format(calendar.getTime());
-        toolbar.setSubtitleTextColor(getColor(R.color.background_color));
         toolbar.setTitle(month);
+        toolbar.setSubtitle(format2.format(calendar.getTime()));
     }
 
     @Override
@@ -103,6 +100,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     @Override
     public void onPageSelected(int position) {
         toolbar.setTitle(fragments[position].getMonth());
+        toolbar.setSubtitle(fragments[position].getMonth2());
     }
 
     @Override
@@ -167,27 +165,5 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        changeColor(false);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        changeColor(true);
-    }
-
-    private void changeColor(boolean isStarted) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_calendar : R.color.primary_dark));
-        }
     }
 }

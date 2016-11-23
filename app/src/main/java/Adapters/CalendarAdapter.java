@@ -92,13 +92,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         }
 
         else {
+
+
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             holder.day_text.setText(day + "");
             if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month) {
                 holder.day_text.setTextColor(ctx.getColor(R.color.calendar_accent));
             }
-            if (month != calendar.get(Calendar.MONTH))
+            if (month != calendar.get(Calendar.MONTH)) {
                 holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
+                holder.title_text.setTextColor(Color.parseColor("#BDBDBD"));
+            }
             for (int i = 0; i < datesList.size(); i++) { 
                     if (datesList.get(i).equals(String.valueOf(calendar.getTime()))) {
                         if (holder.num == 0) {

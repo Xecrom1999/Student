@@ -2,10 +2,8 @@ package Adapters;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,12 +100,16 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         if (position == list.size() && editMode) return;
 
+        Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font2.ttf");
+        viewHolder.name_text.setTypeface(font);
+        viewHolder.number_text.setTypeface(font);
+
         if (editMode) {
             viewHolder.layout.setBackground(ctx.getDrawable(R.drawable.lesson_item));
             viewHolder.layout.setAlpha(0.5f);
         }
         else {
-            viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.dark_calendar));
+            viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.status_bar_color));
             viewHolder.layout.setAlpha(1f);
         }
 

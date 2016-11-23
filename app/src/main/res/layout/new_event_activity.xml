@@ -66,7 +66,7 @@
                 android:text="יום רביעי, 14 ספטמבר 2016"
                 android:id="@+id/event_date_text"
                 android:textSize="18dp"
-                android:textColor="@color/primary_text"
+                android:textColor="@android:color/secondary_text_light"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
                 />
@@ -95,7 +95,7 @@
                 android:textSize="18dp"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/primary_text"
+                android:textColor="@android:color/secondary_text_light"
                 />
 
             <ImageView
@@ -137,6 +137,7 @@
                 android:paddingBottom="15dp"
                 android:layout_marginTop="29dp"
                 android:gravity="center_vertical"
+                android:textColor="@android:color/secondary_text_light"
                 />
 
         </LinearLayout>
@@ -166,7 +167,7 @@
                 android:layout_alignParentStart="true"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/primary_text"
+                android:textColor="@android:color/secondary_text_light"
                 android:id="@+id/reminder_text"
                 />
 

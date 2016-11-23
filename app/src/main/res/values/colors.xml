@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primary_dark">#00796B</color>
-    <color name="primary_text">@android:color/primary_text_light</color>
-    <color name="background_color">#FAFAFA</color>
     <color name="event_text">#7F7F7F</color>
     <color name="primary_new_event">#FF5722</color>
     <color name="dark_new_event">#E64A19</color>
-    <color name="secondary_text">@android:color/secondary_text_light</color>
     <color name="notes_primary">#FFC107</color>
     <color name="dark_notes">#FFA000</color>
-    <color name="primary_calendar">#0165B5</color>
-    <color name="dark_calendar">#417299</color>
+    <color name="primary_color">#0165B5</color>
+    <color name="status_bar_color">#417299</color>
     <color name="calendar_background">#ECEFF1</color>
     <color name="calendar_accent">#FF6E40</color>
     <color name="primary_schedule">#0165B5</color>
     <color name="dark_schedule">#417299</color>
-    <color name="schedule_600">#417299</color>
-    <color name="schedule_900">#417299</color>
     <color name="schedule_accent">#FFD740</color>
-    <color name="new_lesson_primary">@color/primary_calendar</color>
-    <color name="new_lesson_600">@color/dark_calendar</color>
-    <color name="new_lesson_dark">@color/dark_calendar</color>
-    <color name="new_lesson_accent">#448AFF</color>
+    <color name="new_lesson_primary">@color/primary_color</color>
+    <color name="new_lesson_600">@color/status_bar_color</color>
+    <color name="new_lesson_dark">@color/status_bar_color</color>
     <color name="main_button_color">#0165B5</color>
-    <color name="primary_color">#68A4D3</color>
+    <color name="notification_color">#68A4D3</color>
+    <color name="note_color">#FFF59D</color>
 
 </resources>

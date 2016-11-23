@@ -1,6 +1,5 @@
 package com.example.user.student;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -282,7 +281,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.status_bar_color));
         }
     }
 }

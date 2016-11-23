@@ -30,9 +30,11 @@ public class MonthFragment extends Fragment implements CalendarListener{
     RecyclerView recyclerView;
     CalendarAdapter adapter;
     int position;
-    SimpleDateFormat format;
+    SimpleDateFormat format = new SimpleDateFormat("MMMM");;
+    SimpleDateFormat format2 = new SimpleDateFormat("MM/yy");
     Calendar calendar;
     String month;
+    String month2;
     CalendarDB database;
 
     public MonthFragment() {
@@ -49,11 +51,10 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
         View view = inflater.inflate(R.layout.month_layout, container, false);
 
-        format = new SimpleDateFormat("MMMM    MM/yy");
         calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, position);
         month = format.format(calendar.getTime());
-
+        month2 = format2.format(calendar.getTime());
         return view;
     }
 
@@ -121,5 +122,9 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
     public String getMonth() {
         return month;
+    }
+
+    public String getMonth2() {
+        return month2;
     }
 }

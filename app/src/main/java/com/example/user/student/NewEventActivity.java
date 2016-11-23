@@ -286,7 +286,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         if (cal.getTime().getTime() < System.currentTimeMillis() - 60000) return;
 
-
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
         alarmIntent.putExtra("title", event.getTitle());
         alarmIntent.putExtra("calendar", calendar);
@@ -440,7 +439,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.primary_dark));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.status_bar_color));
         }
     }
 }
