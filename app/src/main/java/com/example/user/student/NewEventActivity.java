@@ -304,7 +304,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
             case R.id.event_date_layout:
                 datePicker = new DatePickerDialog(this, R.style.NewEventDialog, new DatePickerListener(), mYear, mMonth, mDay);
                 datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                showDialog(0);
+                datePicker.show();
                 break;
 
             case R.id.event_time_layout:
@@ -342,11 +342,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
                 remove_reminder.setVisibility(View.INVISIBLE);
                 break;
         }
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        return datePicker;
     }
 
     @Override

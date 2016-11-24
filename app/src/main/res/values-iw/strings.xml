@@ -7,7 +7,7 @@
     <string name="comments_string">הוסף הערה</string>
     <string name="no_events_string">אין אירועים</string>
     <string name="save_string">שמור</string>
-    <string name="reminder_string">הוסף תזכורת</string>
+    <string name="add_reminder_string">הוסף תזכורת</string>
     <string name="calendar_string">לוח שנה</string>
     <string name="starts_at_string">מתחיל ב:</string>
     <string name="minutes_string">דקות</string>
@@ -55,6 +55,7 @@
     <string name="add_event_string">הוסף אירוע</string>
     <string name="back_to_month_string">חזור להיום</string>
     <string name="arrange_notes_string">סדר פתקים</string>
+    <string name="reminder_string">תזכורת</string>
 
     <string-array
         name="days_names">

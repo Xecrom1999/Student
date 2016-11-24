@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:textSize="11sp"
         android:textColor="@android:color/secondary_text_light"
-        android:id="@+id/note_title"
+        android:id="@+id/note_edit"
         android:gravity="center"
         android:ellipsize="marquee"
         />

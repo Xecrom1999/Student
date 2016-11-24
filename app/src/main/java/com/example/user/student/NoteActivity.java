@@ -12,15 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.text.SimpleDateFormat;
+
+import Database.NotesDB;
+
 public class NoteActivity extends AppCompatActivity {
 
-    TextView title_text;
+    EditText title_edit;
     TextView date_text;
 
     Configuration config;
@@ -30,28 +35,28 @@ public class NoteActivity extends AppCompatActivity {
     Toolbar toolbar;
     LinearLayout layout;
 
-    String title;
     String date;
 
     Intent intent;
+
+    NotesDB database;
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_activity);
 
-        initializeViews();
+        database = new NotesDB(this);
+
+        title_edit = (EditText) findViewById(R.id.note_edit);
+        date_text = (TextView) findViewById(R.id.note_date);
+
+        setTexts();
 
         setupToolbar();
-
-        intent = getIntent();
-
-        id = intent.getStringExtra("id");
-        title = intent.getStringExtra("title");
-        date = intent.getStringExtra("date");
-
-        title_text.setText(title);
-        date_text.setText(date);
 
         AdView mAdView = (AdView) findViewById(R.id.note_adBanner);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -77,17 +82,31 @@ public class NoteActivity extends AppCompatActivity {
     }
 
 
-    private void initializeViews() {
-        title_text = (TextView) findViewById(R.id.note_title);
-        date_text = (TextView) findViewById(R.id.note_date);
+    private void setTexts() {
+
+        intent = getIntent();
+
+        String title = intent.getStringExtra("title");
+        id = intent.getStringExtra("id");
+        date = intent.getStringExtra("date");
+
+        if (date == null || date.equals(""))
+            date = simpleDateFormat.format(System.currentTimeMillis());
+
+        title_edit.setText(title);
+        date_text.setText(date);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
         date_text.setTypeface(font);
+
+        Helper.showKeyboard(this, title_edit);
+        title_edit.setSelection(title.length());
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.note_menu, menu);
+        getMenuInflater().inflate(R.menu.new_note_menu, menu);
         return true;
     }
 
@@ -96,17 +115,8 @@ public class NoteActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.edit_note_id) {
-            Intent intent;
-
-            intent = new Intent(this, NewNoteActivity.class);
-            intent.putExtra("title", title);
-            intent.putExtra("date", date);
-            intent.putExtra("id", this.id);
-
-            startActivity(intent);
-            finish();
-        }
+        if (id == R.id.done_id)
+            finishNote();
 
         if (id == android.R.id.home) onBackPressed();
         return true;
@@ -119,6 +129,12 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Helper.hideKeyboard(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -127,5 +143,14 @@ public class NoteActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getColor(R.color.dark_notes));
         }
+    }
+
+    public void finishNote() {
+
+        String title = title_edit.getText().toString();
+
+        database.updateData2(id, title, date);
+
+        finish();
     }
 }

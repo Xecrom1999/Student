@@ -42,6 +42,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setSound(alarmSound)
                 .setColor(context.getColor(R.color.notification_color))
                 .setLights(context.getColor(R.color.primary_color), 1000, 1000)
+                .setPriority(Notification.PRIORITY_HIGH)
                 .build();
 
         StatusBarNotification [] not = notificationManager.getActiveNotifications();

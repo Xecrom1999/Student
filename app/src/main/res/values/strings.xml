@@ -7,7 +7,7 @@
     <string name="comments_string">Add a comment</string>
     <string name="no_events_string">No Events</string>
     <string name="save_string">save</string>
-    <string name="reminder_string">Add a reminder</string>
+    <string name="add_reminder_string">Add a reminder</string>
     <string name="calendar_string">Calendar</string>
     <string name="starts_at_string">starts at:</string>
     <string name="minutes_string">minutes</string>
@@ -54,6 +54,7 @@
     <string name="add_event_string">Add event</string>
     <string name="back_to_month_string">Go back to today</string>
     <string name="arrange_notes_string">Arrange notes</string>
+    <string name="reminder_string">Reminder</string>
 
     <string-array name="days_names">
         <item>Sunday</item>

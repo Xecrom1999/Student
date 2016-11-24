@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayout"
-    android:background="#FFFDE7"
-    tools:context=".NewNoteActivity">
+    android:background="#FFFDE7">
 
     <include
         layout="@layout/toolbar_layout"
@@ -36,15 +35,16 @@
             android:layout_marginTop="8dp"
             />
 
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/note_title"
+            android:id="@+id/note_edit"
             android:padding="16dp"
             android:textColor="@android:color/secondary_text_light"
             android:imeOptions="actionNext"
             android:textSize="18dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
             />
 
     </LinearLayout>

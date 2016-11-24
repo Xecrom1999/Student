@@ -105,7 +105,7 @@ public class NotesActivity extends ActionBarActivity {
 
         final View note = getLayoutInflater().inflate(R.layout.note_item_layout, null, false);
 
-        TextView title_text = (TextView) note.findViewById(R.id.note_title);
+        TextView title_text = (TextView) note.findViewById(R.id.note_edit);
         TextView date_text = (TextView) note.findViewById(R.id.note_date);
 
         note.setOnTouchListener(new NoteListener());
@@ -122,7 +122,7 @@ public class NotesActivity extends ActionBarActivity {
         date_text.setTypeface(typeface);
 
         Typeface typeface2 = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
-        //title_text.setTypeface(typeface2);
+        //title_edit.setTypeface(typeface2);
 
         note.setTag(id);
 
@@ -282,23 +282,15 @@ public class NotesActivity extends ActionBarActivity {
     }
 
     public void noteClicked(View v) {
-        Intent intent;
 
         String id = v.getTag().toString();
         Note note = getNoteById(id);
 
         String title = note.getTitle();
         String date = note.getDate();
-        if (title.isEmpty()) {
-            intent = new Intent(this, NewNoteActivity.class);
-            intent.putExtra("isNew", true);
-        }
-        else {
-            intent = new Intent(this, NoteActivity.class);
-            intent.putExtra("title", title);
-            intent.putExtra("date", date);
-        }
-
+        Intent intent = new Intent(this, NoteActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("date", date);
         intent.putExtra("id", v.getTag().toString());
 
         chosen = v;
