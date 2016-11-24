@@ -12,6 +12,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import java.util.ArrayList;
+
 /**
  * Created by gamrian on 03/10/2016.
  */
@@ -20,6 +22,8 @@ public class Helper {
 
     public static Context mContext;
     final static int ACTIVITIES_PER_AD = 8;
+
+    public static ArrayList<Integer> months = new ArrayList<>();
 
     public static void showKeyboard(Context ctx, EditText view) {
         view.requestFocus();
@@ -71,5 +75,14 @@ public class Helper {
     private static void requestNewInterstitial(InterstitialAd mInterstitialAd) {
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
+    }
+
+    public static void addMonth(int month) {
+        if (!months.contains(month))
+        months.add(month);
+    }
+
+    public static void clearMonths() {
+        months.clear();
     }
 }

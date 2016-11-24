@@ -81,7 +81,7 @@ public class EventActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
         getSupportActionBar().setTitle("");
-        toolbar.setBackgroundColor(getColor(R.color.primary_new_event));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primary_new_event));
 
         AdView mAdView = (AdView) findViewById(R.id.event_adBanner);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -183,7 +183,7 @@ public class EventActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.dark_color));
+            window.setStatusBarColor(getResources().getColor(isStarted ? R.color.dark_new_event : R.color.dark_color));
         }
     }
 

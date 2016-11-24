@@ -105,11 +105,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         viewHolder.number_text.setTypeface(font);
 
         if (editMode) {
-            viewHolder.layout.setBackground(ctx.getDrawable(R.drawable.lesson_item));
+            viewHolder.layout.setBackground(ctx.getResources().getDrawable(R.drawable.lesson_item));
             viewHolder.layout.setAlpha(0.5f);
         }
         else {
-            viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.dark_color));
+            viewHolder.layout.setBackgroundColor(ctx.getResources().getColor(R.color.dark_color));
             viewHolder.layout.setAlpha(1f);
         }
 
@@ -160,7 +160,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         TextView time_text, length_text, name_text, number_text;
         ImageView delete_button;
         RelativeLayout layout;
-        int position;
         Lesson lesson;
 
         public ViewHolder(View itemLayoutView, int viewType) {

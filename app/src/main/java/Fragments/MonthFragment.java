@@ -1,6 +1,8 @@
 package Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.user.student.CalendarDayActivity;
+import com.example.user.student.Helper;
 import com.example.user.student.NewEventActivity;
 import com.example.user.student.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import Adapters.CalendarAdapter;
@@ -36,6 +40,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
     String month;
     String month2;
     CalendarDB database;
+    boolean active;
 
     public MonthFragment() {
     }
@@ -72,7 +77,6 @@ public class MonthFragment extends Fragment implements CalendarListener{
         recyclerView = (RecyclerView) view.findViewById(R.id.calendar_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -99,7 +103,21 @@ public class MonthFragment extends Fragment implements CalendarListener{
         super.onStart();
 
         adapter = new CalendarAdapter(getContext(), position, this, database);
-        recyclerView.setAdapter(adapter);
+
+        if (!active) {
+            recyclerView.setAdapter(adapter);
+            active = true;
+
+        }
+        else {
+            ArrayList<Integer> set = Helper.months;
+            for (int i = 0; i < set.size(); i++) {
+                if (set.get(i).equals((position + 10) % 12)) {
+                    recyclerView.setAdapter(adapter);
+                    set.remove(i);
+                }
+            }
+        }
     }
 
     @Override
@@ -126,5 +144,11 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
     public String getMonth2() {
         return month2;
+    }
+
+    @Override
+    public void onDestroy() {
+        active = false;
+        super.onDestroy();
     }
 }

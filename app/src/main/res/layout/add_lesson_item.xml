@@ -10,12 +10,12 @@
     >
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:textColor="@drawable/add_lesson_text"
         android:layout_centerInParent="true"
         android:text="+"
-        android:fontFamily="serif-monospace"
-        android:textSize="50dp"
+        android:gravity="top"
+        android:textSize="40dp"
         android:id="@+id/plus_text"/>
 
 </RelativeLayout>

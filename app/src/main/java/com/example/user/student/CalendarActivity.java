@@ -2,6 +2,8 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -72,7 +74,9 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle("Calendar");
         toolbar.setBackgroundResource(R.color.primary_color);
-        toolbar.setElevation(72);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.setElevation(72);
+        }
         toolbar.setAlpha(0.6f);
 
         pager = (ViewPager) findViewById(R.id.calendar_pager);
@@ -80,6 +84,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         adapter = new MyPagerAdapter(fm);
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
+        pager.setOffscreenPageLimit(0);
         pager.setCurrentItem(NUM_OF_FRAGMENTS - 2);
 
         fab = (FloatingActionButton) findViewById(R.id.calendar_fab);
@@ -91,6 +96,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         String month = format.format(calendar.getTime());
         toolbar.setTitle(month);
         toolbar.setSubtitle(format2.format(calendar.getTime()));
+        toolbar.setSubtitleTextColor(Color.parseColor("#FFFFFF"));
     }
 
     @Override

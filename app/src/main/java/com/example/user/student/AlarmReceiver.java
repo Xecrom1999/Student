@@ -40,12 +40,16 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setVibrate(new long[] {500, 500})
                 .setAutoCancel(true)
                 .setSound(alarmSound)
-                .setColor(context.getColor(R.color.notification_color))
-                .setLights(context.getColor(R.color.primary_color), 1000, 1000)
+                .setColor(context.getResources().getColor(R.color.notification_color))
+                .setLights(context.getResources().getColor(R.color.primary_color), 1000, 1000)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build();
 
-        StatusBarNotification [] not = notificationManager.getActiveNotifications();
+        StatusBarNotification [] not;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            not = notificationManager.getActiveNotifications();
+        }
+        else not = new StatusBarNotification[1];
         notificationManager.notify(not.length, notification);
     }
 }

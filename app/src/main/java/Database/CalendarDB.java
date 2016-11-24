@@ -2,15 +2,19 @@ package Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.ArraySet;
 import android.util.Log;
 
 import com.example.user.student.Event;
+import com.example.user.student.Helper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Set;
 
 /**
  * Created by gamrian on 09/08/2016.
@@ -43,7 +47,7 @@ public class CalendarDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertData(Event event) {
+    public long insertData(Event event, int month) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -55,14 +59,17 @@ public class CalendarDB extends SQLiteOpenHelper {
         contentValues.put(COL_5, event.getComment());
         contentValues.put(COL_6, event.getReminder());
 
+        Helper.addMonth(month);
+
         return db.insert(TABLE_NAME, null, contentValues);
     }
 
-    public void deleteData(String id) {
+    public void deleteData(String id, int month) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_NAME, "ID = ?",new String[] {id});
+        Helper.addMonth(month);
     }
 
     public Cursor getAllData() {
@@ -77,7 +84,7 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public void updateData(String id, Event event) {
+    public void updateData(String id, Event event, int month) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -90,6 +97,8 @@ public class CalendarDB extends SQLiteOpenHelper {
         contentValues.put(COL_6, event.getReminder());
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
+
+        Helper.addMonth(month);
     }
 
     public Cursor getAllTitles(Calendar calendar) {

@@ -121,9 +121,6 @@ public class NotesActivity extends ActionBarActivity {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
         date_text.setTypeface(typeface);
 
-        Typeface typeface2 = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
-        //title_edit.setTypeface(typeface2);
-
         note.setTag(id);
 
         theLayout.addView(note, params);
@@ -138,8 +135,8 @@ public class NotesActivity extends ActionBarActivity {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
 
-        params.leftMargin = 15;
-        params.topMargin = 1370;
+        params.leftMargin = (int) convertDpToPixel(0);
+        params.topMargin = (int) convertDpToPixel(515);
 
         note.setAlpha(0);
 
@@ -213,13 +210,9 @@ public class NotesActivity extends ActionBarActivity {
 
                 layoutParams.leftMargin = x;
                 layoutParams.topMargin = y;
-                layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.note_margin);
-                layoutParams.bottomMargin = (int) getResources().getDimension(R.dimen.note_margin);
+                layoutParams.rightMargin = (int) convertDpToPixel(-250);
+                layoutParams.bottomMargin = (int) convertDpToPixel(-250);
                 v.setLayoutParams(layoutParams);
-
-                TranslateAnimation animation = new TranslateAnimation(v.getX(), x, v.getY(), y);
-                animation.setDuration(1000);
-                //v.startAnimation(animation);
 
                 dataBase.updateData(v.getTag().toString(), String.valueOf(x), String.valueOf(y));
 
@@ -393,7 +386,7 @@ public class NotesActivity extends ActionBarActivity {
         }
 
         private boolean inGarbageRange(View v) {
-            return (v.getBottom() > 1550);
+            return (v.getBottom() >= line.getY());
         }
     }
 
@@ -422,7 +415,7 @@ public class NotesActivity extends ActionBarActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(R.color.dark_color));
+            window.setStatusBarColor(getResources().getColor(R.color.dark_color));
         }
     }
 }

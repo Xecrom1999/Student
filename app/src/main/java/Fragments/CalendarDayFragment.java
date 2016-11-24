@@ -122,7 +122,7 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
 
                 String id = res.getString(0);
 
-                database.deleteData(id);
+                database.deleteData(id, calendar.get(Calendar.MONTH));
 
                 alarmManager.cancel(PendingIntent.getBroadcast(ctx, Integer.valueOf(id), new Intent(ctx, AlarmReceiver.class), 0));
 

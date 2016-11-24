@@ -103,7 +103,7 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
-        toolbar.setBackgroundColor(getColor(R.color.primary_color));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primary_color));
         toolbar.setAlpha(0.6f);
     }
 

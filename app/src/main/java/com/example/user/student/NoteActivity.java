@@ -148,7 +148,7 @@ public class NoteActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(R.color.dark_notes));
+            window.setStatusBarColor(getResources().getColor(R.color.dark_notes));
         }
     }
 

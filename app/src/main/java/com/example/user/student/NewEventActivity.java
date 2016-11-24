@@ -150,8 +150,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
         getSupportActionBar().setTitle("");
-        //getSupportActionBar().setTitle(title_edit.getText().toString().isEmpty() ? R.string.new_event_string : R.string.edit_event_string);
-        toolbar.setBackgroundColor(getColor(R.color.primary_new_event));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.primary_new_event));
     }
 
     @Override
@@ -242,11 +241,11 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         finish();
 
         if (isOld) {
-            database.updateData(this.id, event);
+            database.updateData(this.id, event, calendar.get(Calendar.MONTH));
             Toast.makeText(getApplicationContext(), getString(R.string.event_saved_string), Toast.LENGTH_SHORT).show();
         }
         else {
-            this.id = String.valueOf(database.insertData(event));
+            this.id = String.valueOf(database.insertData(event, calendar.get(Calendar.MONTH)));
             Toast.makeText(getApplicationContext(), getString(R.string.event_created_string), Toast.LENGTH_SHORT).show();
         }
 
@@ -428,7 +427,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.dark_color));
+            window.setStatusBarColor(getResources().getColor(isStarted ? R.color.dark_new_event : R.color.dark_color));
         }
     }
 }

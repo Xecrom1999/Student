@@ -12,7 +12,6 @@
     <string name="starts_at_string">starts at:</string>
     <string name="minutes_string">minutes</string>
     <string name="schedule_string">Schedule</string>
-    <string name="new_note_string">New note</string>
     <string name="notes_string">Notes</string>
     <string name="delete_day_string">Delete day</string>
     <string name="delete_all_string">Delete all</string>
@@ -44,7 +43,6 @@
     <string name="hour_before_string">Hour before</string>
     <string name="two_minutes_before_string">2 minutes before</string>
     <string name="two_hours_before_string">2 hours before</string>
-    <string name="edit_note_string">Edit note</string>
     <string name="delete_event_string">Delete event</string>
     <string name="options_string">Options</string>
     <string name="clear_data_string">Clear data</string>

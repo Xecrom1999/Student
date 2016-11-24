@@ -2,6 +2,7 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -99,7 +100,9 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(getString(R.string.today_events_string));
         toolbar.setBackgroundResource(R.color.primary_color);
-        toolbar.setElevation(72);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.setElevation(72);
+        }
         toolbar.setAlpha(0.6f);
     }
 

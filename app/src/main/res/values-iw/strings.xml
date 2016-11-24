@@ -12,7 +12,6 @@
     <string name="starts_at_string">מתחיל ב:</string>
     <string name="minutes_string">דקות</string>
     <string name="schedule_string">מערכת שעות</string>
-    <string name="new_note_string">פתק חדש</string>
     <string name="notes_string">פתקים</string>
     <string name="delete_day_string">מחק יום</string>
     <string name="delete_all_string">מחק הכל</string>
@@ -44,7 +43,6 @@
     <string name="hour_before_string">שעה לפני</string>
     <string name="two_minutes_before_string">2 דקות לפני</string>
     <string name="two_hours_before_string">שעתיים לפני</string>
-    <string name="edit_note_string">ערוך פתק</string>
     <string name="delete_event_string">מחק אירוע</string>
     <string name="options_string">אפשרויות</string>
     <string name="clear_data_string">איפוס נתונים</string>
