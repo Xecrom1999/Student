@@ -106,18 +106,4 @@ public class WeekViewActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        changeColor(true);
-    }
-
-    private void changeColor(boolean isStarted) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.status_bar_color));
-        }
-    }
 }

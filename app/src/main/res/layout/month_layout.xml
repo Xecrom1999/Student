@@ -10,7 +10,6 @@
         android:id="@+id/calendar_recycler"
         android:layout_marginTop="10dp"
         android:overScrollMode="never"
-        style="@style/OverSwipeCalendar"
         ></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -106,7 +106,7 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_note_menu, menu);
+        getMenuInflater().inflate(R.menu.note_menu, menu);
         return true;
     }
 
@@ -132,11 +132,18 @@ public class NoteActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Helper.hideKeyboard(this);
+
+        changeColor(false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        changeColor(true);
+    }
+
+    private void changeColor(boolean f) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

@@ -19,7 +19,7 @@ import com.google.android.gms.ads.InterstitialAd;
 public class Helper {
 
     public static Context mContext;
-    final static int ACTIVITIES_PER_AD = 10;
+    final static int ACTIVITIES_PER_AD = 8;
 
     public static void showKeyboard(Context ctx, EditText view) {
         view.requestFocus();

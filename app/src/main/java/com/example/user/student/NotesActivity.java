@@ -416,24 +416,13 @@ public class NotesActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        changeColor();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
-        changeColor();
-    }
-
-    private void changeColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(R.color.status_bar_color));
+            window.setStatusBarColor(getColor(R.color.dark_color));
         }
     }
 }

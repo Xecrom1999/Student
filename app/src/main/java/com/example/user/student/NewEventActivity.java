@@ -2,7 +2,6 @@ package com.example.user.student;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -23,8 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,9 +71,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     AlarmManager alarmManager;
 
     int num;
-
-    InterstitialAd mInterstitialAd;
-    boolean hasLoaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -434,7 +428,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.status_bar_color));
+            window.setStatusBarColor(getColor(isStarted ? R.color.dark_new_event : R.color.dark_color));
         }
     }
 }

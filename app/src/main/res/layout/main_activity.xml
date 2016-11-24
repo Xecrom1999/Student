@@ -26,7 +26,7 @@
         android:elevation="16dp"
         android:id="@+id/imageView7"
         android:layout_centerHorizontal="true"
-        android:tint="@color/status_bar_color"
+        android:tint="@color/dark_color"
         android:layout_marginTop="60dp"
         />
 
@@ -86,7 +86,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:background="@color/main_button_color"
+      android:background="@color/primary_color"
       android:elevation="1dp"
       android:alpha="0.6"
       android:id="@+id/linearLayout"

@@ -61,8 +61,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             intent.putExtra("calendar", calendar);
             startActivity(intent);
         }
-
-        changeColor();
     }
 
     @Override
@@ -106,13 +104,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public void onBackPressed() {
         finish();
-    }
-
-    private void changeColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(R.color.status_bar_color));
-        }
     }
 }

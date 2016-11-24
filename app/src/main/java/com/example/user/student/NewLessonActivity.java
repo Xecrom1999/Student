@@ -103,7 +103,7 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
-        toolbar.setBackgroundColor(getColor(R.color.new_lesson_primary));
+        toolbar.setBackgroundColor(getColor(R.color.primary_color));
         toolbar.setAlpha(0.6f);
     }
 
@@ -147,21 +147,6 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         finish();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        changeColor(false);
-    }
-
-    private void changeColor(boolean isStarted) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.new_lesson_dark : R.color.dark_schedule));
-        }
-    }
-
     public void openTimeDialog(View view) {
 
         String time = time_text.getText().toString();
@@ -201,12 +186,5 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) onBackPressed();
         return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        changeColor(true);
     }
 }

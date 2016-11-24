@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="@string/edit_string"
-        android:id="@+id/edit_note_id"
-        android:icon="@drawable/ic_edit"
+    <item android:title="@string/done_string"
+        android:id="@+id/done_id"
+        android:icon="@mipmap/ic_done"
         app:showAsAction="always"
         android:orderInCategory="100"/>
 

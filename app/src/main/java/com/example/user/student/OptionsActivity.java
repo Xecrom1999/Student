@@ -124,24 +124,4 @@ public class OptionsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        changeColor(false);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        changeColor(true);
-    }
-
-    private void changeColor(boolean isStarted) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(R.color.status_bar_color));
-        }
-    }
 }

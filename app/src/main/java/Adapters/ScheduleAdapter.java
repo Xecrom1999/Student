@@ -109,7 +109,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             viewHolder.layout.setAlpha(0.5f);
         }
         else {
-            viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.status_bar_color));
+            viewHolder.layout.setBackgroundColor(ctx.getColor(R.color.dark_color));
             viewHolder.layout.setAlpha(1f);
         }
 

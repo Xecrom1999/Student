@@ -16,7 +16,6 @@ import android.view.View;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import Database.CalendarDB;
@@ -32,7 +31,6 @@ public class CalendarDayActivity extends AppCompatActivity implements View.OnCli
     Calendar mCalendar;
     Configuration config;
     CalendarDB database;
-    final static SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

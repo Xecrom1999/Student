@@ -117,7 +117,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setTitle(R.string.schedule_string);
-        toolbar.setBackgroundResource(R.color.primary_schedule);
+        toolbar.setBackgroundResource(R.color.primary_color);
         toolbar.setAlpha(0.6f);
     }
 
@@ -265,23 +265,4 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         Helper.hideKeyboard(this);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        changeColor(false);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        changeColor(true);
-    }
-
-    private void changeColor(boolean isStarted) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getColor(isStarted ? R.color.dark_schedule : R.color.status_bar_color));
-        }
-    }
 }

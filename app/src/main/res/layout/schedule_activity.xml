@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/schedule_bar"
-        android:background="@color/primary_schedule"
+        android:background="@color/primary_color"
         app:tabTextColor="@android:color/black"
         app:tabIndicatorColor="@color/schedule_accent"
         app:tabSelectedTextColor="@android:color/white"

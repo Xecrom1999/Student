@@ -2,16 +2,11 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorPrimary">@color/primary_color</item>
-        <item name="colorPrimaryDark">@color/status_bar_color</item>
+        <item name="colorPrimaryDark">@color/dark_color</item>
         <item name="windowActionBar">false</item>
         <item name="android:actionMenuTextColor">@android:color/primary_text_dark</item>
         <item name="android:textColorSecondary">@android:color/white</item>
 
-    </style>
-
-    <style name="OverSwipeCalendar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/primary_new_event</item>
-        <item name="colorPrimaryDark">@color/dark_new_event</item>
     </style>
 
     <style name="TextLabel" parent="TextAppearance.AppCompat">
@@ -25,11 +20,11 @@
     </style>
 
     <style name="NewEventDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/primary_color</item>
+        <item name="colorAccent">@color/dark_color</item>
     </style>
 
     <style name="NewLessonDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/status_bar_color</item>
+        <item name="colorAccent">@color/dark_color</item>
     </style>
 
     <style name="MyDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
