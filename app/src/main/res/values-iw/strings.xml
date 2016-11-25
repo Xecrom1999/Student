@@ -54,6 +54,7 @@
     <string name="back_to_month_string">חזור להיום</string>
     <string name="arrange_notes_string">סדר פתקים</string>
     <string name="reminder_string">תזכורת</string>
+    <string name="loading_string">טוען...</string>
 
     <string-array
         name="days_names">

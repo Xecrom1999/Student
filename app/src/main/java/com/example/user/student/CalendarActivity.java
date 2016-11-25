@@ -1,5 +1,6 @@
 package com.example.user.student;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,7 +86,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         adapter = new MyPagerAdapter(fm);
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
-        pager.setOffscreenPageLimit(0);
         pager.setCurrentItem(NUM_OF_FRAGMENTS - 2);
 
         fab = (FloatingActionButton) findViewById(R.id.calendar_fab);

@@ -53,6 +53,7 @@
     <string name="back_to_month_string">Go back to today</string>
     <string name="arrange_notes_string">Arrange notes</string>
     <string name="reminder_string">Reminder</string>
+    <string name="loading_string">Loading...</string>
 
     <string-array name="days_names">
         <item>Sunday</item>

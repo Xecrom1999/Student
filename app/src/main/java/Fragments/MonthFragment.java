@@ -1,8 +1,6 @@
 package Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -107,7 +105,6 @@ public class MonthFragment extends Fragment implements CalendarListener{
         if (!active) {
             recyclerView.setAdapter(adapter);
             active = true;
-
         }
         else {
             ArrayList<Integer> set = Helper.months;

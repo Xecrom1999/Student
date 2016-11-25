@@ -86,7 +86,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         if (holder.getItemViewType() == HEADER_TYPE) {
             holder.day_text.setText(new SimpleDateFormat("EE").format(calendar.getTime()));
-            if (position + 1 == cal.get(Calendar.DAY_OF_WEEK) && calendar.get(Calendar.MONTH) == cal.get(Calendar.MONTH)-1)
+            if (position + 1 == cal.get(Calendar.DAY_OF_WEEK) && calendar.get(Calendar.MONTH) == cal.get(Calendar.MONTH)-1 && calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR))
                 holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
 
             holder.day_text.setTypeface(font);
@@ -96,10 +96,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             holder.day_text.setText(day + "");
-            if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month) {
+            if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month && calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
                 holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
             }
-            if (month != calendar.get(Calendar.MONTH)) {
+            else if (month != calendar.get(Calendar.MONTH)) {
                 holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
                 holder.title_text.setTextColor(Color.parseColor("#BDBDBD"));
             }
@@ -111,7 +111,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                         holder.num++;
                         if (holder.num > 1) {
                             holder.number_text.setVisibility(View.VISIBLE);
-                            holder.number_text.setText((holder.num-1) + "+");
+                            holder.number_text.setText((holder.num - 1) + "+");
                         }
                     }
             }

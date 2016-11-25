@@ -1,5 +1,6 @@
 package com.example.user.student;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -88,7 +89,27 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
             switch (v.getId()) {
                 case R.id.calendar_button:
-                    startActivity(new Intent(this, CalendarActivity.class));
+                    final ProgressDialog pd = new ProgressDialog(this);
+
+                    pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    pd.setMessage(getString(R.string.loading_string));
+                    pd.setCancelable(false);
+                    pd.setIndeterminate(true);
+
+                    pd.show();
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+
+                            startActivity(intent);
+                            pd.dismiss();
+                        }
+                    }).start();
+
                     break;
                 case R.id.schedule_button:
                     startActivity(new Intent(this, ScheduleActivity.class));

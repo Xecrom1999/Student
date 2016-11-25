@@ -41,9 +41,11 @@
             android:label="@string/notes_string"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".WeekViewActivity" />
+        <activity android:name=".WeekViewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CalendarActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".CalendarDayActivity"
@@ -61,7 +63,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".OptionsActivity"></activity>
+        <activity android:name=".OptionsActivity"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

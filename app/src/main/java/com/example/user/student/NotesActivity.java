@@ -136,7 +136,7 @@ public class NotesActivity extends ActionBarActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
 
         params.leftMargin = (int) convertDpToPixel(0);
-        params.topMargin = (int) convertDpToPixel(515);
+        params.topMargin = (int) convertDpToPixel(495);
 
         note.setAlpha(0);
 
