@@ -81,8 +81,4 @@ public class Helper {
         if (!months.contains(month))
         months.add(month);
     }
-
-    public static void clearMonths() {
-        months.clear();
-    }
 }

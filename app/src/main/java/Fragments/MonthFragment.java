@@ -107,6 +107,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
             active = true;
         }
         else {
+
             ArrayList<Integer> set = Helper.months;
             for (int i = 0; i < set.size(); i++) {
                 if (set.get(i).equals((position + 10) % 12)) {
@@ -115,6 +116,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
                 }
             }
         }
+        Helper.months.clear();
     }
 
     @Override
@@ -148,4 +150,6 @@ public class MonthFragment extends Fragment implements CalendarListener{
         active = false;
         super.onDestroy();
     }
+
+
 }
