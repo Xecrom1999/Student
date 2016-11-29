@@ -44,22 +44,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         this.ctx = ctx;
         this.position = position;
         this.database = database;
-
-        datesList = getDatesList();
-        titlesList = getTitlesList();
-
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, position);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.getTime();
-        month = calendar.get(Calendar.MONTH);
-        year = calendar.get(Calendar.YEAR);
-        calendar.set(Calendar.DAY_OF_WEEK, 1);
-        calendar.add(Calendar.DATE, -7);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        update(0);
     }
 
     @Override
@@ -77,6 +62,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        
+        holder.num = 0;
 
         Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font1.ttf");
 
@@ -99,9 +86,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month && calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
                 holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
             }
-            else if (month != calendar.get(Calendar.MONTH)) {
-                holder.day_text.setTextColor(Color.parseColor("#BDBDBD"));
-                holder.title_text.setTextColor(Color.parseColor("#BDBDBD"));
+
+            if (month != calendar.get(Calendar.MONTH)) {
+                holder.root.setAlpha(0.5f);
             }
             for (int i = 0; i < datesList.size(); i++) { 
                     if (datesList.get(i).equals(String.valueOf(calendar.getTime()))) {
@@ -151,6 +138,27 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         }
 
         return titlesList;
+    }
+
+    public void update(int position) {
+
+        datesList = getDatesList();
+        titlesList = getTitlesList();
+        
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, this.position);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.getTime();
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
+        calendar.set(Calendar.DAY_OF_WEEK, 1);
+        calendar.add(Calendar.DATE, -7);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        calendar.add(Calendar.DATE, position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

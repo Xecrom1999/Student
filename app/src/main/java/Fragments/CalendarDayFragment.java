@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,8 +30,6 @@ import Adapters.CalendarDayAdapter;
 import Database.CalendarDB;
 import Interfaces.CalendarDayListener;
 import Interfaces.EventDateListener;
-
-import static android.R.attr.id;
 
 /**
  * Created by gamrian on 31/08/2016.
@@ -106,8 +105,9 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
         startActivity(intent);
     }
 
-    @Override
-    public void deleteEvent(final int position, View v) {
+    public void deleteEvent(int position, View v) {
+        
+
         final PopupMenu popup = new PopupMenu(getActivity(), v);
         popup.getMenuInflater().inflate(R.menu.delete_event_menu, popup.getMenu());
 
@@ -122,7 +122,7 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
 
                 String id = res.getString(0);
 
-                database.deleteData(id, calendar.get(Calendar.MONTH));
+                database.deleteData(id, listener.getCurrentDate());
 
                 alarmManager.cancel(PendingIntent.getBroadcast(ctx, Integer.valueOf(id), new Intent(ctx, AlarmReceiver.class), 0));
 

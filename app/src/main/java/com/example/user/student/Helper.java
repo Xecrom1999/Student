@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by gamrian on 03/10/2016.
@@ -22,8 +23,9 @@ public class Helper {
 
     public static Context mContext;
     final static int ACTIVITIES_PER_AD = 8;
+    public static Calendar currentItem;
 
-    public static ArrayList<Integer> months = new ArrayList<>();
+    public static ArrayList<Calendar> changes = new ArrayList<>();
 
     public static void showKeyboard(Context ctx, EditText view) {
         view.requestFocus();
@@ -77,8 +79,8 @@ public class Helper {
         mInterstitialAd.loadAd(adRequest);
     }
 
-    public static void addMonth(int month) {
-        if (!months.contains(month))
-        months.add(month);
+    public static void addMonth(Calendar calendar) {
+        if (!changes.contains(calendar))
+            changes.add(calendar);
     }
 }

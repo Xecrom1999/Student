@@ -47,7 +47,7 @@ public class CalendarDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertData(Event event, int month) {
+    public long insertData(Event event, Calendar calendar) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -59,17 +59,17 @@ public class CalendarDB extends SQLiteOpenHelper {
         contentValues.put(COL_5, event.getComment());
         contentValues.put(COL_6, event.getReminder());
 
-        Helper.addMonth(month);
+        Helper.addMonth(calendar);
 
         return db.insert(TABLE_NAME, null, contentValues);
     }
 
-    public void deleteData(String id, int month) {
+    public void deleteData(String id, Calendar calendar) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_NAME, "ID = ?",new String[] {id});
-        Helper.addMonth(month);
+        Helper.addMonth(calendar);
     }
 
     public Cursor getAllData() {
@@ -84,7 +84,7 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public void updateData(String id, Event event, int month) {
+    public void updateData(String id, Event event, Calendar calendar) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -98,7 +98,7 @@ public class CalendarDB extends SQLiteOpenHelper {
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
 
-        Helper.addMonth(month);
+        Helper.addMonth(calendar);
     }
 
     public Cursor getAllTitles(Calendar calendar) {

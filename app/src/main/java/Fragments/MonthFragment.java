@@ -62,10 +62,36 @@ public class MonthFragment extends Fragment implements CalendarListener{
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart() {
+        super.onStart();
 
-        adapter = new CalendarAdapter(getContext(), position, this, database);
+        ArrayList <Calendar> list = Helper.changes;
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, position);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.getTime();
+        calendar.set(Calendar.DAY_OF_WEEK, 1);
+        calendar.add(Calendar.DATE, -7);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+
+        for (int i = 0; i < list.size(); i++) {
+            int position = (int) ((list.get(i).getTimeInMillis() - calendar.getTimeInMillis()) / 86400000);
+            if (position > 6 && position < 49) {
+                adapter.update(position);
+                adapter.notifyItemChanged(position);
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Helper.changes.clear();
     }
 
     @Override
@@ -75,6 +101,10 @@ public class MonthFragment extends Fragment implements CalendarListener{
         recyclerView = (RecyclerView) view.findViewById(R.id.calendar_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+
+        adapter = new CalendarAdapter(getContext(), position, this, database);
+
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -94,29 +124,6 @@ public class MonthFragment extends Fragment implements CalendarListener{
         startActivity(intent);
         if (hasEvent)
             getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        adapter = new CalendarAdapter(getContext(), position, this, database);
-
-        if (!active) {
-            recyclerView.setAdapter(adapter);
-            active = true;
-        }
-        else {
-
-            ArrayList<Integer> set = Helper.months;
-            for (int i = 0; i < set.size(); i++) {
-                if (set.get(i).equals((position + 10) % 12)) {
-                    recyclerView.setAdapter(adapter);
-                    set.remove(i);
-                }
-            }
-        }
-        Helper.months.clear();
     }
 
     @Override

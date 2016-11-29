@@ -241,11 +241,11 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         finish();
 
         if (isOld) {
-            database.updateData(this.id, event, calendar.get(Calendar.MONTH));
+            database.updateData(this.id, event, calendar);
             Toast.makeText(getApplicationContext(), getString(R.string.event_saved_string), Toast.LENGTH_SHORT).show();
         }
         else {
-            this.id = String.valueOf(database.insertData(event, calendar.get(Calendar.MONTH)));
+            this.id = String.valueOf(database.insertData(event, calendar));
             Toast.makeText(getApplicationContext(), getString(R.string.event_created_string), Toast.LENGTH_SHORT).show();
         }
 
