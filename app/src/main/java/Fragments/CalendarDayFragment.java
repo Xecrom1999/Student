@@ -86,7 +86,27 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
 
         str = format.format(calendar.getTime());
 
+        Calendar now = Calendar.getInstance();
+
         if (DateUtils.isToday(calendar.getTimeInMillis())) str += " (" + ctx.getString(R.string.today_string) + ")";
+
+        else {
+            now.add(Calendar.DATE, -1);
+
+            if (calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
+                if (calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH))
+                    if (calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH))
+                        str += " (" + ctx.getString(R.string.yesterday_string) + ")";
+            }
+        }
+
+        now.add(Calendar.DATE, 2);
+
+        if (calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
+            if (calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH))
+                if (calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH))
+                    str += " (" + ctx.getString(R.string.tomorrow_string) + ")";
+        }
 
         date_text.setText(str);
 

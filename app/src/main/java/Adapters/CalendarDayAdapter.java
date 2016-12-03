@@ -56,9 +56,6 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
             times.add(res.getString(3));
         }
 
-        Log.d("MYLOG", ids.toString());
-        Log.d("MYLOG", titles.toString());
-
         ArrayList <Integer> list = new ArrayList<>();
 
         for (int i = 0; i < times.size(); i++) {
@@ -88,8 +85,6 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
             times.set(i, times.get(p));
             times.set(p, t);
         }
-        Log.d("MYLOG", ids.toString());
-        Log.d("MYLOG", titles.toString());
     }
 
     public void update() {

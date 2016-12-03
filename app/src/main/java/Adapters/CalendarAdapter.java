@@ -175,8 +175,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
             for (int i = 0; i < eventsList.size(); i++) {
                     if (eventsList.get(i).getDate().equals(String.valueOf(calendar.getTimeInMillis()))) {
+                        holder.title_text.setVisibility(View.VISIBLE);
                         if (holder.num == 0) {
-                            holder.title_text.setVisibility(View.VISIBLE);
                             holder.title_text.setText(eventsList.get(i).getTitle());
                             has = true;
                         }

@@ -2,6 +2,7 @@ package com.example.user.student;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,8 +40,13 @@ public class NotesActivity extends ActionBarActivity {
     ImageView garbage_img;
     ImageView notes_img;
     View line;
-
+    Menu menu;
     boolean rtl;
+
+    boolean autoSave;
+    boolean autoArrange;
+
+    SharedPreferences preferences;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +70,8 @@ public class NotesActivity extends ActionBarActivity {
 
         width = (int) convertDpToPixel(85);
         height = (int) convertDpToPixel(95);
+
+
     }
 
     @Override
@@ -72,6 +81,20 @@ public class NotesActivity extends ActionBarActivity {
         Helper.setupAd(this);
         removeAllNotes();
         showNotes();
+
+        preferences = getSharedPreferences("data", MODE_PRIVATE);
+        autoSave = preferences.getBoolean("autoSave", true);
+        autoArrange = preferences.getBoolean("autoArrange", true);
+
+        if (autoArrange) arrangeNotes();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        preferences.edit().putBoolean("autoSave", autoSave).commit();
+        preferences.edit().putBoolean("autoArrange", autoArrange).commit();
     }
 
     private void setToolbar() {
@@ -156,6 +179,8 @@ public class NotesActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.notes_menu, menu);
+        this.menu = menu;
+        updateMenu();
         return true;
     }
 
@@ -163,19 +188,36 @@ public class NotesActivity extends ActionBarActivity {
 
         int id = item.getItemId();
 
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.notes_delete_id:
+                userDialog();
+                break;
+            case R.id.arrange_notes:
+                arrangeNotes();
+                break;
+            case R.id.auto_save_id:
+                autoSave = !autoSave;
+                updateMenu();
+                break;
+            case R.id.auto_arrange_id:
+                autoArrange = !autoArrange;
+                updateMenu();
+                break;
         }
 
-        else if (id == R.id.notes_delete_id)
-            userDialog();
-
-        else if (id == R.id.arrange_notes)
-            arrangeNotes();
 
         return true;
     }
+
+    private void updateMenu() {
+
+        menu.getItem(2).setChecked(autoSave);
+        menu.getItem(3).setChecked(autoArrange);
+    }
+
 
     private void arrangeNotes() {
         
