@@ -71,8 +71,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
     AlarmManager alarmManager;
 
-    int num;
-
     Calendar oldCalendar;
 
     @Override
@@ -119,15 +117,15 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         isOld = intent.getBooleanExtra("isOld", false);
 
-        num = intent.getIntExtra("position", 0);
+
 
         if (isOld) {
-            Cursor res = database.getRowByDate(String.valueOf(calendar.getTimeInMillis()));
-            res.moveToNext();
-            int i = num;
-            while (i != 0 && res.moveToNext()) i--;
 
-            id = res.getString(0);
+            id = intent.getStringExtra("id");
+
+            Cursor res = database.getEventById(id);
+            res.moveToNext();
+
             title = res.getString(1);
             time = res.getString(3);
             comment = res.getString(4);

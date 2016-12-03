@@ -7,7 +7,7 @@ import android.view.View;
  */
 public interface CalendarDayListener {
 
-    void openEvent(int position);
+    void openEvent(String position);
 
     void deleteEvent(String position, View v);
 }

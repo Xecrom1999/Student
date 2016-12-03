@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -114,12 +113,12 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
     }
 
     @Override
-    public void openEvent(int position) {
+    public void openEvent(String id) {
 
         Intent intent = new Intent(ctx, EventActivity.class);
 
         intent.putExtra("calendar", listener.getCurrentDate());
-        intent.putExtra("position", position);
+        intent.putExtra("id", id);
 
         startActivity(intent);
     }

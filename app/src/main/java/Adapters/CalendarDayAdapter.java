@@ -47,6 +47,7 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
 
         titles.clear();
         times.clear();
+        ids.clear();
 
         Cursor res = database.getAllEventsAtDate(calendar);
 
@@ -133,7 +134,7 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
 
         @Override
         public void onClick(View v) {
-            listener.openEvent(getPosition());
+            listener.openEvent(ids.get(position));
         }
 
         @Override

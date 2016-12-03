@@ -78,9 +78,9 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public Cursor getRowByDate(String date) {
+    public Cursor getEventById(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + date + "'" , null);
+        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + "='" + id + "'" , null);
         return res;
     }
 

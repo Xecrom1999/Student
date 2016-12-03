@@ -46,8 +46,6 @@ public class EventActivity extends AppCompatActivity {
 
     Intent intent;
 
-    int num;
-
     final SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
 
     @Override
@@ -101,17 +99,11 @@ public class EventActivity extends AppCompatActivity {
     private void setAll() {
         setDate(calendar);
 
-        Cursor res = database.getRowByDate(String.valueOf(calendar.getTimeInMillis()));
+        id = intent.getStringExtra("id");
 
-        num = intent.getIntExtra("position", 99);
-
-        int i = num;
-
+        Cursor res = database.getEventById(id);
         res.moveToNext();
 
-        while (i > 0 && res.moveToNext()) i--;
-
-        id = res.getString(0);
         title = res.getString(1);
         time = res.getString(3);
         comment = res.getString(4);
@@ -156,7 +148,7 @@ public class EventActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NewEventActivity.class);
             intent.putExtra("isOld", true);
             intent.putExtra("calendar", calendar);
-            intent.putExtra("position", num);
+            intent.putExtra("id", this.id);
             startActivity(intent);
             finish();
         }
