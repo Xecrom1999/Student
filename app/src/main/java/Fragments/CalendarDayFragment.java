@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -105,28 +104,19 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
         startActivity(intent);
     }
 
-    public void deleteEvent(int position, View v) {
-        
+    public void deleteEvent(final String id, View v) {
 
-        final PopupMenu popup = new PopupMenu(getActivity(), v);
+        final PopupMenu popup = new PopupMenu(getContext(), v);
         popup.getMenuInflater().inflate(R.menu.delete_event_menu, popup.getMenu());
-
-        final int[] pos = {position};
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
 
-                Cursor res = database.getRowByDate(String.valueOf(listener.getCurrentDate().getTime()));
-                res.moveToNext();
-                while (pos[0] != 0 && res.moveToNext()) pos[0]--;
+                    database.deleteData(id);
 
-                String id = res.getString(0);
+                    alarmManager.cancel(PendingIntent.getBroadcast(ctx, Integer.valueOf(id), new Intent(ctx, AlarmReceiver.class), 0));
 
-                database.deleteData(id, listener.getCurrentDate());
-
-                alarmManager.cancel(PendingIntent.getBroadcast(ctx, Integer.valueOf(id), new Intent(ctx, AlarmReceiver.class), 0));
-
-                listener.update();
+                    listener.update();
 
                 return true;
             }

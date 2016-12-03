@@ -2,6 +2,7 @@ package com.example.user.student;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +63,8 @@ public class EventActivity extends AppCompatActivity {
         comment_layout = (LinearLayout) findViewById(R.id.event_comment_layout);
 
         title_edit = (TextView) findViewById(R.id.event_title_edit);
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        title_edit.setTypeface(font);
         comment_edit = (TextView) findViewById(R.id.comment_edit);
 
         time_text = (TextView) findViewById(R.id.event_time_text);
@@ -98,7 +101,7 @@ public class EventActivity extends AppCompatActivity {
     private void setAll() {
         setDate(calendar);
 
-        Cursor res = database.getRowByDate(String.valueOf(calendar.getTime()));
+        Cursor res = database.getRowByDate(String.valueOf(calendar.getTimeInMillis()));
 
         num = intent.getIntExtra("position", 99);
 

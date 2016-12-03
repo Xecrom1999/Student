@@ -9,5 +9,5 @@ public interface CalendarDayListener {
 
     void openEvent(int position);
 
-    void deleteEvent(int position, View v);
+    void deleteEvent(String position, View v);
 }

@@ -14,8 +14,8 @@
         android:textColor="@drawable/add_lesson_text"
         android:layout_centerInParent="true"
         android:text="+"
-        android:gravity="top"
-        android:textSize="40dp"
+        android:gravity="center"
+        android:textSize="30dp"
         android:id="@+id/plus_text"/>
 
 </RelativeLayout>

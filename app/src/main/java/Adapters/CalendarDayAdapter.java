@@ -3,6 +3,7 @@ package Adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,11 @@ import android.widget.TextView;
 
 import com.example.user.student.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import Database.CalendarDB;
 import Interfaces.CalendarDayListener;
@@ -24,6 +28,7 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
     private final CalendarDB database;
     private final Calendar calendar;
     Context ctx;
+    ArrayList<String> ids;
     ArrayList<String> titles;
     ArrayList<String> times;
     static CalendarDayListener listener;
@@ -33,13 +38,62 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
         this.database = database;
         this.calendar = calendar;
         this.listener = listener;
+        titles = new ArrayList<>();
+        times = new ArrayList<>();
+        ids = new ArrayList<>();
+    }
 
-        titles = getTitles();
+    private void setLists() {
+
+        titles.clear();
+        times.clear();
+
+        Cursor res = database.getAllEventsAtDate(calendar);
+
+        while (res.moveToNext()) {
+            ids.add(res.getString(0));
+            titles.add(res.getString(1));
+            times.add(res.getString(3));
+        }
+
+        Log.d("MYLOG", ids.toString());
+        Log.d("MYLOG", titles.toString());
+
+        ArrayList <Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < times.size(); i++) {
+            if (times.get(i).isEmpty()) list.add(2400 + i);
+            else list.add(Integer.valueOf(times.get(i).replace(":", "")));
+        }
+
+        for (int i = 0; i < times.size() - 1; i++) {
+            int min = list.get(i);
+            int p = i;
+            for (int j = i + 1; j < times.size(); j++) {
+                if (list.get(j) < min) {
+                    min = list.get(j);
+                    p = j;
+                }
+            }
+            int x = list.get(i);
+            String id = ids.get(i);
+            String m = titles.get(i);
+            String t = times.get(i);
+            list.set(i, min);
+            list.set(p, x);
+            ids.set(i, ids.get(p));
+            ids.set(p, id);
+            titles.set(i, titles.get(p));
+            titles.set(p, m);
+            times.set(i, times.get(p));
+            times.set(p, t);
+        }
+        Log.d("MYLOG", ids.toString());
+        Log.d("MYLOG", titles.toString());
     }
 
     public void update() {
-        titles = getTitles();
-        times = getTimes();
+        setLists();
         notifyDataSetChanged();
     }
 
@@ -55,6 +109,8 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        holder.position = position;
         holder.title_text.setText(titles.get(position));
         holder.time_text.setText(times.get(position));
     }
@@ -64,30 +120,9 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
         return titles.size();
     }
 
-    public ArrayList<String> getTitles() {
-        Cursor res = database.getAllTitles(calendar);
-        ArrayList<String> titlesList = new ArrayList<>();
-
-        while (res.moveToNext()) {
-            titlesList.add(res.getString(1));
-        }
-
-        return titlesList;
-    }
-
-    public ArrayList<String> getTimes() {
-        Cursor res = database.getAllTitles(calendar);
-        ArrayList<String> timesList = new ArrayList<>();
-
-        while (res.moveToNext()) {
-            timesList.add(res.getString(3));
-        }
-
-        return timesList;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
+        int position;
         TextView title_text;
         TextView time_text;
 
@@ -108,7 +143,7 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
 
         @Override
         public boolean onLongClick(View v) {
-            listener.deleteEvent(getPosition(), v);
+            listener.deleteEvent(ids.get(position), v);
             return true;
         }
     }

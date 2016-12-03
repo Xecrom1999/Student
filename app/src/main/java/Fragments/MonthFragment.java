@@ -1,24 +1,24 @@
 package Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.user.student.CalendarDayActivity;
-import com.example.user.student.Helper;
 import com.example.user.student.NewEventActivity;
 import com.example.user.student.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import Adapters.CalendarAdapter;
 import Database.CalendarDB;
@@ -27,7 +27,7 @@ import Interfaces.CalendarListener;
 /**
  * Created by gamrian on 19/08/2016.
  */
-public class MonthFragment extends Fragment implements CalendarListener{
+public class MonthFragment extends Fragment implements CalendarListener {
 
     RecyclerView recyclerView;
     CalendarAdapter adapter;
@@ -39,6 +39,7 @@ public class MonthFragment extends Fragment implements CalendarListener{
     String month2;
     CalendarDB database;
     boolean active;
+    Context ctx;
 
     public MonthFragment() {
     }
@@ -62,54 +63,28 @@ public class MonthFragment extends Fragment implements CalendarListener{
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        ArrayList <Calendar> list = Helper.changes;
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, position);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.getTime();
-        calendar.set(Calendar.DAY_OF_WEEK, 1);
-        calendar.add(Calendar.DATE, -7);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-
-        for (int i = 0; i < list.size(); i++) {
-            int position = (int) ((list.get(i).getTimeInMillis() - calendar.getTimeInMillis()) / 86400000);
-            if (position > 6 && position < 49) {
-                adapter.update(position);
-                adapter.notifyItemChanged(position);
-            }
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        Helper.changes.clear();
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.calendar_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+        recyclerView.setItemAnimator(null);
 
         adapter = new CalendarAdapter(getContext(), position, this, database);
-
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void newEvent(int day, int month, int year, boolean hasEvent) {
-        Intent intent = new Intent(getActivity(), hasEvent ? CalendarDayActivity.class : NewEventActivity.class);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        this.ctx = context;
+    }
+
+    @Override
+    public void itemClicked(int day, int month, int year, boolean hasEvent) {
+        Intent intent = new Intent(ctx, hasEvent ? CalendarDayActivity.class : NewEventActivity.class);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -121,27 +96,11 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
        intent.putExtra("calendar", calendar);
 
-        startActivity(intent);
-        if (hasEvent)
-            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
-    @Override
-    public void openDay(int day, int month, int year) {
-        Intent intent = new Intent(getActivity(), CalendarDayActivity.class);
-
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(year, month, day);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        intent.putExtra("calendar", calendar);
-
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        try {
+            startActivity(intent);
+            if (hasEvent)
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        } catch (IllegalStateException e){}
     }
 
     public String getMonth() {
@@ -154,9 +113,14 @@ public class MonthFragment extends Fragment implements CalendarListener{
 
     @Override
     public void onDestroy() {
-        active = false;
         super.onDestroy();
+
+        active = false;
     }
 
+    public void update(Date d) {
+
+        adapter.updateSelf(d);
+    }
 
 }

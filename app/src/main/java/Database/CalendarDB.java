@@ -2,19 +2,16 @@ package Database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.ArraySet;
 import android.util.Log;
 
 import com.example.user.student.Event;
-import com.example.user.student.Helper;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Set;
+
+import Adapters.CalendarAdapter;
 
 /**
  * Created by gamrian on 09/08/2016.
@@ -33,7 +30,7 @@ public class CalendarDB extends SQLiteOpenHelper {
     public static final String COL_6 = "REMINDER";
 
     public CalendarDB(Context context) {
-        super(context, DATABASE_NAME, null, 9);
+        super(context, DATABASE_NAME, null, 10);
     }
 
     public void onCreate(SQLiteDatabase db) {
@@ -47,7 +44,7 @@ public class CalendarDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertData(Event event, Calendar calendar) {
+    public long insertData(Event event) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -59,17 +56,20 @@ public class CalendarDB extends SQLiteOpenHelper {
         contentValues.put(COL_5, event.getComment());
         contentValues.put(COL_6, event.getReminder());
 
-        Helper.addMonth(calendar);
+        long id =  db.insert(TABLE_NAME, null, contentValues);
 
-        return db.insert(TABLE_NAME, null, contentValues);
+        CalendarAdapter.eventAdded(id, event);
+
+        return id;
     }
 
-    public void deleteData(String id, Calendar calendar) {
+    public void deleteData(String id) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_NAME, "ID = ?",new String[] {id});
-        Helper.addMonth(calendar);
+
+        CalendarAdapter.eventRemoved(id);
     }
 
     public Cursor getAllData() {
@@ -84,7 +84,7 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public void updateData(String id, Event event, Calendar calendar) {
+    public void updateData(String id, Event event) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -98,13 +98,13 @@ public class CalendarDB extends SQLiteOpenHelper {
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
 
-        Helper.addMonth(calendar);
+        CalendarAdapter.eventChanged(id, event);
     }
 
-    public Cursor getAllTitles(Calendar calendar) {
+    public Cursor getAllEventsAtDate(Calendar calendar) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + String.valueOf(calendar.getTime()) + "'" , null);
+        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + String.valueOf(calendar.getTimeInMillis()) + "'" , null);
         return res;
     }
 

@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -72,6 +73,8 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
     int num;
 
+    Calendar oldCalendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +95,8 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         comment_layout.setOnClickListener(this);
 
         title_edit = (EditText) findViewById(R.id.event_title_edit);
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        title_edit.setTypeface(font);
         comment_edit = (EditText) findViewById(R.id.comment_edit);
         remove_time = (ImageView) findViewById(R.id.remove_time);
         remove_time.setOnClickListener(this);
@@ -117,7 +122,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         num = intent.getIntExtra("position", 0);
 
         if (isOld) {
-            Cursor res = database.getRowByDate(String.valueOf(calendar.getTime()));
+            Cursor res = database.getRowByDate(String.valueOf(calendar.getTimeInMillis()));
             res.moveToNext();
             int i = num;
             while (i != 0 && res.moveToNext()) i--;
@@ -151,6 +156,9 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
         getSupportActionBar().setTitle("");
         toolbar.setBackgroundColor(getResources().getColor(R.color.primary_new_event));
+
+        oldCalendar = Calendar.getInstance();
+        oldCalendar.setTime(calendar.getTime());
     }
 
     @Override
@@ -223,7 +231,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         Helper.hideKeyboard(this);
 
         String title = title_edit.getText().toString();
-        String date = String.valueOf(calendar.getTime());
+        String date = String.valueOf(calendar.getTimeInMillis());
         String time = time_text.getText().toString();
         String comment = comment_edit.getText().toString();
 
@@ -241,11 +249,11 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         finish();
 
         if (isOld) {
-            database.updateData(this.id, event, calendar);
+            database.updateData(this.id, event);
             Toast.makeText(getApplicationContext(), getString(R.string.event_saved_string), Toast.LENGTH_SHORT).show();
         }
         else {
-            this.id = String.valueOf(database.insertData(event, calendar));
+            this.id = String.valueOf(database.insertData(event));
             Toast.makeText(getApplicationContext(), getString(R.string.event_created_string), Toast.LENGTH_SHORT).show();
         }
 

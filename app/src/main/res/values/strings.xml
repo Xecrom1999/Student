@@ -48,6 +48,7 @@
     <string name="clear_data_string">Clear data</string>
     <string name="rate_app_string">Rate app</string>
     <string name="contact_us_string">Bug report/improvement suggestions</string>
+    <string name="are_you_sure_string">Are you sure?</string>
     <string name="clear_string">Clear</string>
     <string name="add_event_string">Add event</string>
     <string name="back_to_month_string">Go back to today</string>

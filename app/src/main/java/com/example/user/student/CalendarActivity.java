@@ -18,16 +18,18 @@ import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
+import Adapters.CalendarAdapter;
 import Database.CalendarDB;
 import Fragments.MonthFragment;
 
 public class CalendarActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
-    ViewPager pager;
+    static ViewPager pager;
     MyPagerAdapter adapter;
     FragmentManager fm;
-    MonthFragment[] fragments;
+    static MonthFragment[] fragments;
     final static int NUM_OF_FRAGMENTS = 14;
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -172,5 +174,24 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        CalendarAdapter.idList = null;
+        CalendarAdapter.eventsList = null;
+    }
+
+    public static void updateFragments(Date d) {
+
+        int pos = pager.getCurrentItem();
+
+        fragments[pos].update(d);
+
+        if (pos > 0)
+        fragments[pos-1].update(d);
+
+        if (pos < NUM_OF_FRAGMENTS - 2)
+        fragments[pos+1].update(d);
+    }
 }

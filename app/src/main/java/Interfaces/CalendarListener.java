@@ -5,7 +5,5 @@ package Interfaces;
  */
 public interface CalendarListener {
 
-    void newEvent(int day, int month, int year, boolean b);
-
-    void openDay(int day, int month, int year);
+    void itemClicked(int day, int month, int year, boolean b);
 }
