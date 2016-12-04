@@ -55,7 +55,6 @@
     <string name="arrange_notes_string">Arrange notes</string>
     <string name="reminder_string">Reminder</string>
     <string name="loading_string">Loading...</string>
-    <string name="auto_save_string">Auto save</string>
     <string name="auto_arrange_string">Auto arrange</string>
     <string name="yesterday_string">Yesterday</string>
     <string name="tomorrow_string">Tomorrow</string>

@@ -96,6 +96,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
         title_edit.setTypeface(font);
         comment_edit = (EditText) findViewById(R.id.comment_edit);
+        comment_edit.setSingleLine(false);
         remove_time = (ImageView) findViewById(R.id.remove_time);
         remove_time.setOnClickListener(this);
 

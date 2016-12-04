@@ -43,8 +43,6 @@ public class NoteActivity extends AppCompatActivity {
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM");
 
-    boolean autoSave;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +61,6 @@ public class NoteActivity extends AppCompatActivity {
         AdView mAdView = (AdView) findViewById(R.id.note_adBanner);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
-        autoSave = getSharedPreferences("data", MODE_PRIVATE).getBoolean("autoSave", true);
     }
 
     @Override
@@ -120,7 +116,7 @@ public class NoteActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.done_id)
-            finishNote();
+            finish();
 
         if (id == android.R.id.home) onBackPressed();
         return true;
@@ -130,10 +126,11 @@ public class NoteActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        if (autoSave) finishNote();
-
-        else finish();
+        finish();
     }
+
+
+
 
     @Override
     protected void onPause() {
@@ -141,6 +138,8 @@ public class NoteActivity extends AppCompatActivity {
         Helper.hideKeyboard(this);
 
         changeColor(false);
+
+        finishNote();
     }
 
     @Override
@@ -164,7 +163,5 @@ public class NoteActivity extends AppCompatActivity {
         String title = title_edit.getText().toString();
 
         database.updateData2(id, title, date);
-
-        finish();
     }
 }

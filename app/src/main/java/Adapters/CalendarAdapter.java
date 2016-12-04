@@ -41,6 +41,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     public static ArrayList<Event> eventsList;
 
     Calendar mCalendar;
+    long t;
+
+    final int NUM_OF_ITEMS = 49;
 
     public CalendarAdapter(Context ctx, int position, CalendarListener listener, CalendarDB database) {
         this.listener = listener;
@@ -56,10 +59,18 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, this.position);
+        calendar.getTime();
+
         month = calendar.get(Calendar.MONTH);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.getTime();
+
         calendar.set(Calendar.DAY_OF_WEEK, 1);
+        calendar.getTime();
+
         calendar.add(Calendar.DATE, -7);
+        calendar.getTime();
+
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -117,7 +128,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         final int p = (int) ((d.getTime() - mCalendar.getTimeInMillis()) / 86400000);
 
-        if (p < 6 || p > 49) return;
+        if (p < 6 || p > (NUM_OF_ITEMS - 1)) return;
 
         calendar.setTime(mCalendar.getTime());
         calendar.add(Calendar.DATE, p);
@@ -142,6 +153,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        if (position == 0) t = System.currentTimeMillis();
+
         holder.num = 0;
 
         Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font1.ttf");
@@ -152,22 +165,21 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         holder.year = calendar.get(Calendar.YEAR);
 
         if (holder.getItemViewType() == HEADER_TYPE) {
-            holder.day_text.setText(new SimpleDateFormat("EE").format(calendar.getTime()));
-            if (position + 1 == cal.get(Calendar.DAY_OF_WEEK) && calendar.get(Calendar.MONTH) == cal.get(Calendar.MONTH)-1 && calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR))
-                holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
-
             holder.day_text.setTypeface(font);
+            holder.day_text.setText(new SimpleDateFormat("EE").format(calendar.getTime()));
+            if (position + 1 == cal.get(Calendar.DAY_OF_WEEK) && this.position == 0)
+                holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
         }
 
         else {
 
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             holder.day_text.setText(day + "");
-            if (day == cal.get(Calendar.DAY_OF_MONTH) && cal.get(Calendar.MONTH) == holder.month && calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
+            if (day == cal.get(Calendar.DAY_OF_MONTH) && this.position == 0) {
                 holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
             }
 
-            if (month != calendar.get(Calendar.MONTH)) {
+            if (month != holder.month) {
                 holder.root.setAlpha(0.5f);
             }
 
@@ -194,6 +206,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             }
         }
         calendar.add(Calendar.DATE, 1);
+
+        //if (position == getItemCount() - 1) Log.d("MYLOG", String.valueOf(System.currentTimeMillis() - t));
     }
 
     @Override
@@ -204,7 +218,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 49;
+        return NUM_OF_ITEMS;
     }
 
     public void setLists() {

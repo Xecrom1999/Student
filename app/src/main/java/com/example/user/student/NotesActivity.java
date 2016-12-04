@@ -43,7 +43,6 @@ public class NotesActivity extends ActionBarActivity {
     Menu menu;
     boolean rtl;
 
-    boolean autoSave;
     boolean autoArrange;
 
     SharedPreferences preferences;
@@ -83,7 +82,6 @@ public class NotesActivity extends ActionBarActivity {
         showNotes();
 
         preferences = getSharedPreferences("data", MODE_PRIVATE);
-        autoSave = preferences.getBoolean("autoSave", true);
         autoArrange = preferences.getBoolean("autoArrange", true);
 
         if (autoArrange) arrangeNotes();
@@ -93,7 +91,6 @@ public class NotesActivity extends ActionBarActivity {
     protected void onPause() {
         super.onPause();
 
-        preferences.edit().putBoolean("autoSave", autoSave).commit();
         preferences.edit().putBoolean("autoArrange", autoArrange).commit();
     }
 
@@ -198,10 +195,6 @@ public class NotesActivity extends ActionBarActivity {
             case R.id.arrange_notes:
                 arrangeNotes();
                 break;
-            case R.id.auto_save_id:
-                autoSave = !autoSave;
-                updateMenu();
-                break;
             case R.id.auto_arrange_id:
                 autoArrange = !autoArrange;
                 updateMenu();
@@ -213,9 +206,7 @@ public class NotesActivity extends ActionBarActivity {
     }
 
     private void updateMenu() {
-
-        menu.getItem(2).setChecked(autoSave);
-        menu.getItem(3).setChecked(autoArrange);
+        menu.getItem(2).setChecked(autoArrange);
     }
 
 

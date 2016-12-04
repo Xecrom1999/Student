@@ -13,12 +13,6 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/auto_save_id"
-        android:title="@string/auto_save_string"
-        android:checkable="true"
-        />
-
-    <item
         android:id="@+id/auto_arrange_id"
         android:title="@string/auto_arrange_string"
         android:checkable="true"

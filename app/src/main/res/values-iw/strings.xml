@@ -55,8 +55,7 @@
     <string name="arrange_notes_string">סדר פתקים</string>
     <string name="reminder_string">תזכורת</string>
     <string name="loading_string">טוען...</string>
-    <string name="auto_save_string">שמירה אוטומטית</string>
-    <string name="auto_arrange_string">סדר אוטומטית</string>
+    <string name="auto_arrange_string">סידור אוטומטי</string>
     <string name="yesterday_string">אתמול</string>
     <string name="tomorrow_string">מחר</string>
 
