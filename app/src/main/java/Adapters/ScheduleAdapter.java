@@ -116,7 +116,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         Lesson lesson = list.get(position);
 
         viewHolder.name_text.setText(lesson.getName());
-        viewHolder.time_text.setText(ctx.getString(R.string.starts_at_string) + " " + lesson.getTime());
+        viewHolder.time_text.setText(lesson.getTime());
         viewHolder.length_text.setText(lesson.getLength() + " " + ctx.getString(R.string.minutes_string));
         viewHolder.number_text.setText(position + 1 + "");
         viewHolder.delete_button.setVisibility(editMode ? View.VISIBLE : View.INVISIBLE);

@@ -10,7 +10,7 @@
     <string name="add_reminder_string">הוסף תזכורת</string>
     <string name="calendar_string">לוח שנה</string>
     <string name="starts_at_string">מתחיל ב:</string>
-    <string name="minutes_string">דקות</string>
+    <string name="minutes_string">דק\'</string>
     <string name="schedule_string">מערכת שעות</string>
     <string name="notes_string">פתקים</string>
     <string name="delete_day_string">מחק יום</string>

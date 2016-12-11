@@ -7,5 +7,4 @@ package Interfaces;
 public interface ReminderListener {
 
     void setReminderText(int count, String timeBefore, int hour, int minute);
-
 }

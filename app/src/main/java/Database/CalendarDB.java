@@ -5,11 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Handler;
 import android.util.Log;
 
+import com.example.user.student.CalendarActivity;
 import com.example.user.student.Event;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import Adapters.CalendarAdapter;
 
@@ -58,18 +61,18 @@ public class CalendarDB extends SQLiteOpenHelper {
 
         long id =  db.insert(TABLE_NAME, null, contentValues);
 
-        CalendarAdapter.eventAdded(id, event);
+        CalendarActivity.updateFragments(new Date(Long.valueOf(event.getDate())));
 
         return id;
     }
 
-    public void deleteData(String id) {
+    public void deleteData(String id, String date) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.delete(TABLE_NAME, "ID = ?",new String[] {id});
+        CalendarActivity.updateFragments(new Date(Long.valueOf(date)));
 
-        CalendarAdapter.eventRemoved(id);
+        db.delete(TABLE_NAME, "ID = ?",new String[] {id});
     }
 
     public Cursor getAllData() {
@@ -84,7 +87,12 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public void updateData(String id, Event event) {
+    public void updateData(String id, final Event event) {
+
+        Cursor res = getEventById(id);
+        res.moveToNext();
+
+        String date = res.getString(2);
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -98,13 +106,21 @@ public class CalendarDB extends SQLiteOpenHelper {
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
 
-        CalendarAdapter.eventChanged(id, event);
+        CalendarActivity.updateFragments(new Date(Long.valueOf(date)));
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CalendarActivity.updateFragments(new Date(Long.valueOf(event.getDate())));
+            }
+        }, 400);
+
     }
 
-    public Cursor getAllEventsAtDate(Calendar calendar) {
+    public Cursor getAllEventsAtDate(String date) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + String.valueOf(calendar.getTimeInMillis()) + "'" , null);
+        Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_3 + "='" + date + "'" , null);
         return res;
     }
 

@@ -6,11 +6,14 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -118,8 +121,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
         isOld = intent.getBooleanExtra("isOld", false);
 
-
-
         if (isOld) {
 
             id = intent.getStringExtra("id");
@@ -200,6 +201,11 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_event_menu, menu);
+
+        MenuItem item = menu.getItem(0);
+        SpannableString s = new SpannableString(getResources().getString(R.string.save_string));
+        s.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s.length(), 0);
+        item.setTitle(s);
         return true;
     }
 

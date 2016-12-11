@@ -20,28 +20,6 @@
         android:layout_margin="5dp"
         android:id="@+id/lesson_number"/>
 
-    <TextView
-        android:id="@+id/startsAt_text"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:text="מתחיל ב: --:--"
-        android:textColor="@android:color/white"
-        android:textSize="13dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/lesson_text"
-        android:layout_marginStart="25dp"
-        />
-
-    <TextView
-        android:id="@+id/length_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="אורך שיעור: 45 דקות"
-        android:textColor="@android:color/white"
-        android:textSize="13dp"
-        android:layout_below="@+id/lesson_text"
-        android:layout_toEndOf="@id/startsAt_text"
-        />
 
     <ImageView
         android:id="@+id/lesson_delete"
@@ -67,5 +45,48 @@
         android:layout_alignBaseline="@+id/lesson_number"
         android:layout_alignBottom="@+id/lesson_number"
         android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lesson_text"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_clock"
+            android:tint="@android:color/white"
+            />
+
+        <TextView
+            android:id="@+id/startsAt_text"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="8:30"
+            android:textColor="@android:color/white"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="48dp"
+            />
+
+        <TextView
+            android:id="@+id/length_text"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="45 דק'"
+            android:textColor="@android:color/white"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:layout_below="@id/lesson_text"
+            android:layout_gravity="end"
+            android:layout_marginStart="48dp"
+            />
+
+    </LinearLayout>
+
 </RelativeLayout>
 

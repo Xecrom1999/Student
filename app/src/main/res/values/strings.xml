@@ -10,7 +10,7 @@
     <string name="add_reminder_string">Add a reminder</string>
     <string name="calendar_string">Calendar</string>
     <string name="starts_at_string">starts at:</string>
-    <string name="minutes_string">minutes</string>
+    <string name="minutes_string">min</string>
     <string name="schedule_string">Schedule</string>
     <string name="notes_string">Notes</string>
     <string name="delete_day_string">Delete day</string>

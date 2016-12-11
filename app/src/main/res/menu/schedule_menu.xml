@@ -15,9 +15,6 @@
         android:title="@string/week_view_string"
        />
 
-    <item android:title="@string/delete_day_string"
-        android:id="@+id/delete_day_id"/>
-
     <item android:title="@string/delete_all_string"
         android:id="@+id/delete_all_id"/>
 

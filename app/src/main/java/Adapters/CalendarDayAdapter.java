@@ -49,7 +49,7 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
         times.clear();
         ids.clear();
 
-        Cursor res = database.getAllEventsAtDate(calendar);
+        Cursor res = database.getAllEventsAtDate(String.valueOf(calendar.getTime().getTime()));
 
         while (res.moveToNext()) {
             ids.add(res.getString(0));

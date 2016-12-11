@@ -1,6 +1,5 @@
 package com.example.user.student;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +34,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
     final static int NUM_OF_FRAGMENTS = 14;
     Toolbar toolbar;
     FloatingActionButton fab;
-
     CalendarDB database;
 
     @Override
@@ -46,6 +43,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
 
 
         database = new CalendarDB(this);
+
 
         fragments = new MonthFragment[NUM_OF_FRAGMENTS];
         for (int i = 0; i < NUM_OF_FRAGMENTS; i++) {
@@ -60,7 +58,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
             intent.putExtra("calendar", calendar);
             startActivity(intent);
         }
-
     }
 
     @Override
@@ -79,7 +76,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back2);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        getSupportActionBar().setTitle("Calendar");
+        getSupportActionBar().setTitle(getResources().getString(R.string.calendar_string));
         toolbar.setBackgroundResource(R.color.primary_color);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             toolbar.setElevation(72);
@@ -179,14 +176,6 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        CalendarAdapter.idList = null;
-        CalendarAdapter.eventsList = null;
-    }
-
     public static void updateFragments(Date d) {
 
         int pos = pager.getCurrentItem();
@@ -196,7 +185,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
         if (pos > 0)
         fragments[pos-1].update(d);
 
-        if (pos < NUM_OF_FRAGMENTS - 2)
+        if (pos < NUM_OF_FRAGMENTS - 1)
         fragments[pos+1].update(d);
     }
 }

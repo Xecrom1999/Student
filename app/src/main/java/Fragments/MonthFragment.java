@@ -68,7 +68,7 @@ public class MonthFragment extends Fragment implements CalendarListener {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.calendar_recycler);
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
         recyclerView.setItemAnimator(null);
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,8 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.Calendar;
@@ -62,7 +59,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         db = new DefaultLessonsDB(this);
 
         boolean isNew = getSharedPreferences("data", MODE_PRIVATE).getBoolean("isNew", true);
-        getSharedPreferences("data", MODE_PRIVATE).edit().putBoolean("isNew", false);
+        getSharedPreferences("data", MODE_PRIVATE).edit().putBoolean("isNew", false).commit();
         if (isNew) {
             db.insertData("8:00", "45");
             db.insertData("8:45", "45");
@@ -135,11 +132,8 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
             case R.id.view_id:
                 changeView();
                 break;
-            case R.id.delete_day_id:
-                userDialog(false);
-                break;
             case R.id.delete_all_id:
-                userDialog(true);
+                userDialog();
                 break;
             case R.id.edit_id:
                 toggleEditMode();
@@ -156,22 +150,17 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         for (int i = 0; i < DAYS_NUM; i++) daysFragments[i].toggleEditMode();
     }
 
-    private void userDialog(final boolean choice) {
+    private void userDialog() {
         final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        if (!choice)
-                            daysFragments[getPosition()].deleteDay();
 
-                        else {
-                            for (int i = 0; i < DAYS_NUM; i++)
-                                try {
-                                    daysFragments[i].deleteDay();
-                                } catch (NullPointerException e) {
-                                }
-                        }
+                        for (int i = 0; i < DAYS_NUM; i++)
+                            try {
+                                daysFragments[i].deleteDay();
+                            } catch (NullPointerException e) {}
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -181,7 +170,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialogStyle);
-        builder.setMessage(getString(choice ? R.string.are_you_sure_string : R.string.are_you_sure_string)).setPositiveButton(getString(R.string.delete_string), dialogClickListener)
+        builder.setMessage(getString(R.string.are_you_sure_string)).setPositiveButton(getString(R.string.delete_string), dialogClickListener)
                 .setNegativeButton(getString(R.string.cancel_string), dialogClickListener).show();
     }
 

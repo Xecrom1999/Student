@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,8 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         checkBox = (CheckBox) findViewById(R.id.default_checkBox);
 
         subject_edit = (EditText) findViewById(R.id.subject_edit);
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font2.ttf");
+        subject_edit.setTypeface(font);
 
         time_text = (TextView) findViewById(R.id.setTime_text);
 

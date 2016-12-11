@@ -1,10 +1,12 @@
 package Adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +38,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     int position;
     int month;
     static CalendarListener listener;
-    CalendarDB database;
-    public static ArrayList<String> idList;
-    public static ArrayList<Event> eventsList;
-
+    static CalendarDB database;
     Calendar mCalendar;
     long t;
+
 
     final int NUM_OF_ITEMS = 49;
 
@@ -49,13 +49,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         this.listener = listener;
         this.ctx = ctx;
         this.position = position;
-        this.database = database;
-
-        idList = new ArrayList<>();
-        eventsList = new ArrayList<>();
-
-        if (idList.isEmpty())
-            setLists();
+        if (this.database == null) this.database = database;
 
         calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, this.position);
@@ -79,50 +73,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         mCalendar = Calendar.getInstance();
         mCalendar.setTime(calendar.getTime());
     }
-
-    public static void eventAdded(long id, Event event) {
-        
-        idList.add(String.valueOf(id));
-        eventsList.add(event);
-
-        Date date = new Date(Long.valueOf(event.getDate()));
-        CalendarActivity.updateFragments(date);
-    }
-
-    public static void eventRemoved(String id) {
-        for (int i = 0; i < idList.size(); i++) {
-            if (idList.get(i).equals(id)) {
-
-                idList.remove(i);
-                Date date = new Date(Long.valueOf(eventsList.get(i).getDate()));
-                eventsList.remove(i);
-
-                CalendarActivity.updateFragments(date);
-
-                return;
-            }
-        }
-    }
-
-    public static void eventChanged(String id, final Event event) {
-
-        for (int i = 0; i < idList.size(); i++) {
-            if (idList.get(i).equals(id)) {
-
-                CalendarActivity.updateFragments(new Date(Long.valueOf(eventsList.get(i).getDate())));
-
-                eventsList.set(i, event);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        CalendarActivity.updateFragments(new Date(Long.valueOf(event.getDate())));
-                    }
-                }, 400);
-                return;
-            }
-        }
-    }
     
     public void updateSelf(Date d) {
 
@@ -134,7 +84,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         calendar.add(Calendar.DATE, p);
 
         notifyItemChanged(p);
-
     }
 
     @Override
@@ -145,15 +94,26 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             view = LayoutInflater.from(ctx).inflate(R.layout.calendar_header, parent, false);
         else {
             view = LayoutInflater.from(ctx).inflate(R.layout.calendar_item, parent, false);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) convertDpToPixel(79));
+            view.setLayoutParams(params);
         }
         CalendarAdapter.ViewHolder viewHolder = new CalendarAdapter.ViewHolder(view, viewType);
         return viewHolder;
+    }
+
+    public float convertDpToPixel(float dp){
+        Resources resources = ctx.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return px;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         if (position == 0) t = System.currentTimeMillis();
+
 
         holder.num = 0;
 
@@ -172,11 +132,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         }
 
         else {
-
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             holder.day_text.setText(day + "");
             if (day == cal.get(Calendar.DAY_OF_MONTH) && this.position == 0) {
                 holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
+                holder.day_text.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             }
 
             if (month != holder.month) {
@@ -185,19 +145,27 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
             boolean has = false;
 
-            for (int i = 0; i < eventsList.size(); i++) {
-                    if (eventsList.get(i).getDate().equals(String.valueOf(calendar.getTimeInMillis()))) {
+            ArrayList<Event> list1 = new ArrayList<>();
+
+            Cursor res = database.getAllEventsAtDate(String.valueOf(calendar.getTime().getTime()));
+
+            while (res.moveToNext()) {
+                list1.add(new Event(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5)));
+            }
+
+            for (int i = 0; i < list1.size(); i++) {
+                    if (list1.get(i).getDate().equals(String.valueOf(calendar.getTimeInMillis()))) {
                         has = true;
                         if (holder.num == 0) {
-                            holder.title_text.setText(eventsList.get(i).getTitle());
+                            holder.title_text.setText(list1.get(i).getTitle());
                             holder.number_text.setText("");
                         }
                         holder.num++;
                         if (holder.num > 1) {
                             holder.number_text.setVisibility(View.VISIBLE);
                             holder.number_text.setText((holder.num - 1) + "+");
-                        }
-                        else holder.number_text.setVisibility(View.INVISIBLE);
+                        } else holder.number_text.setVisibility(View.INVISIBLE);
+
                     }
             }
             if (!has) {
@@ -207,7 +175,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         }
         calendar.add(Calendar.DATE, 1);
 
-        //if (position == getItemCount() - 1) Log.d("MYLOG", String.valueOf(System.currentTimeMillis() - t));
+        if (position == getItemCount() - 1) {
+            Log.d("MYLOG", String.valueOf(System.currentTimeMillis() - t));
+        }
+
+        //All code ~ 304
+        //No events ~
+        //No code ~ 139
     }
 
     @Override
@@ -219,19 +193,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     @Override
     public int getItemCount() {
         return NUM_OF_ITEMS;
-    }
-
-    public void setLists() {
-
-        idList.clear();
-        eventsList.clear();
-
-        Cursor res = database.getAllData();
-
-        while (res.moveToNext()) {
-            idList.add(res.getString(0));
-            eventsList.add(new Event(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5)));
-        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
