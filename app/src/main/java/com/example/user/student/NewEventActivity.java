@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import Database.CalendarDB;
 import Fragments.ReminderFragment;
@@ -56,7 +59,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     TextView reminder_text;
 
     boolean isOld;
-    final static SimpleDateFormat format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+    static SimpleDateFormat format;
 
     String id;
     String title;
@@ -80,6 +83,12 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_activity);
+
+        Configuration config = getResources().getConfiguration();
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            format = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+        }
+        else format = new SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.US);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -141,8 +150,8 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
             if (!reminder.isEmpty()) {
                 int reminder_count = Integer.parseInt(reminder.substring(reminder.indexOf("count") + 5, reminder.indexOf("units")));
                 String reminder_units = reminder.substring(reminder.indexOf("units") + 5, reminder.indexOf("hour"));
-                int reminder_hour = Integer.parseInt(reminder.substring(reminder.indexOf("hour") + 4, reminder.indexOf("minute")));
-                int reminder_minute = Integer.parseInt(reminder.substring(reminder.indexOf("minute") + 6));
+                int reminder_hour = Integer.parseInt(reminder.substring(reminder.indexOf("hour") + 4, reminder.lastIndexOf("minute")));
+                int reminder_minute = Integer.parseInt(reminder.substring(reminder.lastIndexOf("minute") + 6));
                 setReminderText(reminder_count, reminder_units, reminder_hour, reminder_minute);
             }
         }
@@ -269,6 +278,8 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
     private void setReminder(Event event) {
 
+        Log.d("MYLOG", event.getTitle());
+
         String[] arr = getResources().getStringArray(R.array.reminder_spinner2);
         int units;
         if (reminder_units.equals(arr[0])) units = Calendar.MINUTE;
@@ -293,9 +304,8 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (cal.getTime().getTime() < System.currentTimeMillis() - 60000) return;
 
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-        alarmIntent.putExtra("title", event.getTitle());
-        alarmIntent.putExtra("calendar", calendar);
-        alarmIntent.putExtra("comment", event.getComment());
+
+        alarmIntent.putExtra("id", this.id);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, Integer.parseInt(id), alarmIntent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);

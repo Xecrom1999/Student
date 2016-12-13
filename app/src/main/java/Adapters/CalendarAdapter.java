@@ -176,7 +176,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         calendar.add(Calendar.DATE, 1);
 
         if (position == getItemCount() - 1) {
-            Log.d("MYLOG", String.valueOf(System.currentTimeMillis() - t));
+            //Log.d("MYLOG", String.valueOf(System.currentTimeMillis() - t));
         }
 
         //All code ~ 304

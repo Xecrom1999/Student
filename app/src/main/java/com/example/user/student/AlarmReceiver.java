@@ -6,12 +6,17 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import java.util.Calendar;
+import java.util.Date;
+
+import Database.CalendarDB;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -19,13 +24,22 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, Intent intent) {
+
+        CalendarDB database = new CalendarDB(context);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Calendar calendar = (Calendar) intent.getExtras().get("calendar");
+        Calendar calendar = Calendar.getInstance();
+
+        String id = intent.getStringExtra("id");
+
+        Cursor res = database.getEventById(id);
+        res.moveToNext();
+
+        calendar.setTime(new Date(Long.valueOf(res.getString(2))));
 
         Intent myIntent = new Intent(context, MainActivity.class);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -34,7 +48,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentTitle(context.getString(R.string.reminder_string))
-                .setContentText(intent.getStringExtra("title"))
+                .setContentText(res.getString(1))
                 .setSmallIcon(R.mipmap.ic_calendar5)
                 .setContentIntent(PendingIntent.getActivity(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setVibrate(new long[] {500, 500})

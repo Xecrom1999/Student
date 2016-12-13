@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,8 +123,8 @@ public class EventActivity extends AppCompatActivity {
         else {
             int reminder_count = Integer.parseInt(reminder.substring(reminder.indexOf("count") + 5, reminder.indexOf("units")));
             String reminder_units = reminder.substring(reminder.indexOf("units") + 5, reminder.indexOf("hour"));
-            int reminder_hour = Integer.parseInt(reminder.substring(reminder.indexOf("hour") + 4, reminder.indexOf("minute")));
-            int reminder_minute = Integer.parseInt(reminder.substring(reminder.indexOf("minute") + 6));
+            int reminder_hour = Integer.parseInt(reminder.substring(reminder.indexOf("hour") + 4, reminder.lastIndexOf("minute")));
+            int reminder_minute = Integer.parseInt(reminder.substring(reminder.lastIndexOf("minute") + 6));
             setReminderText(reminder_count, reminder_units, reminder_hour, reminder_minute);
         }
     }

@@ -26,6 +26,7 @@
             android:id="@+id/event_title_edit"
             android:gravity="start|center_vertical"
             android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:textColor="@android:color/white"
             android:background="@color/primary_new_event"
             android:lines="1"
