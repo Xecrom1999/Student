@@ -114,7 +114,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         if (position == 0) t = System.currentTimeMillis();
 
-
         holder.num = 0;
 
         Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font1.ttf");
@@ -152,6 +151,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             while (res.moveToNext()) {
                 list1.add(new Event(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5)));
             }
+
+            res.close();
 
             for (int i = 0; i < list1.size(); i++) {
                     if (list1.get(i).getDate().equals(String.valueOf(calendar.getTimeInMillis()))) {

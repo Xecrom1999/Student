@@ -216,7 +216,7 @@ public class NotesActivity extends ActionBarActivity {
         int y = (int) convertDpToPixel(70);
 
         int spaceX = (int) convertDpToPixel(89);
-        int spaceY = (int) convertDpToPixel(110);
+        int spaceY = (int) convertDpToPixel(105);
 
         if (rtl) {
             Display display = getWindowManager().getDefaultDisplay();

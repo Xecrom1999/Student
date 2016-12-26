@@ -43,7 +43,7 @@ public class Helper {
     }
 
     public static void setupAd(final Context ctx) {
-
+/*
         final InterstitialAd mInterstitialAd;
 
         final SharedPreferences preferences = ctx.getSharedPreferences("adCount", Context.MODE_PRIVATE);
@@ -71,7 +71,7 @@ public class Helper {
             public void onAdFailedToLoad(int var1) {
                 Log.d("MYLOG", var1+"");
             }
-        });
+        });*/
     }
 
     private static void requestNewInterstitial(InterstitialAd mInterstitialAd) {

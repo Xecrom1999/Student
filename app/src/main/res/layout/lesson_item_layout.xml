@@ -52,13 +52,6 @@
         android:layout_below="@+id/lesson_text"
         android:gravity="center_horizontal">
 
-        <ImageView
-            android:layout_width="9dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_clock"
-            android:tint="@android:color/white"
-            />
-
         <TextView
             android:id="@+id/startsAt_text"
             android:layout_width="50dp"

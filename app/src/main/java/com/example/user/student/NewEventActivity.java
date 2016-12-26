@@ -134,13 +134,12 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
             id = intent.getStringExtra("id");
 
-            Cursor res = database.getEventById(id);
-            res.moveToNext();
+            Event event  = database.getEventById(id);
 
-            title = res.getString(1);
-            time = res.getString(3);
-            comment = res.getString(4);
-            reminder = res.getString(5);
+            title = event.getTitle();
+            time = event.getTime();
+            comment = event.getComment();
+            reminder = event.getReminder();
 
             title_edit.setText(title);
             title_edit.setSelection(title_edit.length());

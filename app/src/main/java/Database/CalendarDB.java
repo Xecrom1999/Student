@@ -6,15 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
-import android.util.Log;
 
 import com.example.user.student.CalendarActivity;
 import com.example.user.student.Event;
 
-import java.util.Calendar;
 import java.util.Date;
-
-import Adapters.CalendarAdapter;
 
 /**
  * Created by gamrian on 09/08/2016.
@@ -81,37 +77,37 @@ public class CalendarDB extends SQLiteOpenHelper {
         return res;
     }
 
-    public Cursor getEventById(String id) {
+    public Event getEventById(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res =  db.rawQuery("select * from " + TABLE_NAME + " where " + COL_1 + "='" + id + "'" , null);
-        return res;
+        res.moveToNext();
+        Event event = new Event(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5));
+
+        return event;
     }
 
-    public void updateData(String id, final Event event) {
+    public void updateData(String id, final Event newEvent) {
 
-        Cursor res = getEventById(id);
-        res.moveToNext();
-
-        String date = res.getString(2);
+        Event event = getEventById(id);
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_2, event.getTitle());
-        contentValues.put(COL_3, event.getDate());
-        contentValues.put(COL_4, event.getTime());
-        contentValues.put(COL_5, event.getComment());
-        contentValues.put(COL_6, event.getReminder());
+        contentValues.put(COL_2, newEvent.getTitle());
+        contentValues.put(COL_3, newEvent.getDate());
+        contentValues.put(COL_4, newEvent.getTime());
+        contentValues.put(COL_5, newEvent.getComment());
+        contentValues.put(COL_6, newEvent.getReminder());
 
         db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
 
-        CalendarActivity.updateFragments(new Date(Long.valueOf(date)));
+        CalendarActivity.updateFragments(new Date(Long.valueOf(event.getDate())));
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                CalendarActivity.updateFragments(new Date(Long.valueOf(event.getDate())));
+                CalendarActivity.updateFragments(new Date(Long.valueOf(newEvent.getDate())));
             }
         }, 400);
 

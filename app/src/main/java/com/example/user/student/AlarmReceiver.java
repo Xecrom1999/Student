@@ -36,10 +36,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         String id = intent.getStringExtra("id");
 
-        Cursor res = database.getEventById(id);
-        res.moveToNext();
+        Event event = database.getEventById(id);
 
-        calendar.setTime(new Date(Long.valueOf(res.getString(2))));
+        calendar.setTime(new Date(Long.valueOf(event.getDate())));
 
         Intent myIntent = new Intent(context, MainActivity.class);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -48,7 +47,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentTitle(context.getString(R.string.reminder_string))
-                .setContentText(res.getString(1))
+                .setContentText(event.getTitle())
                 .setSmallIcon(R.mipmap.ic_calendar5)
                 .setContentIntent(PendingIntent.getActivity(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setVibrate(new long[] {500, 500})

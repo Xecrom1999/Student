@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.user.student.AlarmReceiver;
+import com.example.user.student.Event;
 import com.example.user.student.EventActivity;
 import com.example.user.student.R;
 
@@ -132,10 +133,9 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
 
-                Cursor res = database.getEventById(id);
-                res.moveToNext();
+                Event event = database.getEventById(id);
 
-                database.deleteData(id, res.getString(2));
+                database.deleteData(id, event.getDate());
 
                 alarmManager.cancel(PendingIntent.getBroadcast(ctx, Integer.valueOf(id), new Intent(ctx, AlarmReceiver.class), 0));
 
