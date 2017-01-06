@@ -41,6 +41,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     static CalendarDB database;
     Calendar mCalendar;
     long t;
+    boolean hasDay;
 
 
     final int NUM_OF_ITEMS = 49;
@@ -72,6 +73,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         mCalendar = Calendar.getInstance();
         mCalendar.setTime(calendar.getTime());
+
+        hasDay = false;
     }
     
     public void updateSelf(Date d) {
@@ -133,9 +136,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         else {
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             holder.day_text.setText(day + "");
-            if (day == cal.get(Calendar.DAY_OF_MONTH) && this.position == 0) {
+            if (day == cal.get(Calendar.DAY_OF_MONTH) && this.position == 0  && !hasDay) {
                 holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
                 holder.day_text.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                hasDay = true;
             }
 
             if (month != holder.month) {
