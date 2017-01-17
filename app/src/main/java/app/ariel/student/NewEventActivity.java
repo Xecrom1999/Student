@@ -1,4 +1,4 @@
-package com.example.user.student;
+package app.ariel.student;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -28,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.ariel.student.student.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

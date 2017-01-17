@@ -1,4 +1,4 @@
-package com.example.user.student;
+package app.ariel.student;
 
 /**
  * Created by user on 15/01/16.

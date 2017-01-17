@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.student.Lesson;
-import com.example.user.student.R;
+import app.ariel.student.Lesson;
+import com.ariel.student.student.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

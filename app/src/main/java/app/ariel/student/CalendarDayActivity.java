@@ -1,4 +1,4 @@
-package com.example.user.student;
+package app.ariel.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ariel.student.student.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 

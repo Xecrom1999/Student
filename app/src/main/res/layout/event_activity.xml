@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_below="@id/event_toolbar"
-        tools:context=".CalendarDayActivity">
+        tools:context="app.ariel.student.CalendarDayActivity">
 
 
         <TextView

@@ -1,4 +1,4 @@
-package com.example.user.student;
+package app.ariel.student;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.ariel.student.student.R;
 
 import java.util.Calendar;
 

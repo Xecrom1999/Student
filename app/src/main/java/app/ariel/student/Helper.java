@@ -1,21 +1,15 @@
-package com.example.user.student;
+package app.ariel.student;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-
-import Fragments.MonthFragment;
 
 /**
  * Created by gamrian on 03/10/2016.

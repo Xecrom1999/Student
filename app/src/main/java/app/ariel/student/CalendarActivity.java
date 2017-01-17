@@ -1,4 +1,4 @@
-package com.example.user.student;
+package app.ariel.student;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,16 +12,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.ariel.student.student.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import Adapters.CalendarAdapter;
 import Database.CalendarDB;
 import Fragments.MonthFragment;
 

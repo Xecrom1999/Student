@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,10 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.user.student.AlarmReceiver;
-import com.example.user.student.Event;
-import com.example.user.student.EventActivity;
-import com.example.user.student.R;
+import app.ariel.student.AlarmReceiver;
+import app.ariel.student.Event;
+import app.ariel.student.EventActivity;
+import com.ariel.student.student.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,15 +48,6 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
     AlarmManager alarmManager;
 
     public CalendarDayFragment() {
-    }
-
-    public static CalendarDayFragment newInstance() {
-        
-        Bundle args = new Bundle();
-        
-        CalendarDayFragment fragment = new CalendarDayFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     public CalendarDayFragment(Context ctx, CalendarDB database, Calendar calendar, EventDateListener listener) {

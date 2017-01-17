@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.user.student.Note;
+import app.ariel.student.Note;
 
 /**
  * Created by gamrian on 09/08/2016.

@@ -1,6 +1,5 @@
 package Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.user.student.CalendarDayActivity;
-import com.example.user.student.NewEventActivity;
-import com.example.user.student.R;
+import app.ariel.student.CalendarDayActivity;
+import app.ariel.student.NewEventActivity;
+import com.ariel.student.student.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

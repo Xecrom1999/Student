@@ -1,4 +1,4 @@
-package com.example.user.student;
+package com.ariel.student.student;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

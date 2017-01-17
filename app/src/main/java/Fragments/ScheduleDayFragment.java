@@ -1,26 +1,21 @@
 package Fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.user.student.Lesson;
-import com.example.user.student.NewLessonActivity;
-import com.example.user.student.R;
+import app.ariel.student.Lesson;
+import app.ariel.student.NewLessonActivity;
+import com.ariel.student.student.R;
 
 import java.util.ArrayList;
 

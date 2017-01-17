@@ -1,8 +1,4 @@
-package com.example.user.student;
-
-import android.widget.ImageView;
-
-import java.util.ArrayList;
+package app.ariel.student;
 
 /**
  * Created by user on 25/01/16.

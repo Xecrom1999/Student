@@ -1,17 +1,14 @@
-package com.example.user.student;
+package app.ariel.student;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.ariel.student.student.R;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.Calendar;

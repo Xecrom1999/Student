@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
 
-import com.example.user.student.CalendarActivity;
-import com.example.user.student.Event;
+import app.ariel.student.CalendarActivity;
+import app.ariel.student.Event;
 
 import java.util.Date;
 

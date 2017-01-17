@@ -1,6 +1,6 @@
 package Interfaces;
 
-import com.example.user.student.Lesson;
+import app.ariel.student.Lesson;
 
 /**
  * Created by gamrian on 09/09/2016.

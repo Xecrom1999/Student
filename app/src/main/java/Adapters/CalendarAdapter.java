@@ -4,19 +4,16 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.user.student.CalendarActivity;
-import com.example.user.student.Event;
-import com.example.user.student.R;
+import app.ariel.student.Event;
+import com.ariel.student.student.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

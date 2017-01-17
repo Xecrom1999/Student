@@ -16,8 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.user.student.Helper;
-import com.example.user.student.R;
+import app.ariel.student.Helper;
+import com.ariel.student.student.R;
 
 import Interfaces.ReminderListener;
 

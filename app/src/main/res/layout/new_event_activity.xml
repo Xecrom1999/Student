@@ -42,7 +42,7 @@
         android:layout_below="@id/event_toolbar"
         android:divider="?android:attr/listDivider"
         android:showDividers="middle"
-        tools:context=".CalendarDayActivity"
+        tools:context="app.ariel.student.CalendarDayActivity"
         android:weightSum="4">
 
         <LinearLayout

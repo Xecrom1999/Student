@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.user.student">
+    package="com.ariel.student.student">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name="app.ariel.student.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/final_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="app.ariel.student.MainActivity"
             android:label="@string/app_name_string"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
@@ -24,46 +24,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScheduleActivity"
+            android:name="app.ariel.student.ScheduleActivity"
             android:label="Schedule2"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             >
         </activity>
         <activity
-            android:name=".NewLessonActivity"
+            android:name="app.ariel.student.NewLessonActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             >
         </activity>
         <activity
-            android:name=".NotesActivity"
+            android:name="app.ariel.student.NotesActivity"
             android:label="@string/notes_string"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".WeekViewActivity"
+        <activity android:name="app.ariel.student.WeekViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CalendarActivity"
+            android:name="app.ariel.student.CalendarActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CalendarDayActivity"
+            android:name="app.ariel.student.CalendarDayActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NewEventActivity"
+            android:name="app.ariel.student.NewEventActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".EventActivity" />
-        <activity android:name=".NoteActivity"
+        <activity android:name="app.ariel.student.EventActivity" />
+        <activity android:name="app.ariel.student.NoteActivity"
             android:windowSoftInputMode="adjustPan"/>
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name="app.ariel.student.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".OptionsActivity"
+        <activity android:name="app.ariel.student.OptionsActivity"
             android:screenOrientation="portrait" ></activity>
     </application>
 
