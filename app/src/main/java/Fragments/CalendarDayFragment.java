@@ -51,6 +51,15 @@ public class CalendarDayFragment extends Fragment implements CalendarDayListener
     public CalendarDayFragment() {
     }
 
+    public static CalendarDayFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        CalendarDayFragment fragment = new CalendarDayFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public CalendarDayFragment(Context ctx, CalendarDB database, Calendar calendar, EventDateListener listener) {
         this.calendar = calendar;
         this.ctx = ctx;
