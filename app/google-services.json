@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "752946130628",
+    "firebase_url": "https://student-6aeeb.firebaseio.com",
+    "project_id": "student-6aeeb",
+    "storage_bucket": "student-6aeeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752946130628:android:baf459668a80e02a",
+        "android_client_info": {
+          "package_name": "app.ariel.student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752946130628-nq381fspo4op0fpndffc8ik8h68k5jcr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIeppx2cXiYVRLlQuuEKhTJg7_ssN_BuM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
