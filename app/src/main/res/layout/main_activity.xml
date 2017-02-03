@@ -34,10 +34,10 @@
     <ImageView
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:elevation="2dp"
         android:alpha="0.8"
+        android:elevation="2dp"
         android:src="@mipmap/scheulde_img"
-        android:id="@+id/imageView5"
+        android:id="@+id/img_schedule"
         android:layout_alignTop="@+id/linearLayout"
         android:layout_marginTop="15dp"
         android:layout_marginStart="65dp"/>
@@ -48,7 +48,7 @@
         android:elevation="2dp"
         android:alpha="0.9"
         android:src="@mipmap/ic_pencil"
-        android:id="@+id/imageView3"
+        android:id="@+id/img_pencil"
         android:layout_alignBottom="@+id/linearLayout"
         android:layout_marginBottom="52dp"
         android:layout_marginStart="55dp"
@@ -63,9 +63,11 @@
         android:layout_alignBottom="@+id/linearLayout"
         android:layout_marginBottom="40dp"
         android:layout_marginStart="65dp"
+        android:id="@+id/img_notes"
         />
 
     <ImageView
+        android:id="@+id/img_options"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:elevation="2dp"
@@ -83,7 +85,7 @@
         android:elevation="2dp"
         android:alpha="0.8"
         android:src="@mipmap/calendar_img4"
-        android:id="@+id/imageView4"
+        android:id="@+id/img_calendar"
         android:layout_alignTop="@+id/linearLayout"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="15dp"

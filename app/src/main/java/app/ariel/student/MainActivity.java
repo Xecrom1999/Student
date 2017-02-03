@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ariel.student.student.R;
@@ -22,11 +23,26 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     TextView options_button;
     TextView title_text;
 
+    ImageView img_schedule, img_calendar, img_options, img_notes, img_pencil;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-6617091054237983/2023963555");
+
+        img_calendar = (ImageView) findViewById(R.id.img_calendar);
+        img_schedule = (ImageView) findViewById(R.id.img_schedule);
+        img_options = (ImageView) findViewById(R.id.img_options);
+        img_notes = (ImageView) findViewById(R.id.img_notes);
+        img_pencil = (ImageView) findViewById(R.id.img_pencil);
+
+        img_calendar.bringToFront();
+        img_schedule.bringToFront();
+        img_options.bringToFront();
+        img_notes.bringToFront();
+        img_pencil.bringToFront();
+
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
 

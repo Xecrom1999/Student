@@ -29,7 +29,7 @@
         android:layout_centerVertical="true"
         android:padding="14dp"
         android:src="@drawable/ic_delete"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:background="?attr/selectableItemBackgroundBorderless"
 />
 
     <TextView
