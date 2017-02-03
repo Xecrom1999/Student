@@ -41,12 +41,13 @@
             android:label="@string/notes_string"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name="app.ariel.student.WeekViewActivity"
+        <activity
+            android:name="app.ariel.student.WeekViewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="app.ariel.student.CalendarActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="app.ariel.student.CalendarDayActivity"
             android:screenOrientation="portrait" />
@@ -55,16 +56,19 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="app.ariel.student.EventActivity" />
-        <activity android:name="app.ariel.student.NoteActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="app.ariel.student.NoteActivity"
+            android:windowSoftInputMode="adjustPan" />
 
         <receiver
             android:name="app.ariel.student.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="app.ariel.student.OptionsActivity"
-            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name="app.ariel.student.OptionsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
