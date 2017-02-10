@@ -58,6 +58,8 @@
     <string name="auto_arrange_string">סידור אוטומטי</string>
     <string name="yesterday_string">אתמול</string>
     <string name="tomorrow_string">מחר</string>
+    <string name="h_hour_string">שעת אפס</string>
+    <string name="to_do_string">דברים לעשות</string>
 
     <string-array
         name="days_names">

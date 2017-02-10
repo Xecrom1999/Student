@@ -2,8 +2,10 @@ package Adapters;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     final static int TAIL_TYPE = 2;
     boolean editMode;
     static ScheduleListener listener;
+    SharedPreferences preferences;
 
     public ScheduleAdapter(Context ctx, ArrayList<Lesson> list, ScheduleListener listener) {
 
@@ -39,6 +42,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         this.ctx = ctx;
         editMode = false;
         this.listener = listener;
+
+        preferences = ctx.getSharedPreferences("data", Context.MODE_PRIVATE);
     }
 
     public void addLesson(Lesson lesson) {
@@ -100,6 +105,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         if (position == list.size() && editMode) return;
 
+        boolean h_hour = preferences.getBoolean("h_hour", false);
+
         Typeface font = Typeface.createFromAsset(ctx.getAssets(), "fonts/font2.ttf");
         viewHolder.name_text.setTypeface(font);
         viewHolder.number_text.setTypeface(font);
@@ -118,7 +125,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         viewHolder.name_text.setText(lesson.getName());
         viewHolder.time_text.setText(lesson.getTime());
         viewHolder.length_text.setText(lesson.getLength() + " " + ctx.getString(R.string.minutes_string));
-        viewHolder.number_text.setText(position + 1 + "");
+        viewHolder.number_text.setText((position + (h_hour ? 0 : 1)) + "");
         viewHolder.delete_button.setVisibility(editMode ? View.VISIBLE : View.INVISIBLE);
 
         viewHolder.lesson = lesson;

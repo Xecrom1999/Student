@@ -66,13 +66,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         options_button.setTypeface(font);
 
 
-        boolean fromNoti = getIntent().getBooleanExtra("fromNoti", false);
+        int fromNoti = getIntent().getIntExtra("fromNoti", 0);
 
-        if (fromNoti) {
+        if (fromNoti == 0) return;
+        else if (fromNoti == 1) {
             Intent intent = new Intent(this, CalendarActivity.class);
-            intent.putExtra("fromNoti", true);
+            intent.putExtra("fromNoti", 1);
             Calendar calendar = (Calendar) getIntent().getExtras().get("calendar");
             intent.putExtra("calendar", calendar);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, NotesActivity.class);
             startActivity(intent);
         }
     }

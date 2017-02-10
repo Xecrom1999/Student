@@ -3,6 +3,7 @@ package app.ariel.student;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -46,6 +47,9 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     Menu menu;
     InputMethodManager imm;
     DefaultLessonsDB db;
+
+    boolean h_hour;
+    SharedPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,15 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     protected void onStart() {
         super.onStart();
         Helper.setupAd(this);
+
+        preferences = getSharedPreferences("data", MODE_PRIVATE);
+        h_hour = preferences.getBoolean("h_hour", false);
+    }
+
+    private void updateMenu() {
+        preferences.edit().putBoolean("h_hour", h_hour).commit();
+        menu.getItem(3).setChecked(h_hour);
+        for (int i = 0; i < DAYS_NUM; i++) daysFragments[i].update();
     }
 
     private void setupToolbar() {
@@ -139,6 +152,10 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
                 break;
             case R.id.edit_id:
                 toggleEditMode();
+                break;
+            case R.id.h_hour_id:
+                h_hour = !h_hour;
+                updateMenu();
                 break;
         }
         return true;
@@ -186,6 +203,7 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.schedule_menu, menu);
         this.menu = menu;
+        updateMenu();
         return true;
     }
 
@@ -254,6 +272,6 @@ public class ScheduleActivity extends AppCompatActivity implements EditModeListe
     public void onPause() {
         super.onPause();
         Helper.hideKeyboard(this);
-    }
 
+    }
 }

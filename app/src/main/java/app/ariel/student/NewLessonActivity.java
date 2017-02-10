@@ -3,6 +3,7 @@ package app.ariel.student;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Typeface;
@@ -20,6 +21,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.ariel.student.student.R;
+
+import java.security.PrivilegedAction;
 
 import Database.DefaultLessonsDB;
 
@@ -40,10 +43,15 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
     int lessonPosition;
     Configuration config;
     String id;
+    SharedPreferences preferences;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_lesson_activity);
+
+        preferences = getSharedPreferences("data", MODE_PRIVATE);
+
+        boolean h_hour = preferences.getBoolean("h_hour", false);
 
         database = new DefaultLessonsDB(this);
 
@@ -67,9 +75,9 @@ public class NewLessonActivity extends AppCompatActivity implements View.OnClick
         Intent intent = getIntent();
         lessonPosition = intent.getIntExtra("itemPosition", 99);
 
-        checkBox.setText(getString(R.string.setDefaultLesson_string) + " " + (lessonPosition + 1));
+        checkBox.setText(getString(R.string.setDefaultLesson_string) + " " + (lessonPosition + (h_hour ? 0 : 1)));
         setToolbar();
-        getSupportActionBar().setTitle(getString(R.string.lesson_string) + " " + (lessonPosition + 1));
+        getSupportActionBar().setTitle(getString(R.string.lesson_string) + " " + (lessonPosition + (h_hour ? 0 : 1)));
 
         isNew = intent.getBooleanExtra("isNew", false);
         if (!isNew) {

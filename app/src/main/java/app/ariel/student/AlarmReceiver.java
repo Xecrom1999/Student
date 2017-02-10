@@ -43,13 +43,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent myIntent = new Intent(context, MainActivity.class);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         myIntent.putExtra("calendar", calendar);
-        myIntent.putExtra("fromNoti", true);
+        myIntent.putExtra("fromNoti", 1);
 
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentTitle(context.getString(R.string.reminder_string))
                 .setContentText(event.getTitle())
                 .setSmallIcon(R.mipmap.ic_calendar5)
-                .setContentIntent(PendingIntent.getActivity(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                .setContentIntent(PendingIntent.getActivity(context, 1, myIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setVibrate(new long[] {500, 500})
                 .setAutoCancel(true)
                 .setSound(alarmSound)

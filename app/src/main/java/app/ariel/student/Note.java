@@ -9,12 +9,14 @@ public class Note {
     private String date;
     private String xPos;
     private String yPos;
+    private int isTop;
 
-    public Note(String title, String date, String xPos, String yPos) {
+    public Note(String title, String date, String xPos, String yPos, int isTop) {
         this.title = title;
         this.date = date;
         this.xPos = xPos;
         this.yPos = yPos;
+        this.isTop = isTop;
     }
 
     public String getTitle() {
@@ -47,5 +49,13 @@ public class Note {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int isTop() {
+        return isTop;
+    }
+
+    public void setTop(int top) {
+        isTop = top;
     }
 }

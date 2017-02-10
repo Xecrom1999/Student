@@ -52,7 +52,7 @@ public class CalendarActivity extends AppCompatActivity implements ViewPager.OnP
 
         initializeViews();
 
-        if (getIntent().getBooleanExtra("fromNoti", false)) {
+        if (getIntent().getIntExtra("fromNoti", 0) == 1) {
             Intent intent = new Intent(this, CalendarDayActivity.class);
             Calendar calendar = (Calendar) getIntent().getExtras().get("calendar");
             intent.putExtra("calendar", calendar);

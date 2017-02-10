@@ -1,5 +1,7 @@
 package app.ariel.student;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +24,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,10 +50,13 @@ public class NotesActivity extends ActionBarActivity {
     boolean autoArrange;
 
     SharedPreferences preferences;
+    NotificationManager notificationManager;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_activity);
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         rtl = false;
 
@@ -69,8 +76,6 @@ public class NotesActivity extends ActionBarActivity {
 
         width = (int) convertDpToPixel(85);
         height = (int) convertDpToPixel(95);
-
-
     }
 
     @Override
@@ -116,17 +121,20 @@ public class NotesActivity extends ActionBarActivity {
         Cursor res = dataBase.getAllData();
 
         while (res.moveToNext()) {
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getInt(5));
         }
         theLayout.invalidate();
     }
 
-    private void addNote(String id, String title, String date, String xPos, String yPos) {
+    private void addNote(String id, String title, String date, String xPos, String yPos, int isTop) {
 
         final View note = getLayoutInflater().inflate(R.layout.note_item_layout, null, false);
 
         TextView title_text = (TextView) note.findViewById(R.id.note_edit);
         TextView date_text = (TextView) note.findViewById(R.id.note_date);
+        ImageView star_img = (ImageView) note.findViewById(R.id.star_img2);
+        LinearLayout linearLayout = (LinearLayout) note.findViewById(R.id.note_item_layout);
+        linearLayout.setLayoutDirection(rtl ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR);
 
         note.setOnTouchListener(new NoteListener());
 
@@ -137,6 +145,11 @@ public class NotesActivity extends ActionBarActivity {
 
         title_text.setText(title);
         date_text.setText(date);
+
+        if (isTop == 0)
+            star_img.setVisibility(View.INVISIBLE);
+        else
+            star_img.setVisibility(View.VISIBLE);
 
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
         date_text.setTypeface(typeface);
@@ -170,7 +183,7 @@ public class NotesActivity extends ActionBarActivity {
     private void addNote(String id) {
         Cursor res = dataBase.getRowById(id);
         while (res.moveToNext())
-            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4));
+            addNote(res.getString(0), res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getInt(5));
     }
 
     @Override
@@ -310,13 +323,11 @@ public class NotesActivity extends ActionBarActivity {
     public void noteClicked(View v) {
 
         String id = v.getTag().toString();
-        Note note = getNoteById(id);
+        Note note = dataBase.getNoteById(id);
 
-        String title = note.getTitle();
-        String date = note.getDate();
+
         Intent intent = new Intent(this, NoteActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("date", date);
+
         intent.putExtra("id", v.getTag().toString());
 
         chosen = v;
@@ -352,7 +363,7 @@ public class NotesActivity extends ActionBarActivity {
 
                     v.setAlpha(1);
 
-                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta));
+                    note = new Note("", "", String.valueOf(x - _xDelta), String.valueOf(y - _yDelta), 0);
 
                     id = v.getTag().toString();
 
@@ -384,6 +395,7 @@ public class NotesActivity extends ActionBarActivity {
                     }
                     else if (inGarbageRange(v)) {
                         dataBase.deleteData(id);
+                        notificationManager.cancel(100000 + Integer.valueOf(id));
                         theLayout.removeView(v);
                         addNote(id);
                     } else if (Math.abs((int) event.getRawX() - fx)  < 3 && Math.abs((int) event.getRawY() - fy)  < 3) {
@@ -430,16 +442,7 @@ public class NotesActivity extends ActionBarActivity {
         return px;
     }
 
-    private Note getNoteById(String id) {
-        Cursor res = dataBase.getAllData();
-        Note note = null;
-        while (res.moveToNext())
-            if (res.getString(0).equals(id))  {
-                note = new Note(res.getString(1), res.getString(2), res.getString(3), res.getString(4));
-                break;
-            }
-        return note;
-    }
+
 
     @Override
     protected void onResume() {

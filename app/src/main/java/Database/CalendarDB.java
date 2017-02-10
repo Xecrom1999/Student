@@ -1,11 +1,13 @@
 package Database;
 
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
+import android.service.notification.StatusBarNotification;
 
 import app.ariel.student.CalendarActivity;
 import app.ariel.student.Event;
@@ -28,8 +30,12 @@ public class CalendarDB extends SQLiteOpenHelper {
     public static final String COL_5 = "COMMENT";
     public static final String COL_6 = "REMINDER";
 
+    Context ctx;
+
     public CalendarDB(Context context) {
         super(context, DATABASE_NAME, null, 10);
+
+        this.ctx = context;
     }
 
     public void onCreate(SQLiteDatabase db) {
@@ -122,6 +128,14 @@ public class CalendarDB extends SQLiteOpenHelper {
 
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        for (StatusBarNotification s : notificationManager.getActiveNotifications()) {
+            if (s.getId() < 100000)
+                notificationManager.cancel(s.getId());
+        }
+
         db.delete(TABLE_NAME, null, null);
     }
 }

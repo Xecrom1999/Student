@@ -58,6 +58,8 @@
     <string name="auto_arrange_string">Auto arrange</string>
     <string name="yesterday_string">Yesterday</string>
     <string name="tomorrow_string">Tomorrow</string>
+    <string name="h_hour_string">H-hour</string>
+    <string name="to_do_string">To do</string>
 
     <string-array name="days_names">
         <item>Sunday</item>

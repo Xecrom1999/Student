@@ -13,15 +13,35 @@
     android:elevation="4dp"
     >
 
-    <TextView
-        android:text=""
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="6sp"
-        android:textColor="@android:color/secondary_text_light"
-        android:id="@+id/note_date"
-        android:gravity="end"
-        />
+        android:orientation="horizontal"
+        android:id="@+id/note_item_layout"
+        >
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/ic_star_full"
+            android:tint="@color/dark_color"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:id="@+id/star_img2"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="6sp"
+            android:textColor="@android:color/secondary_text_light"
+            android:id="@+id/note_date"
+            android:gravity="end|center_vertical"
+            />
+
+    </LinearLayout>
+
     <TextView
         android:text=""
         android:layout_width="match_parent"

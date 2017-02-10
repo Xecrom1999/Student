@@ -18,4 +18,10 @@
     <item android:title="@string/delete_all_string"
         android:id="@+id/delete_all_id"/>
 
+    <item
+        android:id="@+id/h_hour_id"
+        android:title="@string/h_hour_string"
+        android:checkable="true"
+        />
+
 </menu>
