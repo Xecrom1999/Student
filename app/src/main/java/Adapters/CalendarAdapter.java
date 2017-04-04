@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,9 +77,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     
     public void updateSelf(Date d) {
 
-        final int p = (int) ((d.getTime() - mCalendar.getTimeInMillis()) / 86400000);
+        int p = (int) ((d.getTime() - mCalendar.getTimeInMillis()) / 86400000);
 
         if (p < 6 || p > (NUM_OF_ITEMS - 1)) return;
+
+        if (d.getMonth() == 3 && d.getYear() + 1900 == 2017)
+            p++;
 
         calendar.setTime(mCalendar.getTime());
         calendar.add(Calendar.DATE, p);
@@ -137,7 +141,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 holder.day_text.setTextColor(ctx.getResources().getColor(R.color.calendar_accent));
                 holder.day_text.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 hasDay = true;
-            }
+        }
 
             if (month != holder.month) {
                 holder.root.setAlpha(0.5f);
